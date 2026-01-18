@@ -642,6 +642,11 @@
           timeout: CONFIG.FETCH_TIMEOUT,
           retries: CONFIG.FETCH_RETRIES
         });
+        // Debug: Log first game to see what fields are available
+        if (json?.data?.[0]) {
+          console.log('[LiveGames] Sample game data:', json.data[0]);
+          console.log('[LiveGames] Available fields:', Object.keys(json.data[0]));
+        }
         renderGameStats(json);
       } catch (error) {
         console.warn('[LiveGames] fetch failed:', error);
