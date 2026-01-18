@@ -551,7 +551,7 @@ img {
     radial-gradient(ellipse at 20% 20%, var(--color-primary-glow) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 80%, var(--color-accent-glow) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 50%, var(--color-secondary-glow) 0%, transparent 60%),
-    url('LazyGamesGameBanner.png') center/cover no-repeat;
+    url('assets/branding/GoLazyGameCard.png') center/cover no-repeat;
   filter: brightness(0.4);
   z-index: -2;
 }
