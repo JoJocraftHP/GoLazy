@@ -1,0 +1,6 @@
+# Claude Code local settings
+.claude/
+**/.claude/
+
+# Windows reserved filenames
+nul

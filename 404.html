@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 - Page Not Found | GoLazy</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/branding/GoLazyDocument.png" type="image/png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .error-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: var(--space-xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .error-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, var(--color-primary-glow) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, var(--color-accent-glow) 0%, transparent 50%);
+      z-index: -1;
+    }
+
+    .error-code {
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: 800;
+      background: var(--gradient-text);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: var(--space-lg);
+      animation: gradientMove 3s ease-in-out infinite;
+    }
+
+    .error-title {
+      font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-md);
+    }
+
+    .error-message {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      margin: 0 auto var(--space-2xl);
+      line-height: var(--leading-relaxed);
+    }
+
+    .error-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      justify-content: center;
+    }
+
+    .error-icon {
+      font-size: 8rem;
+      margin-bottom: var(--space-xl);
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="error-container">
+    <div class="error-icon">🎮</div>
+    <h1 class="error-code">404</h1>
+    <h2 class="error-title">Oops! Page Not Found</h2>
+    <p class="error-message">
+      Looks like you've stumbled into an uncharted area! This page doesn't exist,
+      but our awesome games do. Head back home to continue your adventure!
+    </p>
+    <div class="error-buttons">
+      <a href="/" class="btn btn--primary btn--lg">Go Home</a>
+      <a href="/#games" class="btn btn--secondary btn--lg">Browse Games</a>
+      <a href="https://discord.gg/UnhZDUH93X" class="btn btn--secondary btn--lg" target="_blank" rel="noopener noreferrer">Join Discord</a>
+    </div>
+  </div>
+</body>
+</html>

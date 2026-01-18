@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LazyGames - Premium Gaming Studio Stylesheet
+   GoLazy - Premium Gaming Studio Stylesheet
    Bold, Modern, Professional Roblox Studio Design
    ========================================================================== */
 
@@ -7,32 +7,32 @@
    CSS Custom Properties (Enhanced Design Tokens)
    -------------------------------------------------------------------------- */
 :root {
-  /* Brand Colors - Enhanced Palette */
-  --color-primary: #ff1a6c;
-  --color-primary-dark: #d01458;
-  --color-primary-light: #ff4d8d;
-  --color-primary-glow: rgba(255, 26, 108, 0.5);
+  /* Brand Colors - Purple Theme */
+  --color-primary: #6c5cff;
+  --color-primary-dark: #3e29ff;
+  --color-primary-light: #8b7fff;
+  --color-primary-glow: rgba(108, 92, 255, 0.5);
 
   --color-secondary: #00e5ff;
   --color-secondary-dark: #00b8d4;
   --color-secondary-light: #4df0ff;
   --color-secondary-glow: rgba(0, 229, 255, 0.5);
 
-  /* Accent Colors - New additions */
-  --color-accent: #a855f7;
-  --color-accent-dark: #9333ea;
-  --color-accent-light: #c084fc;
-  --color-accent-glow: rgba(168, 85, 247, 0.5);
+  /* Accent Colors */
+  --color-accent: #00e5ff;
+  --color-accent-dark: #00b8d4;
+  --color-accent-light: #4df0ff;
+  --color-accent-glow: rgba(0, 229, 255, 0.5);
 
   --color-success: #22c55e;
   --color-warning: #f59e0b;
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
-  --gradient-secondary: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%);
-  --gradient-hero: linear-gradient(135deg, rgba(255, 26, 108, 0.15) 0%, rgba(168, 85, 247, 0.15) 50%, rgba(0, 229, 255, 0.15) 100%);
+  --gradient-primary: linear-gradient(135deg, #6c5cff 0%, #3e29ff 100%);
+  --gradient-secondary: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+  --gradient-hero: linear-gradient(135deg, rgba(108, 92, 255, 0.15) 0%, rgba(62, 41, 255, 0.15) 50%, rgba(0, 229, 255, 0.15) 100%);
   --gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-  --gradient-text: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 50%, var(--color-secondary) 100%);
+  --gradient-text: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-light) 50%, var(--color-secondary) 100%);
 
   /* Background Colors - Darker, richer */
   --color-background: #0a0a0f;
@@ -94,9 +94,9 @@
   --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
   --shadow-xl: 0 16px 60px rgba(0, 0, 0, 0.7);
-  --shadow-glow-primary: 0 0 40px var(--color-primary-glow), 0 0 80px rgba(255, 26, 108, 0.2);
+  --shadow-glow-primary: 0 0 40px var(--color-primary-glow), 0 0 80px rgba(108, 92, 255, 0.2);
   --shadow-glow-secondary: 0 0 40px var(--color-secondary-glow), 0 0 80px rgba(0, 229, 255, 0.2);
-  --shadow-glow-accent: 0 0 40px var(--color-accent-glow), 0 0 80px rgba(168, 85, 247, 0.2);
+  --shadow-glow-accent: 0 0 40px var(--color-accent-glow), 0 0 80px rgba(0, 229, 255, 0.2);
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -124,7 +124,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   /* Offset for fixed header when navigating to anchors */
-  scroll-padding-top: var(--header-height);
+  scroll-padding-top: calc(var(--header-height) - 30px);
 }
 
 body {
@@ -722,7 +722,7 @@ img {
   padding: var(--space-5xl) var(--space-xl);
   max-width: var(--max-width);
   margin: 0 auto;
-  scroll-margin-top: var(--header-height);
+  scroll-margin-top: calc(var(--header-height) - 30px);
 }
 
 /* Alternating section backgrounds */
@@ -805,7 +805,7 @@ img {
   border-radius: var(--border-radius-xl);
   padding: 1px;
   background: linear-gradient(135deg,
-    rgba(255, 26, 108, 0.3) 0%,
+    rgba(108, 92, 255, 0.3) 0%,
     transparent 50%,
     rgba(0, 229, 255, 0.3) 100%
   );
@@ -821,7 +821,7 @@ img {
 
 .game-card:hover {
   transform: translateY(-8px);
-  box-shadow: var(--shadow-xl), 0 0 60px rgba(255, 26, 108, 0.15);
+  box-shadow: var(--shadow-xl), 0 0 60px rgba(108, 92, 255, 0.15);
   border-color: transparent;
 }
 
@@ -892,11 +892,12 @@ img {
   font-size: var(--text-xl);
   font-weight: 700;
   color: var(--color-text-primary);
+  text-align: center;
 }
 
 .game-card__stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-sm);
   padding: var(--space-md);
   background: rgba(255, 255, 255, 0.03);
@@ -964,9 +965,9 @@ img {
    -------------------------------------------------------------------------- */
 .groups-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-xl);
-  max-width: var(--max-width-narrow);
+  max-width: 600px;
   margin: 0 auto;
 }
 
@@ -1223,7 +1224,7 @@ img {
 .footer__link:hover,
 .footer__link:focus-visible {
   color: var(--color-primary);
-  background: rgba(255, 26, 108, 0.1);
+  background: rgba(108, 92, 255, 0.1);
 }
 
 .footer__link:hover::after,
@@ -1282,6 +1283,218 @@ img {
 .stat-loading {
   animation: loadingPulse 1.5s ease-in-out infinite;
   color: var(--color-text-muted);
+}
+
+/* Skeleton Loader */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 0%,
+    var(--color-surface-hover) 50%,
+    var(--color-surface) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--border-radius-sm);
+}
+
+.skeleton-text {
+  height: 1em;
+  margin-bottom: var(--space-xs);
+}
+
+.skeleton-text:last-child {
+  margin-bottom: 0;
+  width: 60%;
+}
+
+/* Image Loading State */
+.image-loading {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 0%,
+    var(--color-surface-hover) 50%,
+    var(--color-surface) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+img[data-loading="true"] {
+  opacity: 0.3;
+}
+
+/* --------------------------------------------------------------------------
+   FAQ Section
+   -------------------------------------------------------------------------- */
+.faq-list {
+  max-width: var(--max-width-narrow);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.faq-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-surface-border);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.faq-item:hover {
+  border-color: var(--color-primary);
+}
+
+.faq-question {
+  width: 100%;
+  padding: var(--space-lg) var(--space-xl);
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  transition: all var(--transition-fast);
+}
+
+.faq-question:hover {
+  color: var(--color-primary);
+}
+
+.faq-icon {
+  font-size: var(--text-xl);
+  transition: transform var(--transition-base);
+  flex-shrink: 0;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-slow);
+}
+
+.faq-item.active .faq-answer {
+  max-height: 500px;
+}
+
+.faq-answer-content {
+  padding: 0 var(--space-xl) var(--space-lg);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* --------------------------------------------------------------------------
+   Discord Widget
+   -------------------------------------------------------------------------- */
+.discord-widget {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-md);
+  background: rgba(88, 101, 242, 0.1);
+  border: 1px solid rgba(88, 101, 242, 0.3);
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--border-radius-full);
+  transition: all var(--transition-fast);
+}
+
+.discord-widget:hover {
+  background: rgba(88, 101, 242, 0.2);
+  border-color: rgba(88, 101, 242, 0.5);
+  transform: translateY(-2px);
+}
+
+.discord-widget__dot {
+  width: 10px;
+  height: 10px;
+  background: #43b581;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.discord-widget__text {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.discord-widget__count {
+  color: #5865f2;
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Social Proof / Milestones Section
+   -------------------------------------------------------------------------- */
+.milestones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-xl);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.milestone-card {
+  text-align: center;
+  padding: var(--space-xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-surface-border);
+  border-radius: var(--border-radius-xl);
+  transition: all var(--transition-base);
+}
+
+.milestone-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-lg), 0 0 30px var(--color-primary-glow);
+}
+
+.milestone-icon {
+  font-size: var(--text-5xl);
+  margin-bottom: var(--space-md);
+}
+
+.milestone-value {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  background: var(--gradient-text);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-xs);
+}
+
+.milestone-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll Progress Indicator
+   -------------------------------------------------------------------------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: var(--gradient-primary);
+  z-index: 1000;
+  transition: width 0.1s ease-out;
+  box-shadow: 0 0 10px var(--color-primary-glow);
 }
 
 /* --------------------------------------------------------------------------
@@ -1459,6 +1672,7 @@ img {
   .groups-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-md);
+    max-width: 100%;
   }
 
   .group-card {
@@ -1504,6 +1718,30 @@ img {
   /* Hide floating orbs on mobile */
   .hero__orb {
     display: none;
+  }
+
+  /* FAQ */
+  .faq-question {
+    font-size: var(--text-base);
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .faq-answer-content {
+    padding: 0 var(--space-lg) var(--space-md);
+  }
+
+  /* Milestones */
+  .milestones {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .milestone-card {
+    padding: var(--space-lg);
+  }
+
+  .milestone-value {
+    font-size: var(--text-3xl);
   }
 }
 
