@@ -154,6 +154,10 @@
             <span class="hero-stats__label">Total Favourites</span>
           </div>
           <div class="hero-stats__item">
+            <span id="total-likes" class="hero-stats__value">--</span>
+            <span class="hero-stats__label">Total Likes</span>
+          </div>
+          <div class="hero-stats__item">
             <span id="total-group-members" class="hero-stats__value">--</span>
             <span class="hero-stats__label">Group Members</span>
           </div>
@@ -166,7 +170,7 @@
       <header class="section__header">
         <span class="section__eyebrow">Featured</span>
         <h2 class="section__title section__title--gradient">Our Top Hits</h2>
-        <p class="section__subtitle">Discover our most popular games loved by millions of players worldwide</p>
+        <p class="section__subtitle">Discover our most popular games loved by millions of players worldwide. We're proud to have some of the highest rated experiences on Roblox, with ratings up to 98.5% on multiple games.</p>
       </header>
 
       <div class="games-grid">
@@ -562,6 +566,7 @@
       let totalCCU = 0;
       let totalVisits = 0;
       let totalFavourites = 0;
+      let totalLikes = 0;
 
       // Store card data with CCU for sorting
       const cardData = [];
@@ -592,6 +597,9 @@
         if (typeof game.playing === 'number') totalCCU += game.playing;
         if (typeof game.visits === 'number') totalVisits += game.visits;
         if (typeof game.favoritedCount === 'number') totalFavourites += game.favoritedCount;
+        // Calculate total likes from upVotes (Roblox API field for likes)
+        const likes = typeof game.upVotes === 'number' ? game.upVotes : (typeof game.likes === 'number' ? game.likes : 0);
+        if (likes > 0) totalLikes += likes;
 
         // Store for sorting
         cardData.push({
@@ -613,9 +621,11 @@
       const totalCCUEl = $('#total-ccu');
       const totalVisitsEl = $('#total-visits');
       const totalFavouritesEl = $('#total-favourites');
+      const totalLikesEl = $('#total-likes');
       if (totalCCUEl) totalCCUEl.textContent = formatNumber(totalCCU);
       if (totalVisitsEl) totalVisitsEl.textContent = formatNumber(totalVisits);
       if (totalFavouritesEl) totalFavouritesEl.textContent = formatNumber(totalFavourites);
+      if (totalLikesEl) totalLikesEl.textContent = formatNumber(totalLikes);
     }
 
     async function fetchGameStats() {
@@ -947,6 +957,20 @@
             hamburger.classList.remove('is-active');
             hamburger.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
+          }
+        });
+
+        // Close nav when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+          if (nav.classList.contains('active')) {
+            const isClickInsideNav = nav.contains(e.target);
+            const isClickOnHamburger = hamburger.contains(e.target);
+            if (!isClickInsideNav && !isClickOnHamburger) {
+              nav.classList.remove('active');
+              hamburger.classList.remove('is-active');
+              hamburger.setAttribute('aria-expanded', 'false');
+              document.body.style.overflow = '';
+            }
           }
         });
       }
