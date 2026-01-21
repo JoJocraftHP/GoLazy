@@ -91,6 +91,7 @@ const BASELINE_PEAKS = {
   '5792683386': 1900,   // Lift a Pet
   '7676176341': 600,    // Monster Training
   '5476431443': 500,    // Click To Get Big
+  '9564163170': 100,    // Floor is Lava for Brainrots
 };
 
 /* -------------- helpers -------------- */
@@ -143,7 +144,7 @@ async function fetchWithRetry(url, { cfTTL = 15, retries = 2, timeoutMs = 8000, 
 
       try {
         ctx?.waitUntil?.(caches.default.put(req, res.clone()));
-      } catch {}
+      } catch { }
 
       return res;
     } catch (e) {
