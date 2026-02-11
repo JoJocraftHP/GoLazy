@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GoLazy - Home of LazyGames & ActiveGames</title>
+  <title>GoLazy - Top Roblox Simulator Games | LazyGames & ActiveGames Studios</title>
 
   <!-- Meta Description for SEO -->
   <meta name="description"
-    content="GoLazy is the umbrella brand for LazyGames and ActiveGames Roblox studios. Specializing in simulators and innovative game concepts. Play our top games!">
+    content="Play top-rated Roblox simulator games from GoLazy Studios. Floor is Lava for Brainrots, Jetpack Training & more. Join millions of players! 98.5% rating.">
 
   <!-- Favicon -->
   <!-- Favicon -->
@@ -23,12 +23,13 @@
   <meta name="theme-color" content="#ffffff">
 
   <!-- Preconnect to external origins for performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+  <!-- Google Fonts - Dreamy & Cloudy -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
+
+
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css">
@@ -109,7 +110,8 @@
   <header class="header reveal" role="banner">
     <div class="header__container">
       <a href="#hero" class="logo">
-        <img src="assets/branding/GoLazyBraindingMain.png" alt="" class="logo__image">
+        <img src="assets/branding/GoLazyBraindingMain.png" alt="GoLazy Studios - Roblox Game Development"
+          class="logo__image">
         <span>GoLazy</span>
       </a>
 
@@ -132,10 +134,16 @@
     </div>
   </header>
 
+  <!-- Ambient Background -->
+  <div class="ambient-bg">
+    <div class="stars"></div>
+    <div class="clouds"></div>
+  </div>
+
   <!-- Main Content -->
   <main id="main-content">
     <!-- Hero Section -->
-    <section id="hero" class="hero">
+    <section id="hero" class="hero" aria-label="Welcome section">
       <!-- Floating Orbs for Visual Effect -->
       <div class="hero__orb hero__orb--1" aria-hidden="true"></div>
       <div class="hero__orb hero__orb--2" aria-hidden="true"></div>
@@ -148,14 +156,15 @@
           Home of LazyGames & ActiveGames
         </div>
 
-        <h1 class="hero__title reveal">Welcome to GoLazy</h1>
-        <p class="hero__subtitle reveal">We are an experienced Roblox studio specializing in simulators and innovative
-          game concepts. Join millions of players in our immersive gaming experiences.</p>
+        <h1 class="hero__title reveal"><span class="text-gradient">Welcome to GoLazy</span></h1>
+        <p class="hero__subtitle reveal">Premium simulator games and innovative Roblox experiences from GoLazy Studios.
+          Join millions of players worldwide in our top-rated games including Floor is Lava for Brainrots, Jetpack
+          Training, and Crush for Brainrots.</p>
 
         <div class="hero__cta reveal">
-          <a href="#games" class="btn btn--primary btn--lg">Explore Our Games</a>
+          <a href="#games" class="btn btn--primary btn--lg" id="explore-games-btn">Explore Our Roblox Games</a>
           <a href="https://discord.gg/UnhZDUH93X" class="btn btn--secondary btn--lg" target="_blank"
-            rel="noopener noreferrer">Join Discord</a>
+            rel="noopener noreferrer" aria-label="Join Discord community (opens in new tab)">Join Discord</a>
         </div>
 
         <!-- Live Stats -->
@@ -185,26 +194,28 @@
     </section>
 
     <!-- Games Section -->
-    <section id="games" class="section reveal">
+    <section id="games" class="section reveal" aria-label="Featured Roblox games">
       <header class="section__header">
         <span class="section__eyebrow">Featured</span>
-        <h2 class="section__title section__title--gradient">Our Top Hits</h2>
-        <p class="section__subtitle">Discover our most popular games loved by millions of players worldwide. We're proud
-          to have some of the highest rated experiences on Roblox, with ratings up to 98.5% on multiple games.</p>
+        <h2 class="section__title section__title--gradient">Featured Roblox Simulator Games</h2>
+        <p class="section__subtitle">Discover our most popular Roblox simulator games loved by millions of players
+          worldwide. Play top-rated Roblox games including Floor is Lava for Brainrots and Jetpack Training - rated up
+          to 98.5% by the Roblox community.</p>
       </header>
 
       <div class="games-grid">
         <!-- Floor is Lava for Brainrots -->
-        <article class="game-card reveal" data-universe-id="9564163170">
+        <article class="game-card reveal" data-universe-id="9564163170"
+          aria-label="Floor is Lava for Brainrots game card" aria-live="polite">
           <a href="https://www.roblox.com/games/128909126739170/Floor-is-Lava-for-Brainrots" target="_blank"
             rel="noopener noreferrer" class="game-card__image-wrapper">
             <div class="game-card__live-badge">
               <span class="game-card__live-dot" aria-hidden="true"></span>
               LIVE
             </div>
-            <img src="assets/branding/GoLazyGameCard.png" alt="Floor is Lava for Brainrots game thumbnail"
-              class="game-card__image" loading="lazy" data-universe-id="9564163170"
-              data-fallback="assets/branding/GoLazyGameCard.png">
+            <img src="assets/branding/GoLazyGameCard.png"
+              alt="Floor is Lava for Brainrots - Popular Roblox simulator game" class="game-card__image" loading="lazy"
+              width="768" height="432" data-universe-id="9564163170" data-fallback="assets/branding/GoLazyGameCard.png">
           </a>
           <div class="game-card__content">
             <h3 class="game-card__title">Floor is Lava for Brainrots</h3>
@@ -224,22 +235,25 @@
             </div>
             <div class="game-card__actions">
               <a href="https://www.roblox.com/games/128909126739170/Floor-is-Lava-for-Brainrots"
-                class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer">
+                class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer"
+                aria-label="Play Floor is Lava for Brainrots on Roblox (opens in new tab)">
                 Play Now
               </a>
             </div>
           </div>
         </article>
         <!-- Crush for Brainrots -->
-        <article class="game-card reveal" data-universe-id="8357236286">
+        <article class="game-card reveal" data-universe-id="8357236286" aria-label="Crush for Brainrots game card"
+          aria-live="polite">
           <a href="https://www.roblox.com/games/117579798602171/UPD5-Crush-for-Brainrots" target="_blank"
             rel="noopener noreferrer" class="game-card__image-wrapper">
             <div class="game-card__live-badge">
               <span class="game-card__live-dot" aria-hidden="true"></span>
               LIVE
             </div>
-            <img src="assets/GameIcons/CrushTN1.png" alt="Crush for Brainrots game thumbnail" class="game-card__image"
-              loading="lazy" data-universe-id="8357236286" data-fallback="assets/GameIcons/CrushTN1.png">
+            <img src="assets/GameIcons/CrushTN1.png" alt="Crush for Brainrots - Top-rated Roblox game with 98.5% rating"
+              class="game-card__image" loading="lazy" width="768" height="432" data-universe-id="8357236286"
+              data-fallback="assets/GameIcons/CrushTN1.png">
           </a>
           <div class="game-card__content">
             <h3 class="game-card__title">Crush for Brainrots</h3>
@@ -259,7 +273,8 @@
             </div>
             <div class="game-card__actions">
               <a href="https://www.roblox.com/games/117579798602171/UPD5-Crush-for-Brainrots"
-                class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer">
+                class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer"
+                aria-label="Play Crush for Brainrots on Roblox (opens in new tab)">
                 Play Now
               </a>
             </div>
@@ -267,15 +282,18 @@
         </article>
 
         <!-- Jetpack Training -->
-        <article class="game-card reveal" data-universe-id="7017269091">
+        <article class="game-card reveal" data-universe-id="7017269091" aria-label="Jetpack Training game card"
+          aria-live="polite">
           <a href="https://www.roblox.com/games/95557214969049" target="_blank" rel="noopener noreferrer"
             class="game-card__image-wrapper">
             <div class="game-card__live-badge">
               <span class="game-card__live-dot" aria-hidden="true"></span>
               LIVE
             </div>
-            <img src="assets/GameIcons/JetpackTN1.png" alt="Jetpack Training game thumbnail" class="game-card__image"
-              loading="lazy" data-universe-id="7017269091" data-fallback="assets/GameIcons/JetpackTN1.png">
+            <img src="assets/GameIcons/JetpackTN1.png"
+              alt="Jetpack Training - Roblox training simulator game by LazyGames" class="game-card__image"
+              loading="lazy" width="768" height="432" data-universe-id="7017269091"
+              data-fallback="assets/GameIcons/JetpackTN1.png">
           </a>
           <div class="game-card__content">
             <h3 class="game-card__title">Jetpack Training</h3>
@@ -295,7 +313,7 @@
             </div>
             <div class="game-card__actions">
               <a href="https://www.roblox.com/games/95557214969049" class="btn btn--primary btn--sm" target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer" aria-label="Play Jetpack Training on Roblox (opens in new tab)">
                 Play Now
               </a>
             </div>
@@ -303,15 +321,17 @@
         </article>
 
         <!-- Lift a Pet -->
-        <article class="game-card reveal" data-universe-id="5792683386">
+        <article class="game-card reveal" data-universe-id="5792683386" aria-label="Lift a Pet game card"
+          aria-live="polite">
           <a href="https://www.roblox.com/games/16858182871" target="_blank" rel="noopener noreferrer"
             class="game-card__image-wrapper">
             <div class="game-card__live-badge">
               <span class="game-card__live-dot" aria-hidden="true"></span>
               LIVE
             </div>
-            <img src="assets/GameIcons/LAPTN1.png" alt="Lift a Pet game thumbnail" class="game-card__image"
-              loading="lazy" data-universe-id="5792683386" data-fallback="assets/GameIcons/LAPTN1.png">
+            <img src="assets/GameIcons/LAPTN1.png" alt="Lift a Pet - Roblox pet simulator game by ActiveGames"
+              class="game-card__image" loading="lazy" width="768" height="432" data-universe-id="5792683386"
+              data-fallback="assets/GameIcons/LAPTN1.png">
           </a>
           <div class="game-card__content">
             <h3 class="game-card__title">Lift a Pet</h3>
@@ -331,7 +351,7 @@
             </div>
             <div class="game-card__actions">
               <a href="https://www.roblox.com/games/16858182871" class="btn btn--primary btn--sm" target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer" aria-label="Play Lift a Pet on Roblox (opens in new tab)">
                 Play Now
               </a>
             </div>
@@ -339,15 +359,17 @@
         </article>
 
         <!-- Monster Training -->
-        <article class="game-card reveal" data-universe-id="7676176341">
+        <article class="game-card reveal" data-universe-id="7676176341" aria-label="Monster Training game card"
+          aria-live="polite">
           <a href="https://www.roblox.com/games/78263156263540" target="_blank" rel="noopener noreferrer"
             class="game-card__image-wrapper">
             <div class="game-card__live-badge">
               <span class="game-card__live-dot" aria-hidden="true"></span>
               LIVE
             </div>
-            <img src="assets/GameIcons/MonsterTN1.png" alt="Monster Training game thumbnail" class="game-card__image"
-              loading="lazy" data-universe-id="7676176341" data-fallback="assets/GameIcons/MonsterTN1.png">
+            <img src="assets/GameIcons/MonsterTN1.png" alt="Monster Training - Roblox monster simulator game"
+              class="game-card__image" loading="lazy" width="768" height="432" data-universe-id="7676176341"
+              data-fallback="assets/GameIcons/MonsterTN1.png">
           </a>
           <div class="game-card__content">
             <h3 class="game-card__title">Monster Training</h3>
@@ -367,7 +389,7 @@
             </div>
             <div class="game-card__actions">
               <a href="https://www.roblox.com/games/78263156263540" class="btn btn--primary btn--sm" target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer" aria-label="Play Monster Training on Roblox (opens in new tab)">
                 Play Now
               </a>
             </div>
@@ -377,7 +399,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="section reveal">
+    <section id="about" class="section reveal" aria-label="About GoLazy Studios">
       <header class="section__header">
         <span class="section__eyebrow">Our Story</span>
         <h2 class="section__title section__title--gradient">About Us</h2>
@@ -393,7 +415,7 @@
     </section>
 
     <!-- Groups Section -->
-    <section id="groups" class="section reveal">
+    <section id="groups" class="section reveal" aria-label="Roblox community groups">
       <header class="section__header">
         <span class="section__eyebrow">Community</span>
         <h2 class="section__title section__title--gradient">Our Roblox Groups</h2>
@@ -424,7 +446,7 @@
     </section>
 
     <!-- Team Section -->
-    <section id="team" class="section reveal">
+    <section id="team" class="section reveal" aria-label="Team members">
       <header class="section__header">
         <span class="section__eyebrow">The Creators</span>
         <h2 class="section__title section__title--gradient">Meet the Team</h2>
@@ -485,7 +507,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact reveal">
+    <section id="contact" class="contact reveal" aria-label="Contact information">
       <div class="contact__content">
         <header class="section__header">
           <span class="section__eyebrow">Connect</span>
@@ -916,25 +938,46 @@
       // Reduced motion preference
       const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-      // Reveal animations with Intersection Observer
+      // Reveal animations with Intersection Observer (optimized)
       if (!prefersReducedMotion) {
         try {
           const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
               if (entry.isIntersecting) {
-                entry.target.classList.add('active');
+                // Use requestAnimationFrame for smoother activation
+                requestAnimationFrame(() => {
+                  entry.target.classList.add('active');
+
+                  // Remove will-change after animation completes (600ms)
+                  setTimeout(() => {
+                    entry.target.style.willChange = 'auto';
+                  }, 600);
+                });
+
                 obs.unobserve(entry.target);
               }
             });
-          }, { threshold: 0.1 });
+          }, {
+            threshold: 0.1,
+            rootMargin: '50px' // Start animation slightly before element is visible
+          });
 
-          $$('.reveal').forEach(el => observer.observe(el));
+          $$('.reveal').forEach(el => {
+            el.style.willChange = 'opacity, transform';
+            observer.observe(el);
+          });
         } catch (e) {
           // Fallback: show all elements
-          $$('.reveal').forEach(el => el.classList.add('active'));
+          $$('.reveal').forEach(el => {
+            el.classList.add('active');
+            el.style.willChange = 'auto';
+          });
         }
       } else {
-        $$('.reveal').forEach(el => el.classList.add('active'));
+        $$('.reveal').forEach(el => {
+          el.classList.add('active');
+          el.style.willChange = 'auto';
+        });
       }
 
       // Header scroll effect
@@ -1008,14 +1051,22 @@
         yearEl.textContent = new Date().getFullYear();
       }
 
-      // Scroll Progress Indicator
+      // Scroll Progress Indicator (optimized with requestAnimationFrame)
       const scrollProgress = $('#scroll-progress');
       if (scrollProgress) {
+        let ticking = false;
+
         window.addEventListener('scroll', () => {
-          const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-          const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-          const scrolled = (winScroll / height) * 100;
-          scrollProgress.style.width = scrolled + '%';
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+              const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+              const scrolled = (winScroll / height) * 100;
+              scrollProgress.style.width = scrolled + '%';
+              ticking = false;
+            });
+            ticking = true;
+          }
         }, { passive: true });
       }
 
@@ -1109,6 +1160,125 @@
         clearInterval(refreshTimer);
       });
     });
+
+    // ==========================================================================
+    // Confetti & Particle System
+    // ==========================================================================
+    class Particle {
+      constructor(canvas, x, y, color) {
+        this.canvas = canvas;
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.size = Math.random() * 8 + 4;
+        this.speedX = Math.random() * 6 - 3;
+        this.speedY = Math.random() * 6 - 3;
+        this.gravity = 0.1;
+        this.decay = 0.015;
+        this.life = 1;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.speedY += this.gravity;
+        this.life -= this.decay;
+        this.size *= 0.96;
+      }
+
+      draw(ctx) {
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.life;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    class ConfettiSystem {
+      constructor() {
+        this.canvas = document.createElement('canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.colors = ['#6C5CFF', '#FF9F6C', '#6FEDD6']; // Purple, Orange, Mint
+
+        this.canvas.style.position = 'fixed';
+        this.canvas.style.top = '0';
+        this.canvas.style.left = '0';
+        this.canvas.style.width = '100%';
+        this.canvas.style.height = '100%';
+        this.canvas.style.pointerEvents = 'none';
+        this.canvas.style.zIndex = '9999';
+        document.body.appendChild(this.canvas);
+
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        this.animate();
+
+        // Attach to buttons
+        const btn = document.getElementById('explore-games-btn');
+        if (btn) {
+          btn.addEventListener('click', (e) => this.burst(e.clientX, e.clientY));
+        }
+      }
+
+      resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      }
+
+      burst(x, y) {
+        for (let i = 0; i < 30; i++) {
+          const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+          this.particles.push(new Particle(this.canvas, x, y, color));
+        }
+      }
+
+      animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+          const p = this.particles[i];
+          p.update();
+          p.draw(this.ctx);
+          if (p.life <= 0) {
+            this.particles.splice(i, 1);
+          }
+        }
+
+        requestAnimationFrame(() => this.animate());
+      }
+    }
+
+    // Initialize Confetti
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      new ConfettiSystem();
+    }
+
+    // ==========================================================================
+    // Loading State Helpers
+    // ==========================================================================
+    function showLoadingState(element) {
+      if (!element) return;
+      element.style.opacity = '0.5';
+      const originalText = element.getAttribute('data-original-text') || element.textContent;
+      element.setAttribute('data-original-text', originalText);
+      element.textContent = '...';
+    }
+
+    function clearLoadingState(element) {
+      if (!element) return;
+      element.style.opacity = '1';
+      // We don't restore text because we likely just updated it with new data
+    }
+
+    function showErrorState(element) {
+      if (!element) return;
+      element.style.opacity = '1';
+      element.style.color = 'var(--color-danger)';
+      element.textContent = 'Err';
+    }
   </script>
 </body>
 
