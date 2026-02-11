@@ -698,6 +698,7 @@
         const visitsEl = $('.live-visits', card);
         const favouritesEl = $('.live-favourites', card);
 
+        // Set initial values for immediate display
         if (ccuEl) {
           ccuEl.textContent = typeof game.playing === 'number' ? game.playing.toLocaleString() : '--';
         }
@@ -709,6 +710,27 @@
         }
         if (favouritesEl) {
           favouritesEl.textContent = typeof game.favoritedCount === 'number' ? formatNumber(game.favoritedCount) : '--';
+        }
+
+        // Trigger count-up animations if not already animated and not reduced motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReducedMotion) {
+          if (ccuEl && typeof game.playing === 'number' && !ccuEl.dataset.animated) {
+            ccuEl.dataset.animated = 'true';
+            animateCountUp(ccuEl, game.playing);
+          }
+          if (peakEl && typeof game.peakPlaying === 'number' && !peakEl.dataset.animated) {
+            peakEl.dataset.animated = 'true';
+            animateCountUp(peakEl, game.peakPlaying);
+          }
+          if (visitsEl && typeof game.visits === 'number' && !visitsEl.dataset.animated) {
+            visitsEl.dataset.animated = 'true';
+            animateCountUp(visitsEl, game.visits);
+          }
+          if (favouritesEl && typeof game.favoritedCount === 'number' && !favouritesEl.dataset.animated) {
+            favouritesEl.dataset.animated = 'true';
+            animateCountUp(favouritesEl, game.favoritedCount);
+          }
         }
 
         if (typeof game.playing === 'number') totalCCU += game.playing;
@@ -1295,7 +1317,8 @@
         initMagneticButtons();
         initCardTilt();
 
-        // Stats Count-Up Animation (once when visible)
+        // Stats Count-Up Animation (once when visible) - ONLY for hero stats
+        // Game card stats are animated separately after data loads
         const statsObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -1312,8 +1335,8 @@
           });
         }, { threshold: 0.5 });
 
-        // Observe all stat values
-        $$('.hero-stats__value, .game-card__stat-value').forEach(el => {
+        // Observe only hero stats (game cards are handled after data loads)
+        $$('.hero-stats__value').forEach(el => {
           statsObserver.observe(el);
         });
       }
