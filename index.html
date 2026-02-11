@@ -932,6 +932,135 @@
     }
 
     // ==========================================================================
+    // Modern Interactions - Performance First
+    // ==========================================================================
+
+    /**
+     * Parse formatted number strings back to actual numbers
+     * "2.7K" → 2700, "1.5M" → 1500000, "123" → 123
+     */
+    function parseFormattedNumber(str) {
+      if (!str || typeof str !== 'string') return 0;
+
+      str = str.trim();
+
+      // Check for K (thousands)
+      if (str.endsWith('K') || str.endsWith('k')) {
+        return Math.floor(parseFloat(str) * 1000);
+      }
+
+      // Check for M (millions)
+      if (str.endsWith('M') || str.endsWith('m')) {
+        return Math.floor(parseFloat(str) * 1000000);
+      }
+
+      // Check for B (billions)
+      if (str.endsWith('B') || str.endsWith('b')) {
+        return Math.floor(parseFloat(str) * 1000000000);
+      }
+
+      // Regular number (remove commas if present)
+      return parseInt(str.replace(/,/g, '')) || 0;
+    }
+
+    // Count-Up Animation (runs once when visible) - Fast & Smart
+    function animateCountUp(element, target) {
+      const duration = 800; // Faster: 0.8 seconds instead of 2
+      const frameRate = 16;
+      const totalFrames = duration / frameRate;
+      let frame = 0;
+
+      const easeOutQuad = (t) => t * (2 - t); // Smooth easing
+
+      const timer = setInterval(() => {
+        frame++;
+        const progress = frame / totalFrames;
+        const easedProgress = easeOutQuad(progress);
+        const current = Math.floor(easedProgress * target);
+
+        if (frame >= totalFrames) {
+          element.textContent = formatNumber(target);
+          clearInterval(timer);
+        } else {
+          element.textContent = formatNumber(current);
+        }
+      }, frameRate);
+    }
+
+    // Parallax Effect (throttled for performance)
+    function initParallax() {
+      const stars = $('.stars');
+      const clouds = $('.clouds');
+      if (!stars || !clouds) return;
+
+      let ticking = false;
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const scrolled = window.pageYOffset;
+            stars.style.transform = `translateY(${scrolled * 0.5}px)`;
+            clouds.style.transform = `translateY(${scrolled * 0.3}px)`;
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    }
+
+    // Magnetic Button Effect (hover only, throttled)
+    function initMagneticButtons() {
+      const buttons = $$('.btn--primary, .btn--secondary');
+
+      buttons.forEach(button => {
+        button.addEventListener('mousemove', (e) => {
+          const rect = button.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+
+          requestAnimationFrame(() => {
+            button.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) translateZ(0)`;
+          });
+        });
+
+        button.addEventListener('mouseleave', () => {
+          requestAnimationFrame(() => {
+            button.style.transform = '';
+          });
+        });
+      });
+    }
+
+    // Card Tilt Effect (CSS perspective + mouse tracking)
+    function initCardTilt() {
+      const cards = $$('.game-card, .team-card, .group-card');
+
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = (y - centerY) / 10;
+          const rotateY = (centerX - x) / 10;
+
+          requestAnimationFrame(() => {
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+          });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          requestAnimationFrame(() => {
+            card.style.transform = '';
+          });
+        });
+      });
+    }
+
+    // ==========================================================================
     // Page Initialization
     // ==========================================================================
     document.addEventListener('DOMContentLoaded', () => {
@@ -1159,6 +1288,35 @@
       window.addEventListener('pagehide', () => {
         clearInterval(refreshTimer);
       });
+
+      // Initialize modern interactions (only if not reduced motion)
+      if (!prefersReducedMotion) {
+        initParallax();
+        initMagneticButtons();
+        initCardTilt();
+
+        // Stats Count-Up Animation (once when visible)
+        const statsObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const statElement = entry.target;
+              const targetValue = parseFormattedNumber(statElement.textContent);
+
+              if (targetValue > 0 && !statElement.dataset.animated) {
+                statElement.dataset.animated = 'true';
+                animateCountUp(statElement, targetValue);
+              }
+
+              statsObserver.unobserve(statElement);
+            }
+          });
+        }, { threshold: 0.5 });
+
+        // Observe all stat values
+        $$('.hero-stats__value, .game-card__stat-value').forEach(el => {
+          statsObserver.observe(el);
+        });
+      }
     });
 
     // ==========================================================================

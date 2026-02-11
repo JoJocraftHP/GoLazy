@@ -529,17 +529,41 @@ img {
   }
 }
 
-/* Reveal Animation Classes */
+/* Reveal Animation Classes - Enhanced Float In */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(40px) scale(0.95);
   transition: opacity var(--transition-bounce),
     transform var(--transition-bounce);
 }
 
 .reveal.active {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+}
+
+/* Skeleton Loading Animation */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg,
+      var(--color-surface) 0%,
+      var(--color-surface-hover) 50%,
+      var(--color-surface) 100%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  border-radius: var(--border-radius-sm);
+  display: inline-block;
+  min-width: 60px;
+  min-height: 1.2em;
 }
 
 /* --------------------------------------------------------------------------
@@ -1209,7 +1233,7 @@ img {
   gap: var(--space-xl);
 }
 
-/* Game Card - Premium Design */
+/* Game Card - Premium Design with Enhanced Glass */
 .game-card {
   position: relative;
   background: var(--color-surface);
@@ -1218,13 +1242,21 @@ img {
   display: flex;
   flex-direction: column;
   border: 1px solid var(--color-surface-border);
-  transition: transform var(--transition-base),
-    box-shadow var(--transition-base),
-    border-color var(--transition-base);
-  /* Force GPU acceleration and prevent repaints */
-  /* Force GPU acceleration and prevent repaints */
+  transition: all var(--transition-base);
+  /* 3D Perspective Support */
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  /* Force GPU acceleration */
   transform: translateZ(0);
   -webkit-tap-highlight-color: transparent;
+  /* Enhanced glassmorphism */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.02) 100%);
+  box-shadow: var(--shadow-md),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 .game-card::before {
@@ -1445,13 +1477,22 @@ img {
   background: var(--color-surface);
   border: 1px solid var(--color-surface-border);
   border-radius: var(--border-radius-xl);
-  transition: transform var(--transition-base),
-    border-color var(--transition-base),
-    box-shadow var(--transition-base);
+  transition: all var(--transition-base);
+  /* 3D Perspective Support */
+  transform-style: preserve-3d;
+  perspective: 1000px;
   /* Hardware acceleration */
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
+  /* Enhanced glassmorphism */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.02) 100%);
+  box-shadow: var(--shadow-md),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 .group-card:hover {
@@ -1511,16 +1552,25 @@ img {
   border-radius: var(--border-radius-xl);
   padding: var(--space-2xl);
   text-align: center;
-  transition: transform var(--transition-base),
-    border-color var(--transition-base),
-    box-shadow var(--transition-base);
+  transition: all var(--transition-base);
   overflow: hidden;
   width: 280px;
   flex-shrink: 0;
+  /* 3D Perspective Support */
+  transform-style: preserve-3d;
+  perspective: 1000px;
   /* Hardware acceleration */
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
+  /* Enhanced glassmorphism */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.02) 100%);
+  box-shadow: var(--shadow-md),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 .team-card::before {
