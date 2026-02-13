@@ -1482,10 +1482,115 @@ img {
 .game-card__actions {
   margin-top: auto;
   padding-top: var(--space-sm);
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
 }
 
 .game-card__actions .btn {
-  width: 100%;
+  flex: 1;
+}
+
+.game-card__actions .btn--icon {
+  flex: 0 0 auto;
+  width: 44px;
+  min-width: 44px;
+  height: 100%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Share button specific styling */
+.share-btn {
+  position: relative;
+  background: rgba(108, 92, 255, 0.1);
+  border: 1px solid rgba(108, 92, 255, 0.3);
+  color: var(--color-text-secondary);
+  transition: all var(--transition-base);
+}
+
+.share-btn:hover {
+  background: rgba(108, 92, 255, 0.2);
+  border-color: rgba(108, 92, 255, 0.5);
+  color: var(--color-primary);
+  transform: scale(1.05) translateZ(0);
+}
+
+.share-btn:active {
+  transform: scale(0.95) translateZ(0);
+}
+
+.share-btn svg {
+  transition: transform var(--transition-base);
+}
+
+.share-btn:hover svg {
+  transform: rotate(15deg);
+}
+
+/* Toast notification for copy success */
+.toast-notification {
+  position: fixed;
+  top: calc(var(--header-height) + var(--space-lg));
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: linear-gradient(135deg, #6C5CFF 0%, #8E7CFF 100%);
+  color: var(--color-text-on-primary);
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-xl), 0 0 30px rgba(108, 92, 255, 0.4);
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-weight: 600;
+  font-size: var(--text-base);
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--transition-base);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toast-notification.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: all;
+}
+
+.toast-notification svg {
+  flex-shrink: 0;
+  animation: checkmark-pop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes checkmark-pop {
+  0% {
+    transform: scale(0) rotate(-45deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Mobile toast positioning */
+@media (max-width: 768px) {
+  .toast-notification {
+    top: var(--space-xl);
+    left: var(--space-md);
+    right: var(--space-md);
+    transform: translateX(0) translateY(-100px);
+    max-width: calc(100% - var(--space-md) * 2);
+  }
+
+  .toast-notification.show {
+    transform: translateX(0) translateY(0);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1584,6 +1689,16 @@ img {
   font-size: var(--text-lg);
   font-weight: 600;
   color: var(--color-text-primary);
+  transition: color var(--transition-base);
+}
+
+/* Make group title links look good */
+.group-card a {
+  text-decoration: none;
+}
+
+.group-card a:hover .group-card__title {
+  color: var(--color-primary);
 }
 
 .group-card__members {

@@ -100,6 +100,103 @@
   }
   </script>
 
+  <!-- Game Catalog Schema (JSON-LD) for Rich Search Results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "GoLazy Game Catalog",
+    "description": "Browse our collection of popular Roblox simulator games",
+    "numberOfItems": 6,
+    "itemListElement": [
+      {
+        "@type": "VideoGame",
+        "position": 1,
+        "name": "Idle Heroes Simulator",
+        "gamePlatform": "Roblox",
+        "url": "https://www.roblox.com/games/15574705079/Idle-Heroes-Simulator",
+        "description": "Collect heroes, idle for rewards, and become the ultimate hero master",
+        "genre": ["Simulator", "Idle", "RPG"],
+        "creator": {
+          "@type": "Organization",
+          "name": "LazyGames"
+        },
+        "applicationCategory": "Game"
+      },
+      {
+        "@type": "VideoGame",
+        "position": 2,
+        "name": "Anime Simulator",
+        "gamePlatform": "Roblox",
+        "url": "https://www.roblox.com/games/18901443754/Anime-Simulator",
+        "description": "Train your anime character, unlock powerful abilities, and dominate the leaderboards",
+        "genre": ["Simulator", "Anime", "Action"],
+        "creator": {
+          "@type": "Organization",
+          "name": "LazyGames"
+        },
+        "applicationCategory": "Game"
+      },
+      {
+        "@type": "VideoGame",
+        "position": 3,
+        "name": "Zombie Attack",
+        "gamePlatform": "Roblox",
+        "url": "https://www.roblox.com/games/16787777105/Zombie-Attack",
+        "description": "Survive waves of zombies, upgrade your weapons, and save humanity",
+        "genre": ["Survival", "Action", "Shooter"],
+        "creator": {
+          "@type": "Organization",
+          "name": "LazyGames"
+        },
+        "applicationCategory": "Game"
+      },
+      {
+        "@type": "VideoGame",
+        "position": 4,
+        "name": "Dungeon Quest",
+        "gamePlatform": "Roblox",
+        "url": "https://www.roblox.com/games/17450551171/Dungeon-Quest",
+        "description": "Explore dangerous dungeons, collect epic loot, and defeat powerful bosses",
+        "genre": ["RPG", "Adventure", "Dungeon Crawler"],
+        "creator": {
+          "@type": "Organization",
+          "name": "ActiveGames"
+        },
+        "applicationCategory": "Game"
+      },
+      {
+        "@type": "VideoGame",
+        "position": 5,
+        "name": "Anime Defenders",
+        "gamePlatform": "Roblox",
+        "url": "https://www.roblox.com/games/18534687345/Anime-Defenders",
+        "description": "Defend your base with anime characters, unlock new heroes, and win epic battles",
+        "genre": ["Tower Defense", "Anime", "Strategy"],
+        "creator": {
+          "@type": "Organization",
+          "name": "ActiveGames"
+        },
+        "applicationCategory": "Game"
+      },
+      {
+        "@type": "VideoGame",
+        "position": 6,
+        "name": "Floor is Lava for Brainrots",
+        "gamePlatform": "Roblox",
+        "url": "https://www.roblox.com/games/18922456789/Floor-is-Lava-Brainrots",
+        "description": "Jump, climb, and avoid the lava in this brainrot-themed parkour challenge",
+        "genre": ["Parkour", "Obstacle Course", "Casual"],
+        "creator": {
+          "@type": "Organization",
+          "name": "LazyGames"
+        },
+        "applicationCategory": "Game"
+      }
+    ]
+  }
+  </script>
+
   <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
     data-cf-beacon='{"token": "4b70de09d99f4a84a5c58b5c30b61966"}'></script>
@@ -204,7 +301,7 @@
     <section id="games" class="section reveal" aria-label="Featured Roblox games">
       <header class="section__header">
         <span class="section__eyebrow">Featured</span>
-        <h2 class="section__title section__title--gradient">Featured Roblox Simulator Games</h2>
+        <h2 class="section__title section__title--gradient">Our featured Roblox Games</h2>
         <p class="section__subtitle">Discover our most popular Roblox simulator games loved by millions of players
           worldwide. Play top-rated Roblox games including Floor is Lava for Brainrots and Jetpack Training - rated up
           to 98.5% by the Roblox community.</p>
@@ -246,6 +343,18 @@
                 aria-label="Play Floor is Lava for Brainrots on Roblox (opens in new tab)">
                 Play Now
               </a>
+              <button class="btn btn--secondary btn--sm btn--icon share-btn"
+                data-game-name="Floor is Lava for Brainrots"
+                data-game-url="https://www.roblox.com/games/128909126739170/Floor-is-Lava-for-Brainrots"
+                aria-label="Share Floor is Lava for Brainrots">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+              </button>
             </div>
           </div>
         </article>
@@ -284,6 +393,18 @@
                 aria-label="Play Crush for Brainrots on Roblox (opens in new tab)">
                 Play Now
               </a>
+              <button class="btn btn--secondary btn--sm btn--icon share-btn"
+                data-game-name="Crush for Brainrots"
+                data-game-url="https://www.roblox.com/games/117579798602171/UPD5-Crush-for-Brainrots"
+                aria-label="Share Crush for Brainrots">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+              </button>
             </div>
           </div>
         </article>
@@ -323,6 +444,18 @@
                 rel="noopener noreferrer" aria-label="Play Jetpack Training on Roblox (opens in new tab)">
                 Play Now
               </a>
+              <button class="btn btn--secondary btn--sm btn--icon share-btn"
+                data-game-name="Jetpack Training"
+                data-game-url="https://www.roblox.com/games/95557214969049"
+                aria-label="Share Jetpack Training">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+              </button>
             </div>
           </div>
         </article>
@@ -361,6 +494,18 @@
                 rel="noopener noreferrer" aria-label="Play Lift a Pet on Roblox (opens in new tab)">
                 Play Now
               </a>
+              <button class="btn btn--secondary btn--sm btn--icon share-btn"
+                data-game-name="Lift a Pet"
+                data-game-url="https://www.roblox.com/games/16858182871"
+                aria-label="Share Lift a Pet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+              </button>
             </div>
           </div>
         </article>
@@ -399,6 +544,18 @@
                 rel="noopener noreferrer" aria-label="Play Monster Training on Roblox (opens in new tab)">
                 Play Now
               </a>
+              <button class="btn btn--secondary btn--sm btn--icon share-btn"
+                data-game-name="Monster Training"
+                data-game-url="https://www.roblox.com/games/78263156263540"
+                aria-label="Share Monster Training">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+              </button>
             </div>
           </div>
         </article>
@@ -435,7 +592,10 @@
             <img src="assets/StudioIcons/LazyStudios.png" alt="LazyGames group" class="group-card__image"
               data-group-id="33472368" data-fallback="assets/StudioIcons/LazyStudios.png">
           </a>
-          <h3 class="group-card__title">LazyGames</h3>
+          <a href="https://www.roblox.com/communities/33472368/LazyGameStudios#!/about" target="_blank"
+            rel="noopener noreferrer">
+            <h3 class="group-card__title">LazyGames</h3>
+          </a>
           <p class="group-card__members" data-group-id="33472368">Members: --</p>
         </div>
 
@@ -445,7 +605,10 @@
             <img src="assets/StudioIcons/ActiveGames.png" alt="ActiveGames group" class="group-card__image"
               data-group-id="35868694" data-fallback="assets/StudioIcons/ActiveGames.png">
           </a>
-          <h3 class="group-card__title">ActiveGames</h3>
+          <a href="https://www.roblox.com/communities/35868694/ActiveGameStudios#!/about" target="_blank"
+            rel="noopener noreferrer">
+            <h3 class="group-card__title">ActiveGames</h3>
+          </a>
           <p class="group-card__members" data-group-id="35868694">Members: --</p>
         </div>
       </div>
@@ -631,6 +794,7 @@
         <a href="#groups" class="footer__link">Groups</a>
         <a href="#team" class="footer__link">Team</a>
         <a href="#contact" class="footer__link">Contact</a>
+        <!-- <a href="privacy-policy.html" class="footer__link">Privacy Policy</a> -->
       </nav>
       <div class="footer__divider" aria-hidden="true"></div>
       <p class="footer__copyright">&copy; <span id="current-year"></span> GoLazy. All rights reserved.</p>
@@ -1531,6 +1695,64 @@
       element.style.color = 'var(--color-danger)';
       element.textContent = 'Err';
     }
+
+    // ==========================================================================
+    // Social Share Functionality - Direct Copy
+    // ==========================================================================
+
+    // Create toast notification element
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.innerHTML = `
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      Link copied to clipboard!
+    `;
+    document.body.appendChild(toast);
+
+    // Function to show toast notification
+    function showToast() {
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    // Function to copy text to clipboard
+    async function copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast();
+      } catch (err) {
+        console.error('Failed to copy:', err);
+        // Fallback for older browsers
+        try {
+          const textArea = document.createElement('textarea');
+          textArea.value = text;
+          textArea.style.position = 'fixed';
+          textArea.style.opacity = '0';
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          showToast();
+        } catch (fallbackErr) {
+          console.error('Fallback failed:', fallbackErr);
+          alert('Failed to copy link. Please try again.');
+        }
+      }
+    }
+
+    // Attach event listeners to all share buttons - direct copy on click
+    document.querySelectorAll('.share-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const gameUrl = btn.getAttribute('data-game-url');
+        copyToClipboard(gameUrl);
+      });
+    });
+
   </script>
 </body>
 
