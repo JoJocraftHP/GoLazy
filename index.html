@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>GoLazy - Top Roblox Simulator Games | LazyGames & ActiveGames Studios</title>
 
   <!-- Meta Description for SEO -->
@@ -61,7 +61,7 @@
   <meta name="robots" content="index, follow">
   <meta name="author" content="GoLazy">
   <meta name="keywords"
-    content="Roblox, game studio, simulators, Roblox games, GoLazy, LazyGames, ActiveGames, game development, Jetpack Training, Lift a Pet">
+    content="GoLazy, GoLazy Studios, GoLazyStudios, LazyGames, Lazy Games, LazyGameStudios, Lazy Game Studios, ActiveGames, Active Games, ActiveGameStudios, Active Game Studios, Roblox game studio, Roblox simulators, Roblox games, Floor is Lava for Brainrots, Crush for Brainrots, Jetpack Training, Lift a Pet, Monster Training, simulator games, game development">
   <link rel="canonical" href="https://www.lazygames.dev/">
 
   <!-- Mobile Browser Theme -->
@@ -81,10 +81,10 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "GoLazy",
-    "alternateName": ["LazyGames", "ActiveGames"],
+    "alternateName": ["GoLazy Studios", "GoLazyStudios", "LazyGames", "Lazy Games", "LazyGameStudios", "Lazy Game Studios", "ActiveGames", "Active Games", "ActiveGameStudios", "Active Game Studios"],
     "url": "https://www.lazygames.dev",
     "logo": "https://www.lazygames.dev/assets/branding/GoLazyBraindingMain.png",
-    "description": "GoLazy is the umbrella brand for LazyGames and ActiveGames Roblox studios, specializing in simulators and innovative game concepts.",
+    "description": "GoLazy is the umbrella brand for LazyGames and ActiveGames Roblox studios, specializing in simulators and innovative game concepts like Floor is Lava for Brainrots, Crush for Brainrots, and Jetpack Training.",
     "foundingDate": "2023",
     "sameAs": [
       "https://discord.gg/UnhZDUH93X",
@@ -519,6 +519,16 @@
             </a>
             <p class="team-card__role">Scripter</p>
           </article>
+
+          <article class="team-card reveal">
+            <a href="https://www.roblox.com/users/2237059307/profile" class="team-card__link" target="_blank"
+              rel="noopener noreferrer">
+              <img src="assets/profiles/DefaultProfile.png" alt="JustaDev profile picture" class="team-card__avatar"
+                loading="lazy" data-user-id="2237059307" data-fallback="assets/profiles/DefaultProfile.png">
+              <h3 class="team-card__name">JustaDev</h3>
+            </a>
+            <p class="team-card__role">Management</p>
+          </article>
         </div>
       </div>
 
@@ -741,39 +751,35 @@
         const visitsEl = $('.live-visits', card);
         const favouritesEl = $('.live-favourites', card);
 
-        // Set initial values for immediate display
-        if (ccuEl) {
-          ccuEl.textContent = typeof game.playing === 'number' ? game.playing.toLocaleString() : '--';
-        }
-        if (peakEl) {
-          peakEl.textContent = typeof game.peakPlaying === 'number' ? game.peakPlaying.toLocaleString() : '--';
-        }
-        if (visitsEl) {
-          visitsEl.textContent = typeof game.visits === 'number' ? formatNumber(game.visits) : '--';
-        }
-        if (favouritesEl) {
-          favouritesEl.textContent = typeof game.favoritedCount === 'number' ? formatNumber(game.favoritedCount) : '--';
-        }
-
-        // Trigger count-up animations if not already animated and not reduced motion
+        // Check if this is an update (element already has data) or initial load
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         if (!prefersReducedMotion) {
-          if (ccuEl && typeof game.playing === 'number' && !ccuEl.dataset.animated) {
+          // Animate all stats with smooth tweening
+          const isUpdate = ccuEl?.dataset.animated === 'true';
+
+          if (ccuEl && typeof game.playing === 'number') {
             ccuEl.dataset.animated = 'true';
-            animateCountUp(ccuEl, game.playing);
+            animateCountUp(ccuEl, game.playing, isUpdate);
           }
-          if (peakEl && typeof game.peakPlaying === 'number' && !peakEl.dataset.animated) {
+          if (peakEl && typeof game.peakPlaying === 'number') {
             peakEl.dataset.animated = 'true';
-            animateCountUp(peakEl, game.peakPlaying);
+            animateCountUp(peakEl, game.peakPlaying, isUpdate);
           }
-          if (visitsEl && typeof game.visits === 'number' && !visitsEl.dataset.animated) {
+          if (visitsEl && typeof game.visits === 'number') {
             visitsEl.dataset.animated = 'true';
-            animateCountUp(visitsEl, game.visits);
+            animateCountUp(visitsEl, game.visits, isUpdate);
           }
-          if (favouritesEl && typeof game.favoritedCount === 'number' && !favouritesEl.dataset.animated) {
+          if (favouritesEl && typeof game.favoritedCount === 'number') {
             favouritesEl.dataset.animated = 'true';
-            animateCountUp(favouritesEl, game.favoritedCount);
+            animateCountUp(favouritesEl, game.favoritedCount, isUpdate);
           }
+        } else {
+          // Reduced motion: instant updates
+          if (ccuEl) ccuEl.textContent = typeof game.playing === 'number' ? game.playing.toLocaleString() : '--';
+          if (peakEl) peakEl.textContent = typeof game.peakPlaying === 'number' ? game.peakPlaying.toLocaleString() : '--';
+          if (visitsEl) visitsEl.textContent = typeof game.visits === 'number' ? formatNumber(game.visits) : '--';
+          if (favouritesEl) favouritesEl.textContent = typeof game.favoritedCount === 'number' ? formatNumber(game.favoritedCount) : '--';
         }
 
         if (typeof game.playing === 'number') totalCCU += game.playing;
@@ -1028,24 +1034,46 @@
       return parseInt(str.replace(/,/g, '')) || 0;
     }
 
-    // Count-Up Animation (runs once when visible) - Fast & Smart
-    function animateCountUp(element, target) {
-      const duration = 800; // Faster: 0.8 seconds instead of 2
+    // Count-Up Animation with Tweening - Smooth transitions on updates
+    function animateCountUp(element, target, isUpdate = false) {
+      // Get the current value from the element
+      const currentText = element.textContent;
+      let start = 0;
+
+      if (isUpdate && currentText !== '--') {
+        // Parse current value (remove K/M suffixes and commas)
+        const cleaned = currentText.replace(/[KM,]/g, '');
+        const multiplier = currentText.includes('M') ? 1_000_000 :
+                          currentText.includes('K') ? 1_000 : 1;
+        start = parseFloat(cleaned) * multiplier;
+
+        // If values are the same, no need to animate
+        if (start === target) return;
+      }
+
+      // Clear any existing animation
+      if (element._countUpTimer) {
+        clearInterval(element._countUpTimer);
+      }
+
+      const duration = isUpdate ? 600 : 800; // Faster for updates
       const frameRate = 16;
       const totalFrames = duration / frameRate;
       let frame = 0;
 
       const easeOutQuad = (t) => t * (2 - t); // Smooth easing
 
-      const timer = setInterval(() => {
+      element._countUpTimer = setInterval(() => {
         frame++;
         const progress = frame / totalFrames;
         const easedProgress = easeOutQuad(progress);
-        const current = Math.floor(easedProgress * target);
+        const current = Math.floor(start + (target - start) * easedProgress);
 
         if (frame >= totalFrames) {
           element.textContent = formatNumber(target);
-          clearInterval(timer);
+          clearInterval(element._countUpTimer);
+          element._countUpTimer = null;
+          element._lastValue = target; // Store for next update
         } else {
           element.textContent = formatNumber(current);
         }

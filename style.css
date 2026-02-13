@@ -1309,15 +1309,17 @@ img {
 
 @media (hover: hover) {
   .game-card:hover {
-    transform: translateY(-12px) scale(1.01) translateZ(0);
-    box-shadow: var(--shadow-xl),
-      0 0 60px rgba(108, 92, 255, 0.2),
-      0 0 100px rgba(108, 92, 255, 0.1);
-    border-color: transparent;
+    transform: translateY(-3px) scale(1.002) translateZ(0);
+    /* Ultra-subtle: minimal lift and scale */
+    box-shadow: var(--shadow-md),
+      0 0 20px rgba(108, 92, 255, 0.1);
+    /* Gentle shadow and glow */
+    border-color: rgba(108, 92, 255, 0.3);
   }
 
   .game-card:hover::before {
-    opacity: 1;
+    opacity: 0.5;
+    /* Very subtle border glow */
   }
 }
 
@@ -1360,26 +1362,10 @@ img {
   }
 }
 
-/* Live Badge */
+/* Live Badge - Hidden per user request */
 .game-card__live-badge {
-  position: absolute;
-  top: var(--space-md);
-  left: var(--space-md);
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--border-radius-full);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  color: var(--color-text-primary);
-  z-index: 2;
-  /* Isolate badge from card transforms */
-  transform: translateZ(0);
-  will-change: auto;
+  display: none;
+  /* Removed from thumbnails - can be re-enabled by changing display to flex */
 }
 
 .game-card__live-dot {
@@ -1535,9 +1521,11 @@ img {
 }
 
 .group-card:hover {
-  transform: translateY(-6px) translateZ(0);
+  transform: translateY(-3px) translateZ(0);
+  /* Reduced from -6px for subtler effect */
   border-color: var(--color-secondary);
-  box-shadow: var(--shadow-lg), 0 0 40px var(--color-secondary-glow);
+  box-shadow: var(--shadow-md), 0 0 20px rgba(255, 159, 108, 0.2);
+  /* Reduced glow intensity */
 }
 
 .group-card__image-wrapper {
@@ -1555,7 +1543,8 @@ img {
 
 .group-card:hover .group-card__image {
   border-color: var(--color-secondary);
-  transform: scale(1.05);
+  transform: scale(1.02);
+  /* Reduced from 1.05 for subtler effect */
 }
 
 .group-card__title {
@@ -1628,9 +1617,11 @@ img {
 }
 
 .team-card:hover {
-  transform: translateY(-6px) translateZ(0);
+  transform: translateY(-3px) translateZ(0);
+  /* Reduced from -6px for subtler effect */
   border-color: var(--color-primary);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
+  /* Reduced from shadow-lg */
 }
 
 .team-card:hover::before {
@@ -1655,8 +1646,10 @@ img {
 
 .team-card:hover .team-card__avatar {
   border-color: var(--color-primary);
-  transform: scale(1.05);
-  box-shadow: var(--shadow-lg), var(--shadow-glow-primary);
+  transform: scale(1.02);
+  /* Reduced from 1.05 for subtler effect */
+  box-shadow: var(--shadow-md);
+  /* Removed glow for cleaner look */
 }
 
 .team-card__name {
@@ -2296,10 +2289,19 @@ img[data-loading="true"] {
     padding: var(--space-3xl) var(--space-md);
   }
 
-  /* Games Grid */
+  /* Games Grid - Native App-Like Scroll Snap */
   .games-grid {
     grid-template-columns: 1fr;
     gap: var(--space-lg);
+    /* Enable smooth scroll snap for native feel */
+    scroll-snap-type: y proximity;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .game-card {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
   }
 
   /* Groups Grid */
@@ -2349,9 +2351,154 @@ img[data-loading="true"] {
     height: 50px;
   }
 
-  /* Hide floating orbs on mobile */
+  /* Hide floating orbs on mobile - GPU memory savings */
   .hero__orb {
     display: none;
+  }
+
+  /* GPU Memory Diet - Critical for iOS Safari stability */
+  /* Remove will-change from non-animating elements on mobile */
+  .btn,
+  .game-card,
+  .team-card,
+  .group-card,
+  .milestone-card,
+  .nav__link,
+  .logo,
+  .back-to-top,
+  .discord-widget {
+    will-change: auto !important;
+  }
+
+  /* Reduce backdrop-filter blur for memory savings */
+  .header {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .nav {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+
+  .game-card,
+  .team-card,
+  .group-card {
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  .hero__badge,
+  .discord-widget {
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+
+  /* Simplify box-shadows on mobile */
+  .game-card,
+  .team-card,
+  .group-card {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn--primary {
+    box-shadow: var(--shadow-md);
+  }
+
+  .game-card:hover,
+  .team-card:hover,
+  .group-card:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Touch-Optimized Interactions - Active States */
+  /* Replace hover with :active for immediate touch feedback */
+  .btn:active {
+    transform: scale(0.97) translateZ(0);
+    transition-duration: 100ms;
+  }
+
+  .nav__link:active {
+    background: rgba(108, 92, 255, 0.2);
+    transform: scale(0.98) translateZ(0);
+  }
+
+  .game-card:active {
+    transform: scale(0.98) translateZ(0);
+  }
+
+  .team-card:active,
+  .group-card:active {
+    transform: scale(0.98) translateZ(0);
+  }
+
+  /* Ensure buttons are always visible (no hover-only states) */
+  .game-card__actions .btn {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Touch Target Optimization - Minimum 44x44px */
+  .hamburger {
+    width: 48px;
+    height: 48px;
+    /* Already meets minimum */
+  }
+
+  .nav__link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .back-to-top {
+    width: 56px;
+    height: 56px;
+    /* Already exceeds minimum */
+  }
+
+  .footer__social-link {
+    width: 48px;
+    height: 48px;
+    /* Increased from 44px for better tappability */
+  }
+
+  /* Mobile Font Size Optimization - Readable without zooming */
+  body {
+    font-size: 16px;
+    /* Prevent iOS auto-zoom on focus */
+  }
+
+  .hero__subtitle {
+    font-size: 1.125rem;
+    /* Increased for better readability */
+    line-height: 1.6;
+  }
+
+  .section__subtitle {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .game-card__stat-label {
+    font-size: 0.75rem;
+    /* Slightly larger for readability */
+  }
+
+  /* Tighten spacing for mobile - use --space-md instead of --space-xl */
+  .hero {
+    padding: calc(var(--header-height) + var(--space-xl)) var(--space-md) var(--space-xl);
+  }
+
+  .section {
+    padding: var(--space-2xl) var(--space-md);
+    /* Reduced from 3xl */
+  }
+
+  .hero__cta {
+    gap: var(--space-md);
+    /* Tighter button spacing */
   }
 
   /* FAQ */
