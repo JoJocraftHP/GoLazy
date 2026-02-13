@@ -10,6 +10,13 @@
   <meta name="description"
     content="Play top-rated Roblox simulator games from GoLazy Studios. Floor is Lava for Brainrots, Jetpack Training & more. Join millions of players! 98.5% rating.">
 
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://livestatsupdate.jojocrafthdyt.workers.dev https://thumbnails.roproxy.com; frame-ancestors 'none';">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
   <!-- Favicon -->
   <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="assets/branding/GoLazyFav/apple-touch-icon.png">
@@ -1202,7 +1209,7 @@
         yearEl.textContent = new Date().getFullYear();
       }
 
-      // Scroll Progress Indicator (optimized with requestAnimationFrame)
+      // Scroll Progress Indicator (optimized with transform for 60fps)
       const scrollProgress = $('#scroll-progress');
       if (scrollProgress) {
         let ticking = false;
@@ -1212,8 +1219,9 @@
             window.requestAnimationFrame(() => {
               const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
               const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-              const scrolled = (winScroll / height) * 100;
-              scrollProgress.style.width = scrolled + '%';
+              const scrolled = (winScroll / height);
+              // Use scaleX for better performance (GPU-accelerated)
+              scrollProgress.style.transform = `scaleX(${scrolled})`;
               ticking = false;
             });
             ticking = true;

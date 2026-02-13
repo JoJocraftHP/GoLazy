@@ -451,7 +451,7 @@ img {
   }
 }
 
-/* Pulse Glow - Soft breathing effect */
+/* Pulse Glow - Organic breathing effect (enhanced) */
 @keyframes pulseGlow {
 
   0%,
@@ -461,10 +461,22 @@ img {
     filter: brightness(1);
   }
 
+  25% {
+    opacity: 0.92;
+    transform: scale(1.015);
+    filter: brightness(1.05);
+  }
+
   50% {
-    opacity: 0.85;
-    transform: scale(1.03);
-    filter: brightness(1.15);
+    opacity: 0.82;
+    transform: scale(1.035);
+    filter: brightness(1.18);
+  }
+
+  75% {
+    opacity: 0.9;
+    transform: scale(1.02);
+    filter: brightness(1.08);
   }
 }
 
@@ -752,6 +764,9 @@ img {
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--border-radius-md);
   transition: all var(--transition-fast);
+  /* Premium smooth hover */
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .nav__link::before {
@@ -768,10 +783,11 @@ img {
 .nav__link:hover,
 .nav__link:focus-visible {
   color: var(--color-text-primary);
+  transform: translateY(-1px) scale(1.02) translateZ(0);
 }
 
 .nav__link:hover::before {
-  opacity: 0.1;
+  opacity: 0.15;
 }
 
 .nav__link.active {
@@ -986,18 +1002,20 @@ img {
   z-index: -1;
 }
 
-/* Floating orbs decoration */
+/* Floating orbs decoration - Optimized for performance */
 .hero__orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(40px);
-  /* Reduced from 60px for better performance */
-  opacity: 0.4;
-  /* Reduced from 0.6 */
+  filter: blur(30px);
+  /* Optimized from 40px for better GPU performance */
+  opacity: 0.35;
+  /* Slightly reduced for subtlety */
   z-index: -1;
   will-change: transform;
   transform: translate3d(0, 0, 0);
   /* Force GPU acceleration */
+  backface-visibility: hidden;
+  /* Prevent flickering */
 }
 
 .hero__orb--1 {
@@ -1143,6 +1161,10 @@ img {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   line-height: 1;
+  /* Prevent CLS when stats load */
+  min-width: 3ch;
+  display: inline-block;
+  text-align: center;
 }
 
 .hero-stats__label {
@@ -1303,7 +1325,6 @@ img {
   position: relative;
   aspect-ratio: 16/10;
   overflow: hidden;
-  overflow: hidden;
   /* Reduced containment to prevent paint issues */
   contain: content;
   /* Fix Safari border-radius overflow issue */
@@ -1388,6 +1409,11 @@ img {
   color: var(--color-text-primary);
   text-align: center;
   line-height: 1.2;
+  /* Fix flicker on hover transform */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .game-card__stats {
@@ -1412,6 +1438,15 @@ img {
   font-size: var(--text-base);
   font-weight: 600;
   color: var(--color-text-primary);
+  /* Fix flicker on hover transform */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  will-change: contents;
+  /* Prevent CLS when stats load */
+  min-width: 2.5ch;
+  display: inline-block;
+  text-align: center;
 }
 
 .game-card__stat-label {
@@ -1419,6 +1454,10 @@ img {
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  /* Fix flicker on hover transform */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 .game-card__actions {
@@ -2022,20 +2061,23 @@ img[data-loading="true"] {
 }
 
 /* --------------------------------------------------------------------------
-   Scroll Progress Indicator
+   Scroll Progress Indicator - Optimized for 60fps
    -------------------------------------------------------------------------- */
 .scroll-progress {
   position: fixed;
   top: 0;
   left: 0;
-  width: 0%;
+  width: 100%;
   height: 3px;
   background: var(--gradient-primary);
   z-index: 1000;
-  transition: width var(--transition-scroll);
+  /* Use scaleX transform for GPU-accelerated animation */
+  transform: scaleX(0);
+  transform-origin: left center;
   box-shadow: 0 0 10px var(--color-primary-glow);
-  will-change: width;
-  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+  contain: layout style paint;
 }
 
 /* --------------------------------------------------------------------------
