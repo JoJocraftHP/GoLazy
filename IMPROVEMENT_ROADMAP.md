@@ -43,7 +43,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.lazygames.dev/</loc>
+    <loc>https://www.golazy.net/</loc>
     <lastmod>2026-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -71,7 +71,7 @@ Allow: /
 Disallow: /assets/profiles/
 Disallow: /.git/
 
-Sitemap: https://www.lazygames.dev/sitemap.xml
+Sitemap: https://www.golazy.net/sitemap.xml
 ```
 
 **Action**: Create `robots.txt` in root directory

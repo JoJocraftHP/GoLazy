@@ -51,7 +51,7 @@ Successfully implemented the top 5 "Quick Win" features from the IMPROVEMENT_ROA
 
 **Implementation**:
 - Allows all legitimate crawlers (`User-agent: *`)
-- Points to sitemap location: `https://www.lazygames.dev/sitemap.xml`
+- Points to sitemap location: `https://www.golazy.net/sitemap.xml`
 - Sets polite crawl delay of 1 second
 - Blocks AI scrapers (GPTBot, ChatGPT-User, CCBot) to protect content
 - Allows Claude bots (anthropic-ai, Claude-Web)
@@ -274,7 +274,7 @@ Successfully implemented the top 5 "Quick Win" features from the IMPROVEMENT_ROA
 ### SEO Testing
 - [ ] Submit `sitemap.xml` to Google Search Console
 - [ ] Submit `sitemap.xml` to Bing Webmaster Tools
-- [ ] Verify `robots.txt` at https://www.lazygames.dev/robots.txt
+- [ ] Verify `robots.txt` at https://www.golazy.net/robots.txt
 - [ ] Test schema markup at https://search.google.com/test/rich-results
 - [ ] Monitor Google Search Console for rich snippet appearance (1-2 weeks)
 

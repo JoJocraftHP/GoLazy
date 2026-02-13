@@ -1,4 +1,4 @@
-# robots.txt for www.lazygames.dev
+# robots.txt for www.golazy.net
 # GoLazy - Parent brand of LazyGames and ActiveGames
 
 # Allow all crawlers to index all content
@@ -6,7 +6,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://www.lazygames.dev/sitemap.xml
+Sitemap: https://www.golazy.net/sitemap.xml
 
 # Crawl delay (optional - helps prevent overwhelming the server)
 # Set to 1 second to be polite to the server

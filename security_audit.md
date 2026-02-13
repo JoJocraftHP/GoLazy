@@ -2,7 +2,7 @@
 
 **Date**: 2026-02-13
 **Auditor**: Elite Senior Frontend Architect & Cybersecurity Specialist
-**Website**: https://www.lazygames.dev
+**Website**: https://www.golazy.net
 **Scope**: Comprehensive security audit of index.html, style.css, and embedded JavaScript
 
 ---
@@ -219,7 +219,7 @@ The website does not contain any user input forms or editable fields.
 
 ```javascript
 console.log(
-  '%c🎮 GoLazy %c www.lazygames.dev ',
+  '%c🎮 GoLazy %c www.golazy.net ',
   'background: linear-gradient(...); color: white; ...',
   'background: #0a0a0f; color: #00e5ff; ...'
 );
