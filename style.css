@@ -58,10 +58,12 @@
   --color-surface-elevated: #1e1e32;
   --color-surface-border: rgba(255, 255, 255, 0.08);
 
-  /* Text Colors */
+  /* Text Colors - Enhanced for readability */
   --color-text-primary: #ffffff;
-  --color-text-secondary: #c0c0d8;
-  --color-text-muted: #8b8b9e;
+  --color-text-secondary: #d0d0e8;
+  /* Brighter for better contrast */
+  --color-text-muted: #a0a0b8;
+  /* Significantly brighter for readability */
   --color-text-on-primary: #ffffff;
 
   /* Typography */
@@ -159,6 +161,8 @@ html {
 body {
   font-family: var(--font-primary);
   font-size: var(--text-base);
+  font-weight: 500;
+  /* Increased base weight for better readability */
   line-height: var(--leading-normal);
   color: var(--color-text-primary);
   background-color: var(--color-background);
@@ -759,7 +763,8 @@ img {
 .nav__link {
   position: relative;
   color: var(--color-text-secondary);
-  font-weight: 500;
+  font-weight: 600;
+  /* Bolder for better visibility */
   font-size: var(--text-base);
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--border-radius-md);
@@ -848,7 +853,8 @@ img {
   gap: var(--space-sm);
   font-family: inherit;
   font-size: var(--text-base);
-  font-weight: 600;
+  font-weight: 700;
+  /* Bold for emphasis */
   padding: var(--space-md) var(--space-xl);
   border: none;
   border-radius: var(--border-radius-md);
@@ -1093,15 +1099,20 @@ img {
 
 .hero__title {
   font-size: clamp(var(--text-4xl), 8vw, var(--text-6xl));
-  font-weight: 700;
+  font-weight: 800;
+  /* Extra bold for impact */
   line-height: var(--leading-tight);
   margin-bottom: var(--space-lg);
   display: block;
+  letter-spacing: -0.02em;
+  /* Tighter for bold fonts */
 }
 
 
 .hero__subtitle {
   font-size: clamp(var(--text-lg), 3vw, var(--text-xl));
+  font-weight: 500;
+  /* Medium weight for readability */
   color: var(--color-text-secondary);
   margin-bottom: var(--space-2xl);
   max-width: 700px;
@@ -1154,7 +1165,8 @@ img {
 
 .hero-stats__value {
   font-size: var(--text-3xl);
-  font-weight: 700;
+  font-weight: 800;
+  /* Extra bold for impact */
   background: var(--gradient-text);
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -1217,9 +1229,12 @@ img {
 
 .section__title {
   font-size: clamp(var(--text-3xl), 6vw, var(--text-5xl));
-  font-weight: 700;
+  font-weight: 800;
+  /* Extra bold for sections */
   line-height: var(--leading-tight);
   margin-bottom: var(--space-md);
+  letter-spacing: -0.01em;
+  /* Tighter for bold fonts */
 }
 
 .section__title--gradient {
@@ -1240,6 +1255,8 @@ img {
 
 .section__subtitle {
   font-size: var(--text-lg);
+  font-weight: 500;
+  /* Medium weight for readability */
   color: var(--color-text-secondary);
   max-width: 600px;
   margin: 0 auto;
@@ -1392,9 +1409,12 @@ img {
 .game-card__title {
   font-size: var(--text-lg);
   font-weight: 700;
+  /* Bold and clear */
   color: var(--color-text-primary);
   text-align: center;
   line-height: 1.2;
+  letter-spacing: -0.01em;
+  /* Tighter for readability */
   /* Fix flicker on hover transform */
   transform: translateZ(0);
   backface-visibility: hidden;
@@ -1422,7 +1442,8 @@ img {
 
 .game-card__stat-value {
   font-size: var(--text-base);
-  font-weight: 600;
+  font-weight: 700;
+  /* Bold for emphasis */
   color: var(--color-text-primary);
   /* Fix flicker on hover transform */
   transform: translateZ(0);
@@ -1440,10 +1461,22 @@ img {
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  font-weight: 600;
+  /* Semibold for readability */
   /* Fix flicker on hover transform */
   transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Playing (CCU) numbers in vibrant green */
+.live-ccu {
+  color: #6FEDD6;
+  /* Mint green for active player count */
+  font-weight: 800;
+  /* Extra bold for emphasis */
+  text-shadow: 0 0 10px rgba(111, 237, 214, 0.3);
+  /* Subtle glow effect */
 }
 
 .game-card__actions {
