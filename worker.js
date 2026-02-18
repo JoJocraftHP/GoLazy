@@ -92,6 +92,7 @@ const BASELINE_PEAKS = {
   '7676176341': 600,    // Monster Training
   '5476431443': 500,    // Click To Get Big
   '9564163170': 100,    // Floor is Lava for Brainrots
+  '9697706765': 0,      // Escape Color Block for Brainrots
 };
 
 /* -------------- helpers -------------- */

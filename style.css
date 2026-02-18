@@ -2787,3 +2787,527 @@ img[data-loading="true"] {
 .team-grid--community .team-card__role {
   font-size: var(--text-sm);
 }
+
+/* ==========================================================================
+   DREAMY VIBES — Sleepy / Dreamy Aesthetic Enhancement
+   ========================================================================== */
+
+/* --- Extended Color Tokens --- */
+:root {
+  --color-lavender: #C3B1E1;
+  --color-moonlight: #EDE8FF;
+  --color-nebula: rgba(90, 60, 180, 0.28);
+  --color-moon-core: #F2EEFF;
+  --color-moon-glow: rgba(210, 190, 255, 0.45);
+  --color-aurora-1: rgba(108, 92, 255, 0.38);
+  --color-aurora-2: rgba(111, 237, 214, 0.28);
+  --color-aurora-3: rgba(255, 159, 108, 0.22);
+  --color-firefly-green: rgba(180, 255, 200, 0.9);
+  --color-firefly-purple: rgba(200, 180, 255, 0.9);
+  --color-firefly-blue: rgba(180, 220, 255, 0.9);
+  --color-shooting-star: rgba(255, 255, 255, 0.95);
+  --anim-morph-duration: 14s;
+  --anim-aurora-duration: 20s;
+  --anim-moon-duration: 6s;
+}
+
+/* --- Dreamy Keyframes --- */
+
+/* Morphing blob — organic shape change for orbs */
+@keyframes morphBlob {
+  0%,  100% { border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%; }
+  15%        { border-radius: 65% 35% 55% 45% / 40% 60% 40% 60%; }
+  30%        { border-radius: 35% 65% 40% 60% / 60% 40% 65% 35%; }
+  45%        { border-radius: 55% 45% 65% 35% / 45% 55% 35% 65%; }
+  60%        { border-radius: 40% 60% 35% 65% / 55% 45% 60% 40%; }
+  75%        { border-radius: 60% 40% 50% 50% / 35% 65% 45% 55%; }
+}
+
+/* Shooting star — diagonal trail */
+@keyframes shootStar {
+  0%   { transform: translateX(0)    translateY(0)    rotate(-35deg); opacity: 0;   width: 0;    }
+  5%   {                                                               opacity: 1;               }
+  75%  {                                                               opacity: 0.8;             }
+  100% { transform: translateX(-80vw) translateY(80vh) rotate(-35deg); opacity: 0;   width: 200px; }
+}
+
+/* Aurora band sweep — kept very subtle */
+@keyframes auroraMove {
+  0%   { transform: translateX(-110%) skewX(-6deg); opacity: 0;    }
+  22%  {                                             opacity: 0.42; }
+  78%  {                                             opacity: 0.22; }
+  100% { transform: translateX(110%)  skewX(-6deg); opacity: 0;    }
+}
+
+/* Moon glow pulse */
+@keyframes moonGlowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 30px rgba(210,190,255,0.5))
+            drop-shadow(0 0 70px rgba(180,160,255,0.25));
+  }
+  50% {
+    filter: drop-shadow(0 0 55px rgba(220,200,255,0.75))
+            drop-shadow(0 0 110px rgba(190,170,255,0.45));
+  }
+}
+
+/* Nebula depth drift */
+@keyframes nebulaDrift {
+  0%,  100% { opacity: 0.32; transform: scale(1)    rotate(0deg);  }
+  33%        { opacity: 0.48; transform: scale(1.05) rotate(1deg);  }
+  66%        { opacity: 0.25; transform: scale(0.96) rotate(-1deg); }
+}
+
+/* Cursor glow pulse */
+@keyframes cursorGlowAnim {
+  0%, 100% { transform: translate(-50%,-50%) scale(1);   opacity: 0.55; }
+  50%       { transform: translate(-50%,-50%) scale(2.2); opacity: 0.12; }
+}
+
+/* Wave drift for dividers */
+@keyframes waveDrift {
+  0%   { transform: translateX(0);      }
+  100% { transform: translateX(-600px); }
+}
+
+/* Section separator shimmer */
+@keyframes separatorShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* Hero sparkle pop */
+@keyframes sparkle {
+  0%, 100% { opacity: 0;   transform: scale(0)   rotate(0deg);   }
+  40%       { opacity: 1;   transform: scale(1.4) rotate(120deg); }
+  70%       { opacity: 0.6; transform: scale(1)   rotate(200deg); }
+}
+
+/* -------------------------------------------------------------------------
+   Enhanced Ambient Star Field (overrides basic version above)
+   ------------------------------------------------------------------------- */
+.stars {
+  background-image:
+    /* near stars — large, bright */
+    radial-gradient(2.5px 2.5px at  5%  8%, rgba(255,255,255,0.90), transparent),
+    radial-gradient(2px   2px   at 14% 32%, rgba(200,180,255,0.85), transparent),
+    radial-gradient(2.5px 2.5px at 24%  4%, rgba(255,255,255,0.88), transparent),
+    radial-gradient(1.5px 1.5px at 34% 19%, rgba(255,220,200,0.75), transparent),
+    radial-gradient(2px   2px   at 44% 74%, rgba(255,255,255,0.92), transparent),
+    radial-gradient(2.5px 2.5px at 54% 14%, rgba(200,225,255,0.88), transparent),
+    radial-gradient(2px   2px   at 64% 88%, rgba(255,255,255,0.82), transparent),
+    radial-gradient(1.5px 1.5px at 74% 29%, rgba(225,200,255,0.78), transparent),
+    radial-gradient(2.5px 2.5px at 84% 58%, rgba(255,255,255,0.90), transparent),
+    radial-gradient(2px   2px   at 94% 42%, rgba(180,225,255,0.82), transparent),
+    /* mid stars — medium brightness, colour variety */
+    radial-gradient(1.5px 1.5px at  8% 54%, rgba(255,255,255,0.62), transparent),
+    radial-gradient(1px   1px   at 19% 69%, rgba(255,200,180,0.72), transparent),
+    radial-gradient(1.5px 1.5px at 29% 44%, rgba(200,255,220,0.65), transparent),
+    radial-gradient(1px   1px   at 41% 83%, rgba(255,255,255,0.58), transparent),
+    radial-gradient(1.5px 1.5px at 51% 24%, rgba(220,180,255,0.68), transparent),
+    radial-gradient(1px   1px   at 61% 54%, rgba(255,255,255,0.62), transparent),
+    radial-gradient(1.5px 1.5px at 71% 79%, rgba(180,255,220,0.55), transparent),
+    radial-gradient(1px   1px   at 81% 14%, rgba(255,225,180,0.68), transparent),
+    radial-gradient(1.5px 1.5px at 91% 68%, rgba(255,255,255,0.58), transparent),
+    /* distant stars — small, dim */
+    radial-gradient(1px   1px   at  3% 79%, rgba(255,255,255,0.42), transparent),
+    radial-gradient(1px   1px   at 12% 17%, rgba(200,200,255,0.38), transparent),
+    radial-gradient(0.5px 0.5px at 22% 91%, rgba(255,255,255,0.32), transparent),
+    radial-gradient(1px   1px   at 37% 61%, rgba(255,255,255,0.48), transparent),
+    radial-gradient(0.5px 0.5px at 47% 47%, rgba(220,220,255,0.38), transparent),
+    radial-gradient(1px   1px   at 57% 71%, rgba(255,255,255,0.42), transparent),
+    radial-gradient(0.5px 0.5px at 67% 21%, rgba(200,255,240,0.32), transparent),
+    radial-gradient(1px   1px   at 77% 94%, rgba(255,255,255,0.48), transparent),
+    radial-gradient(0.5px 0.5px at 87% 37%, rgba(240,220,255,0.38), transparent),
+    radial-gradient(0.5px 0.5px at 97% 84%, rgba(255,255,255,0.32), transparent);
+  background-repeat: repeat;
+  background-size:
+    620px 620px, 520px 520px, 460px 460px, 530px 530px, 490px 490px,
+    610px 610px, 560px 560px, 530px 530px, 500px 500px, 520px 520px,
+    410px 410px, 390px 390px, 430px 430px, 370px 370px, 450px 450px,
+    390px 390px, 420px 420px, 400px 400px, 380px 380px,
+    310px 310px, 290px 290px, 330px 330px, 270px 270px, 320px 320px,
+    300px 300px, 280px 280px, 340px 340px, 295px 295px, 325px 325px;
+  opacity: 0.75;
+  animation: starsMove 180s linear infinite;
+}
+
+/* -------------------------------------------------------------------------
+   Nebula layer — deep cloudy depth
+   ------------------------------------------------------------------------- */
+.nebula {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 62% 42% at 14% 22%, rgba(108,92,255,0.14) 0%, transparent 62%),
+    radial-gradient(ellipse 52% 64% at 84% 12%, rgba(111,237,214,0.09) 0%, transparent 58%),
+    radial-gradient(ellipse 72% 52% at 50% 84%, rgba(255,159,108,0.09) 0%, transparent 62%),
+    radial-gradient(ellipse 42% 52% at 74% 58%, rgba(108,92,255,0.11) 0%, transparent 52%),
+    radial-gradient(ellipse 58% 38% at 25% 68%, rgba(111,237,214,0.07) 0%, transparent 57%),
+    radial-gradient(ellipse 38% 58% at 62% 35%, rgba(180,160,255,0.06) 0%, transparent 50%);
+  animation: nebulaDrift 45s ease-in-out infinite;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+/* -------------------------------------------------------------------------
+   Firefly canvas — subtle, desktop only
+   ------------------------------------------------------------------------- */
+#firefly-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* -------------------------------------------------------------------------
+   Hero Moon
+   ------------------------------------------------------------------------- */
+.hero__moon {
+  position: absolute;
+  top: 7%;
+  right: 7%;
+  width: clamp(100px, 14vw, 210px);
+  height: clamp(100px, 14vw, 210px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 37% 37%,
+    #f8f2ff 0%,
+    #dccfff 28%,
+    #b098f0 58%,
+    rgba(140,120,220,0.45) 80%,
+    transparent 100%
+  );
+  animation:
+    moonGlowPulse var(--anim-moon-duration) ease-in-out infinite,
+    dreamyScale 10s ease-in-out infinite;
+  z-index: 0;
+  opacity: 0.58;
+  pointer-events: none;
+  will-change: filter;
+}
+
+.hero__moon::before {
+  content: '';
+  position: absolute;
+  inset: -45%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,180,255,0.22) 0%, transparent 70%);
+  animation: pulseGlow 6s ease-in-out infinite;
+}
+
+.hero__moon::after {
+  content: '';
+  position: absolute;
+  inset: -90%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(180,160,255,0.09) 0%, transparent 60%);
+  animation: dreamyScale 9s ease-in-out infinite reverse;
+}
+
+/* -------------------------------------------------------------------------
+   Hero Aurora bands
+   ------------------------------------------------------------------------- */
+.hero__aurora {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 65%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero__aurora-band {
+  position: absolute;
+  left: -55%;
+  width: 210%;
+  height: 140px;
+  border-radius: 50%;
+  filter: blur(45px);
+  animation: auroraMove var(--anim-aurora-duration) ease-in-out infinite;
+  opacity: 0;
+}
+
+.hero__aurora-band:nth-child(1) {
+  top: 14%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(108,92,255,0.20),
+    rgba(111,237,214,0.12),
+    transparent
+  );
+  animation-duration: 26s;
+  animation-delay: 0s;
+}
+
+.hero__aurora-band:nth-child(2) {
+  top: 36%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(111,237,214,0.15),
+    rgba(108,92,255,0.12),
+    transparent
+  );
+  animation-duration: 38s;
+  animation-delay: -13s;
+}
+
+/* Third band removed — two is enough for subtlety */
+.hero__aurora-band:nth-child(3) {
+  display: none;
+}
+
+/* -------------------------------------------------------------------------
+   4th Hero Orb
+   ------------------------------------------------------------------------- */
+.hero__orb--4 {
+  width: 180px;
+  height: 180px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  top: 48%;
+  left: 52%;
+  transform: translate(-50%, -50%);
+  animation:
+    float 18s ease-in-out infinite,
+    morphBlob calc(var(--anim-morph-duration) * 1.6) ease-in-out infinite;
+  animation-delay: -14s;
+  opacity: 0.18;
+}
+
+/* Orbs: gentle float only — no morphing (keeps focus on content) */
+.hero__orb--1 { animation: float 10s ease-in-out infinite;             animation-delay: 0s;  }
+.hero__orb--2 { animation: float 12s ease-in-out infinite;             animation-delay: -3s; }
+.hero__orb--3 { animation: float 14s ease-in-out infinite;             animation-delay: -5s; }
+.hero__orb--4 { animation: float 18s ease-in-out infinite;             animation-delay: -14s; }
+
+/* -------------------------------------------------------------------------
+   Enhanced ambient clouds (richer gradients)
+   ------------------------------------------------------------------------- */
+.clouds {
+  background:
+    radial-gradient(ellipse at 10vw 10vh, rgba(108,92,255,0.20) 0%, transparent 46%),
+    radial-gradient(ellipse at 80vw  5vh, rgba(255,159,108,0.14) 0%, transparent 42%),
+    radial-gradient(ellipse at 30vw 90vh, rgba(111,237,214,0.14) 0%, transparent 46%),
+    radial-gradient(ellipse at 90vw 80vh, rgba(108,92,255,0.14) 0%, transparent 42%),
+    radial-gradient(ellipse at 50vw 50vh, rgba(180,160,255,0.09) 0%, transparent 52%),
+    radial-gradient(ellipse at 22vw 52vh, rgba(111,237,214,0.07) 0%, transparent 38%),
+    radial-gradient(ellipse at 72vw 42vh, rgba(255,159,108,0.09) 0%, transparent 42%);
+  opacity: 0.42;
+}
+
+/* -------------------------------------------------------------------------
+   Shooting Stars
+   ------------------------------------------------------------------------- */
+.shooting-star {
+  position: absolute;
+  top: var(--sy, 10%);
+  right: var(--sx, 10%);
+  width: var(--sl, 140px);
+  height: 2px;
+  background: linear-gradient(to left,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0.95),
+    rgba(255,255,255,0)
+  );
+  border-radius: 2px;
+  transform: rotate(-35deg);
+  transform-origin: right center;
+  animation: shootStar var(--sd, 2.5s) ease-in forwards;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  filter: drop-shadow(0 0 4px rgba(255,255,255,0.85))
+          drop-shadow(0 0 8px rgba(200,180,255,0.5));
+}
+
+/* -------------------------------------------------------------------------
+   Custom Cursor Glow — removed (too distracting)
+   ------------------------------------------------------------------------- */
+.cursor-glow { display: none !important; }
+
+/* -------------------------------------------------------------------------
+   Wave Divider
+   ------------------------------------------------------------------------- */
+.wave-divider {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  overflow: hidden;
+  pointer-events: none;
+  line-height: 0;
+}
+
+.wave-divider svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: calc(100% + 620px);
+  height: 100%;
+  animation: waveDrift 14s linear infinite;
+  fill: var(--color-primary);
+  opacity: 0.12;
+}
+
+.wave-divider .wave-b {
+  animation-duration: 20s;
+  animation-direction: reverse;
+  fill: var(--color-accent);
+  opacity: 0.08;
+  bottom: -8px;
+}
+
+/* -------------------------------------------------------------------------
+   Section Separator (static glowing line — no animation, less noise)
+   ------------------------------------------------------------------------- */
+.section-separator {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--color-primary) 25%,
+    var(--color-accent) 50%,
+    var(--color-secondary) 75%,
+    transparent 100%
+  );
+  box-shadow: 0 0 12px var(--color-primary-glow);
+  opacity: 0.3;
+  border: none;
+  margin: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Enhanced Hero badge
+   ------------------------------------------------------------------------- */
+.hero__badge {
+  background: rgba(108,92,255,0.14);
+  border-color: rgba(108,92,255,0.35);
+  box-shadow:
+    0 0 22px rgba(108,92,255,0.18),
+    inset 0 1px 1px rgba(255,255,255,0.12);
+}
+
+/* -------------------------------------------------------------------------
+   Holographic sheen on cards (via ::after)
+   ------------------------------------------------------------------------- */
+.game-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.07) 0%,
+    rgba(255,255,255,0)    35%,
+    rgba(108,92,255,0.06)  55%,
+    rgba(111,237,214,0.06) 75%,
+    rgba(255,255,255,0)    100%
+  );
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity var(--transition-base);
+  opacity: 0.6;
+}
+
+@media (hover: hover) {
+  .game-card:hover::after {
+    opacity: 1;
+    background: linear-gradient(135deg,
+      rgba(255,255,255,0.12) 0%,
+      rgba(255,255,255,0)    35%,
+      rgba(108,92,255,0.12)  55%,
+      rgba(111,237,214,0.12) 75%,
+      rgba(255,255,255,0)    100%
+    );
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Team avatar dreamy glow on hover
+   ------------------------------------------------------------------------- */
+.team-card:hover .team-card__avatar {
+  box-shadow:
+    0 0 22px var(--color-primary-glow),
+    0 0 45px rgba(108,92,255,0.22);
+}
+
+/* -------------------------------------------------------------------------
+   About highlight — gradient text
+   ------------------------------------------------------------------------- */
+.about__highlight {
+  background: var(--gradient-text);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift var(--anim-gradient-duration) ease-in-out infinite;
+  font-weight: 700;
+}
+
+/* -------------------------------------------------------------------------
+   Group card enhanced glow
+   ------------------------------------------------------------------------- */
+.group-card:hover {
+  box-shadow:
+    var(--shadow-lg),
+    0 0 30px rgba(255,159,108,0.28),
+    inset 0 0 22px rgba(255,159,108,0.06);
+}
+
+/* -------------------------------------------------------------------------
+   Scroll progress bar — static gradient, no extra animation
+   ------------------------------------------------------------------------- */
+.scroll-progress {
+  background: linear-gradient(90deg,
+    var(--color-primary),
+    var(--color-accent),
+    var(--color-secondary)
+  );
+  box-shadow: 0 0 8px var(--color-primary-glow);
+}
+
+/* Footer divider — full gradient */
+.footer__divider {
+  background: var(--gradient-text);
+  background-size: 200% auto;
+  animation: gradientShift 6s ease-in-out infinite;
+  width: 120px;
+}
+
+/* -------------------------------------------------------------------------
+   Reduced Motion overrides for new elements
+   ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .shooting-star  { display: none !important; }
+  .cursor-glow    { display: none !important; }
+  #firefly-canvas { display: none !important; }
+  .hero__moon     { animation: none; }
+  .hero__aurora-band { animation: none; opacity: 0.3; }
+  .nebula         { animation: none; }
+  .wave-divider svg { animation: none; }
+  .hero__orb      { animation: none; }
+  .scroll-progress { animation: none; }
+  .section-separator { animation: none; }
+}
+
+/* -------------------------------------------------------------------------
+   Mobile — hide expensive GPU effects
+   ------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hero__moon {
+    width: 90px;
+    height: 90px;
+    right: 4%;
+    top: 4%;
+    opacity: 0.42;
+  }
+
+  .hero__aurora   { display: none; }
+  .cursor-glow    { display: none; }
+  #firefly-canvas { display: none; }
+  .nebula         { opacity: 0.15; animation: none; }
+  .hero__orb--4   { display: none; }
+  .wave-divider   { height: 40px; }
+  /* Reduce orb blur on mobile for GPU savings */
+  .hero__orb      { filter: blur(20px); }
+}

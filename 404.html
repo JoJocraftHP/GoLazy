@@ -82,12 +82,24 @@
   </style>
 </head>
 <body>
+  <!-- Ambient Background -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="stars"></div>
+    <div class="clouds"></div>
+    <div class="nebula"></div>
+  </div>
+
   <div class="error-container">
-    <div class="error-icon">🎮</div>
+    <!-- Floating orbs for dreamy vibe -->
+    <div class="hero__orb hero__orb--1" aria-hidden="true" style="width:280px;height:280px;top:5%;left:-5%;opacity:0.25;"></div>
+    <div class="hero__orb hero__orb--2" aria-hidden="true" style="width:220px;height:220px;bottom:10%;right:-3%;opacity:0.22;"></div>
+    <div class="hero__moon" aria-hidden="true" style="top:5%;right:5%;width:140px;height:140px;"></div>
+
+    <div class="error-icon">💤</div>
     <h1 class="error-code">404</h1>
     <h2 class="error-title">Oops! Page Not Found</h2>
     <p class="error-message">
-      Looks like you've stumbled into an uncharted area! This page doesn't exist,
+      Looks like you've drifted off into a dream... This page doesn't exist,
       but our awesome games do. Head back home to continue your adventure!
     </p>
     <div class="error-buttons">
@@ -96,5 +108,21 @@
       <a href="https://discord.gg/UnhZDUH93X" class="btn btn--secondary btn--lg" target="_blank" rel="noopener noreferrer">Join Discord</a>
     </div>
   </div>
+
+  <script>
+    // Shooting stars on 404 too
+    function spawn404Star() {
+      const star = document.createElement('div');
+      star.className = 'shooting-star';
+      const top = Math.random() * 50, right = Math.random() * 80, dur = Math.random() * 1.5 + 1.5;
+      star.style.cssText = `--sy:${top}%;--sx:${right}%;--sd:${dur}s;--sl:${Math.random()*100+80}px`;
+      document.querySelector('.ambient-bg').appendChild(star);
+      setTimeout(() => star.remove(), (dur + 0.6) * 1000);
+    }
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setTimeout(spawn404Star, 1000);
+      setInterval(() => Math.random() > 0.4 && spawn404Star(), 3500);
+    }
+  </script>
 </body>
 </html>

@@ -248,7 +248,11 @@
   <div class="ambient-bg">
     <div class="stars"></div>
     <div class="clouds"></div>
+    <div class="nebula" aria-hidden="true"></div>
   </div>
+
+  <!-- Firefly Canvas -->
+  <canvas id="firefly-canvas" aria-hidden="true"></canvas>
 
   <!-- Main Content -->
   <main id="main-content">
@@ -258,6 +262,17 @@
       <div class="hero__orb hero__orb--1" aria-hidden="true"></div>
       <div class="hero__orb hero__orb--2" aria-hidden="true"></div>
       <div class="hero__orb hero__orb--3" aria-hidden="true"></div>
+      <div class="hero__orb hero__orb--4" aria-hidden="true"></div>
+
+      <!-- Dreamy Moon -->
+      <div class="hero__moon" aria-hidden="true"></div>
+
+      <!-- Aurora Bands -->
+      <div class="hero__aurora" aria-hidden="true">
+        <div class="hero__aurora-band"></div>
+        <div class="hero__aurora-band"></div>
+        <div class="hero__aurora-band"></div>
+      </div>
 
       <div class="hero__content">
         <!-- Badge - always visible, no animation -->
@@ -504,6 +519,57 @@
                 data-game-name="Lift a Pet"
                 data-game-url="https://www.roblox.com/games/16858182871"
                 aria-label="Share Lift a Pet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Escape Color Block for Brainrots -->
+        <article class="game-card reveal" data-universe-id="9697706765" aria-label="Escape Color Block for Brainrots game card"
+          aria-live="polite">
+          <a href="https://www.roblox.com/games/82425850234122/Escape-Color-Block-for-Brainrots" target="_blank"
+            rel="noopener noreferrer" class="game-card__image-wrapper">
+            <div class="game-card__live-badge">
+              <span class="game-card__live-dot" aria-hidden="true"></span>
+              LIVE
+            </div>
+            <img src="assets/branding/GoLazyGameCard.png"
+              alt="Escape Color Block for Brainrots - Roblox game by GoLazy" class="game-card__image" loading="lazy"
+              width="768" height="432" data-universe-id="9697706765" data-fallback="assets/branding/GoLazyGameCard.png">
+          </a>
+          <div class="game-card__content">
+            <h3 class="game-card__title">Escape Color Block for Brainrots</h3>
+            <div class="game-card__stats">
+              <div class="game-card__stat">
+                <span class="game-card__stat-value live-ccu">--</span>
+                <span class="game-card__stat-label">Playing</span>
+              </div>
+              <div class="game-card__stat">
+                <span class="game-card__stat-value live-peak">--</span>
+                <span class="game-card__stat-label">Peak</span>
+              </div>
+              <div class="game-card__stat">
+                <span class="game-card__stat-value live-visits">--</span>
+                <span class="game-card__stat-label">Visits</span>
+              </div>
+            </div>
+            <div class="game-card__actions">
+              <a href="https://www.roblox.com/games/82425850234122/Escape-Color-Block-for-Brainrots"
+                class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer"
+                aria-label="Play Escape Color Block for Brainrots on Roblox (opens in new tab)">
+                Play Now
+              </a>
+              <button class="btn btn--secondary btn--sm btn--icon share-btn"
+                data-game-name="Escape Color Block for Brainrots"
+                data-game-url="https://www.roblox.com/games/82425850234122/Escape-Color-Block-for-Brainrots"
+                aria-label="Share Escape Color Block for Brainrots">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="18" cy="5" r="3"></circle>
                   <circle cx="6" cy="12" r="3"></circle>
@@ -1758,6 +1824,202 @@
         copyToClipboard(gameUrl);
       });
     });
+
+    // ==========================================================================
+    // Firefly Particle System — Dreamy Canvas
+    // ==========================================================================
+    class FireflySystem {
+      constructor() {
+        this.canvas = document.getElementById('firefly-canvas');
+        if (!this.canvas) return;
+        this.ctx = this.canvas.getContext('2d');
+        this.fireflies = [];
+        this.maxFireflies = window.innerWidth < 768 ? 0 : 10;
+        this.running = true;
+
+        this.resize();
+        window.addEventListener('resize', () => this.resize(), { passive: true });
+
+        if (this.maxFireflies === 0) return;
+
+        // Stagger initial spawn
+        for (let i = 0; i < this.maxFireflies; i++) {
+          setTimeout(() => this.spawnFirefly(), Math.random() * 8000);
+        }
+
+        this.animate();
+      }
+
+      resize() {
+        this.canvas.width  = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      }
+
+      spawnFirefly() {
+        const palette = [
+          'rgba(180,255,200,',   // green
+          'rgba(200,180,255,',   // lavender
+          'rgba(180,230,255,',   // blue
+          'rgba(255,210,180,'    // peach
+        ];
+        this.fireflies.push({
+          x:          Math.random() * this.canvas.width,
+          y:          this.canvas.height * 0.25 + Math.random() * this.canvas.height * 0.75,
+          size:       Math.random() * 2.5 + 0.8,
+          vx:         (Math.random() - 0.5) * 0.5,
+          vy:         -(Math.random() * 0.7 + 0.15),
+          opacity:    0,
+          maxOpacity: Math.random() * 0.65 + 0.2,
+          life:       0,
+          maxLife:    Math.random() * 320 + 180,
+          color:      palette[Math.floor(Math.random() * palette.length)],
+          wobble:     Math.random() * Math.PI * 2
+        });
+      }
+
+      animate() {
+        if (!this.running) return;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // Refill
+        if (this.fireflies.length < this.maxFireflies && Math.random() < 0.04) {
+          this.spawnFirefly();
+        }
+
+        this.fireflies = this.fireflies.filter(ff => ff.life < ff.maxLife);
+
+        this.fireflies.forEach(ff => {
+          ff.life++;
+          ff.wobble += 0.018;
+          ff.x += ff.vx + Math.sin(ff.wobble) * 0.35;
+          ff.y += ff.vy + Math.cos(ff.wobble * 0.7) * 0.2;
+
+          const ratio = ff.life / ff.maxLife;
+          if (ratio < 0.12) {
+            ff.opacity = (ratio / 0.12) * ff.maxOpacity;
+          } else if (ratio > 0.78) {
+            ff.opacity = ((1 - ratio) / 0.22) * ff.maxOpacity;
+          } else {
+            // Gentle twinkle
+            ff.opacity = ff.maxOpacity * (0.55 + 0.45 * Math.sin(ff.life * 0.09));
+          }
+
+          // Glow halo
+          const grd = this.ctx.createRadialGradient(ff.x, ff.y, 0, ff.x, ff.y, ff.size * 5);
+          grd.addColorStop(0,   `${ff.color}${ff.opacity})`);
+          grd.addColorStop(0.5, `${ff.color}${ff.opacity * 0.28})`);
+          grd.addColorStop(1,   `${ff.color}0)`);
+
+          this.ctx.beginPath();
+          this.ctx.arc(ff.x, ff.y, ff.size * 5, 0, Math.PI * 2);
+          this.ctx.fillStyle = grd;
+          this.ctx.fill();
+
+          // Core dot
+          this.ctx.beginPath();
+          this.ctx.arc(ff.x, ff.y, ff.size, 0, Math.PI * 2);
+          this.ctx.fillStyle = `${ff.color}${Math.min(ff.opacity * 2.2, 1)})`;
+          this.ctx.fill();
+        });
+
+        requestAnimationFrame(() => this.animate());
+      }
+
+      destroy() {
+        this.running = false;
+      }
+    }
+
+    // ==========================================================================
+    // Shooting Star Generator
+    // ==========================================================================
+    function spawnShootingStar() {
+      const ambientBg = document.querySelector('.ambient-bg');
+      if (!ambientBg) return;
+
+      const star = document.createElement('div');
+      star.className = 'shooting-star';
+
+      const top      = Math.random() * 48;
+      const right    = Math.random() * 75;
+      const duration = Math.random() * 1.8 + 1.4;
+      const length   = Math.random() * 110 + 80;
+
+      star.style.setProperty('--sy', `${top}%`);
+      star.style.setProperty('--sx', `${right}%`);
+      star.style.setProperty('--sd', `${duration}s`);
+      star.style.setProperty('--sl', `${length}px`);
+
+      ambientBg.appendChild(star);
+      setTimeout(() => star.remove(), (duration + 0.6) * 1000);
+    }
+
+    // ==========================================================================
+    // Custom Cursor Glow (desktop hover devices only)
+    // ==========================================================================
+    function initCursorGlow() {
+      if (window.matchMedia('(hover: none)').matches) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const cursor = document.createElement('div');
+      cursor.className = 'cursor-glow';
+      document.body.appendChild(cursor);
+
+      let mx = -200, my = -200, cx = -200, cy = -200;
+
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX;
+        my = e.clientY;
+      }, { passive: true });
+
+      (function moveCursor() {
+        cx += (mx - cx) * 0.10;
+        cy += (my - cy) * 0.10;
+        cursor.style.left = cx + 'px';
+        cursor.style.top  = cy + 'px';
+        requestAnimationFrame(moveCursor);
+      })();
+
+      // Expand on interactive elements
+      document.querySelectorAll('a, button, .game-card, .team-card, .group-card').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('is-hovering'),    { passive: true });
+        el.addEventListener('mouseleave', () => cursor.classList.remove('is-hovering'), { passive: true });
+      });
+    }
+
+    // ==========================================================================
+    // Initialise New Dreamy Effects
+    // ==========================================================================
+    (function initDreamyEffects() {
+      const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!noMotion) {
+        // Firefly system
+        const ffCanvas = document.getElementById('firefly-canvas');
+        if (ffCanvas) {
+          const ffSystem = new FireflySystem();
+          // Pause when tab is hidden to save GPU
+          document.addEventListener('visibilitychange', () => {
+            ffSystem.running = document.visibilityState === 'visible';
+            if (ffSystem.running) ffSystem.animate();
+          });
+        }
+
+        // Cursor glow removed — too distracting
+
+        // Shooting stars — occasional, not constant
+        setTimeout(() => {
+          spawnShootingStar();
+          setInterval(() => {
+            if (document.visibilityState !== 'visible') return;
+            // ~1 in 3 chance every 11s = roughly one star per 33s on average
+            if (Math.random() > 0.65) {
+              spawnShootingStar();
+            }
+          }, 11000);
+        }, 4000);
+      }
+    })();
 
   </script>
 </body>
