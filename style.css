@@ -1472,11 +1472,20 @@ img {
 /* Playing (CCU) numbers in vibrant green */
 .live-ccu {
   color: #6FEDD6;
-  /* Mint green for active player count */
   font-weight: 800;
-  /* Extra bold for emphasis */
   text-shadow: 0 0 10px rgba(111, 237, 214, 0.3);
-  /* Subtle glow effect */
+}
+
+/* Hero "Players Online" value — cool green gradient */
+#total-ccu {
+  background: linear-gradient(135deg, #00FF88 0%, #6FEDD6 50%, #00C9A7 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(111, 237, 214, 0.5));
+  will-change: background-position;
 }
 
 .game-card__actions {
