@@ -640,7 +640,7 @@ button {
   justify-content: center;
   padding: 6rem 1.5rem 4rem;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden removed — aurora has own containment (.hero__aurora), bg-img is inset:0 */
 }
 
 .hero__aurora {
@@ -826,11 +826,11 @@ button {
   text-shadow: 0 0 18px rgba(52, 211, 153, 0.55);
 }
 
-/* Mint accent — like rating */
+/* Orange accent — like rating */
 .game-card__stat-value.stat-accent {
-  -webkit-text-fill-color: var(--color-accent);
-  color: var(--color-accent);
-  text-shadow: 0 0 14px rgba(111, 237, 214, 0.45);
+  -webkit-text-fill-color: var(--color-secondary);
+  color: var(--color-secondary);
+  text-shadow: 0 0 14px rgba(255, 159, 108, 0.45);
 }
 
 .hero-stats__value:not(.stat-green) {
@@ -849,29 +849,42 @@ button {
 
 @media (max-width: 640px) {
   .hero-stats {
-    overflow-x: auto;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    max-width: 100%;
-    border-radius: var(--radius-lg);
+    flex-wrap: wrap;
+    /* overflow: hidden kept so ::before background clips to border-radius */
   }
 
-  .hero-stats::-webkit-scrollbar {
+  /* Top row: 3 items at 33.333% each */
+  .hero-stats__item {
+    flex: 0 0 33.333%;
+    min-width: 0;
+    padding: 0.875rem 0.25rem;
+  }
+
+  /* Bottom row: items 4 and 5 at 50% each */
+  .hero-stats__item:nth-child(4),
+  .hero-stats__item:nth-child(5) {
+    flex: 0 0 50%;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Hide all right-edge dividers by default */
+  .hero-stats__item:not(:last-child)::after {
     display: none;
   }
 
-  .hero-stats__item {
-    flex-shrink: 0;
-    min-width: 115px;
-    scroll-snap-align: start;
-    padding: 1rem 0.625rem;
+  /* Re-enable dividers within same row only */
+  .hero-stats__item:nth-child(1)::after,
+  .hero-stats__item:nth-child(2)::after,
+  .hero-stats__item:nth-child(4)::after {
+    display: block;
   }
 
   .hero-stats__value {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
+  }
+
+  .hero-stats__label {
+    font-size: 0.62rem;
   }
 }
 
