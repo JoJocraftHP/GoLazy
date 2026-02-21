@@ -1,7 +1,10 @@
 /**
- * DEPRECATED — Cloudflare Worker (no longer active).
- * Replaced by /api/stats.js (Vercel Serverless Function).
- * TODO: delete this file once the Vercel deployment is verified in production.
+ * Cloudflare Worker — live Roblox stats API (active).
+ * Deployed at: livestatsupdate.jojocrafthdyt.workers.dev
+ * Handles:
+ *   ?endpoint=games&ids=<comma-separated universeIds>
+ *   ?endpoint=group&groupId=<groupId>
+ * Peaks persist via KV binding (PEAKS namespace), fallback to in-memory.
  */
 export default {
   async fetch(request, env, ctx) {
