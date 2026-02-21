@@ -46,7 +46,7 @@ export default function Header() {
   // Close mobile nav on Escape
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && navOpen) closeNav();
+      if (e.key === "Escape" && navOpen) setNavOpen(false);
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
@@ -109,9 +109,8 @@ export default function Header() {
               <li key={link.href} className="nav__item">
                 <a
                   href={link.href}
-                  className={`nav__link${
-                    activeSection === link.href.slice(1) ? " active" : ""
-                  }`}
+                  className={`nav__link${activeSection === link.href.slice(1) ? " active" : ""
+                    }`}
                   onClick={(e) => {
                     e.preventDefault();
                     handleLinkClick(link.href);
