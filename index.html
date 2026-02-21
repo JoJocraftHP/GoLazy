@@ -12,7 +12,7 @@
 
   <!-- Security Headers -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://livestatsupdate.jojocrafthdyt.workers.dev https://thumbnails.roproxy.com; frame-ancestors 'none';">
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://thumbnails.roproxy.com; frame-ancestors 'none';">
   <meta http-equiv="X-Frame-Options" content="DENY">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -78,7 +78,6 @@
 
   <!-- Performance: Preload Critical Assets -->
   <link rel="preload" href="assets/branding/GoLazyGameCard.png" as="image">
-  <link rel="dns-prefetch" href="https://livestatsupdate.jojocrafthdyt.workers.dev">
   <link rel="dns-prefetch" href="https://thumbnails.roproxy.com">
 
   <!-- Structured Data (JSON-LD) for Rich Search Results -->
@@ -897,7 +896,7 @@
     // Configuration
     // ==========================================================================
     const CONFIG = {
-      WORKER_URL: 'https://livestatsupdate.jojocrafthdyt.workers.dev',
+      WORKER_URL: '/api/stats',
       ROPROXY_URL: 'https://thumbnails.roproxy.com/v1',
       REFRESH_MS: 60000,
       FETCH_TIMEOUT: 9000,
@@ -1055,7 +1054,7 @@
 
       if (!ids.length) return;
 
-      const url = `${CONFIG.WORKER_URL}/?endpoint=games&ids=${encodeURIComponent(ids.join(','))}`;
+      const url = `${CONFIG.WORKER_URL}?endpoint=games&ids=${encodeURIComponent(ids.join(','))}`;
 
       try {
         const json = await fetchJSON(url, {
@@ -1105,7 +1104,7 @@
 
         try {
           const json = await fetchJSON(
-            `${CONFIG.WORKER_URL}/?endpoint=group&groupId=${encodeURIComponent(id)}`,
+            `${CONFIG.WORKER_URL}?endpoint=group&groupId=${encodeURIComponent(id)}`,
             { timeout: CONFIG.FETCH_TIMEOUT, retries: CONFIG.FETCH_RETRIES }
           );
           const count = renderGroupMembers(el, json);

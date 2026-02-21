@@ -1,3 +1,8 @@
+/**
+ * DEPRECATED — Cloudflare Worker (no longer active).
+ * Replaced by /api/stats.js (Vercel Serverless Function).
+ * TODO: delete this file once the Vercel deployment is verified in production.
+ */
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
