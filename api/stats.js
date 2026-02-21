@@ -1,3 +1,8 @@
+// NOTE: This Vercel Edge Function is not currently used.
+// The live stats API is handled by the Cloudflare Worker at:
+// https://livestatsupdate.jojocrafthdyt.workers.dev
+// This file is kept here in case we want to switch back in the future.
+
 /**
  * /api/stats.js — Vercel Edge Function
  *

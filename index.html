@@ -12,7 +12,7 @@
 
   <!-- Security Headers -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://*.vercel-insights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://thumbnails.roproxy.com; frame-ancestors 'none';">
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://*.vercel-insights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; connect-src 'self' https://thumbnails.roproxy.com https://livestatsupdate.jojocrafthdyt.workers.dev; frame-ancestors 'none';">
   <meta http-equiv="X-Frame-Options" content="DENY">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -901,7 +901,7 @@
     // Configuration
     // ==========================================================================
     const CONFIG = {
-      WORKER_URL: '/api/stats',
+      WORKER_URL: 'https://livestatsupdate.jojocrafthdyt.workers.dev',
       ROPROXY_URL: 'https://thumbnails.roproxy.com/v1',
       REFRESH_MS: 60000,
       FETCH_TIMEOUT: 9000,
