@@ -1,16 +1,16 @@
 /**
- * /api/stats.js — Vercel Serverless Function
+ * /api/stats.js — Vercel Edge Function
  *
- * Replaces the Cloudflare Worker at livestatsupdate.jojocrafthdyt.workers.dev.
+ * Runs on Vercel's edge network (V8 isolate, always warm, zero cold starts).
  * Handles two endpoints:
  *   ?endpoint=games&ids=<comma-separated universeIds>
  *   ?endpoint=group&groupId=<groupId>
  *
- * Peaks are kept in the module-level MEMORY_PEAKS Map (ephemeral per instance).
+ * Peaks are kept in the module-level MEMORY_PEAKS Map (ephemeral per isolate).
  * BASELINE_PEAKS seeds them so they never fall below historical highs.
- *
- * TODO: delete worker.js once this function is verified in production.
  */
+
+export const config = { runtime: 'edge' };
 
 /* ---------- seeded peak baselines ---------- */
 const BASELINE_PEAKS = {
@@ -81,34 +81,44 @@ async function fetchWithRetry(url, { retries = 2, timeoutMs = 8000 } = {}) {
   throw lastErr;
 }
 
-/* ---------- CORS headers ---------- */
-const CORS = {
+/* ---------- response helpers ---------- */
+const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Accept',
 };
 
-/* ---------- handler ---------- */
-module.exports = async function handler(req, res) {
-  // Apply CORS headers to every response
-  for (const [k, v] of Object.entries(CORS)) res.setHeader(k, v);
+function json(data, { status = 200 } = {}) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'public, s-maxage=15, stale-while-revalidate=30',
+      ...CORS_HEADERS,
+    },
+  });
+}
 
-  if (req.method === 'OPTIONS') return res.status(204).end();
-  if (req.method !== 'GET') {
-    return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
+/* ---------- handler ---------- */
+export default async function handler(req) {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers: CORS_HEADERS });
   }
 
-  // Cache hint for Vercel Edge Network and downstream CDNs
-  res.setHeader('Cache-Control', 'public, s-maxage=15, stale-while-revalidate=30');
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  if (req.method !== 'GET') {
+    return json({ ok: false, error: 'Method Not Allowed' }, { status: 405 });
+  }
+
+  const { searchParams } = new URL(req.url);
+  const endpoint = searchParams.get('endpoint');
+  const idsParam = searchParams.get('ids');
+  const groupId = searchParams.get('groupId');
 
   try {
-    const { endpoint, ids: idsParam, groupId } = req.query;
-
     /* --- games endpoint --- */
     if (endpoint === 'games') {
       const ids = splitIds(idsParam);
-      if (!ids.length) return res.status(400).json({ ok: false, error: 'Missing ids' });
+      if (!ids.length) return json({ ok: false, error: 'Missing ids' }, { status: 400 });
 
       const chunks = chunk(ids, 100);
       const out = [];
@@ -116,7 +126,6 @@ module.exports = async function handler(req, res) {
       for (const part of chunks) {
         const joined = encodeURIComponent(part.join(','));
 
-        // Fetch game data and vote data in parallel
         const [gamesRes, votesRes] = await Promise.all([
           fetchWithRetry(`https://games.roblox.com/v1/games?universeIds=${joined}`),
           fetchWithRetry(`https://games.roblox.com/v1/games/votes?universeIds=${joined}`),
@@ -150,22 +159,22 @@ module.exports = async function handler(req, res) {
         }
       }
 
-      return res.status(200).json({ ok: true, data: out });
+      return json({ ok: true, data: out });
     }
 
     /* --- group endpoint --- */
     if (endpoint === 'group') {
-      if (!groupId) return res.status(400).json({ ok: false, error: 'Missing groupId' });
+      if (!groupId) return json({ ok: false, error: 'Missing groupId' }, { status: 400 });
 
       const groupRes = await fetchWithRetry(
         `https://groups.roblox.com/v1/groups/${encodeURIComponent(groupId)}`
       );
       const body = await groupRes.json();
-      return res.status(200).json({ ok: true, memberCount: toNum(body?.memberCount) });
+      return json({ ok: true, memberCount: toNum(body?.memberCount) });
     }
 
-    return res.status(400).json({ ok: false, error: 'Unknown endpoint' });
+    return json({ ok: false, error: 'Unknown endpoint' }, { status: 400 });
   } catch (err) {
-    return res.status(502).json({ ok: false, error: String(err?.message || err) });
+    return json({ ok: false, error: String(err?.message || err) }, { status: 502 });
   }
 }
