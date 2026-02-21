@@ -76,6 +76,12 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
   const ccu = stat?.playing ?? null;
   const peak = stat?.peakPlaying ?? null;
   const visits = stat?.visits ?? null;
+  const likeRate = (() => {
+    const up = stat?.upVotes ?? null;
+    const down = stat?.downVotes ?? null;
+    if (up === null || down === null || up + down === 0) return null;
+    return Math.round((up / (up + down)) * 1000) / 10;
+  })();
 
   return (
     <motion.div
@@ -115,10 +121,13 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
       <div className="game-card__content text-center flex flex-col items-center">
         <h3 className="game-card__title">{game.title}</h3>
 
-        <div className="game-card__stats">
-          <StatCell value={ccu} label="Playing" isGreen />
-          <StatCell value={peak} label="Peak" highlight />
-          <StatCell value={visits} label="Visits" isLarge highlight />
+        <div className="game-card__stats-panel">
+          <div className="game-card__stats">
+            <StatCell value={ccu} label="Playing" isGreen />
+            <StatCell value={peak} label="Peak" />
+            <StatCell value={visits} label="Visits" isLarge />
+            <StatCell value={likeRate} label="Rating" isPercent isAccent />
+          </div>
         </div>
 
         <div className="game-card__actions justify-center mt-4">
@@ -149,19 +158,33 @@ function StatCell({
   label,
   isLarge = false,
   isGreen = false,
-  highlight = false,
+  isPercent = false,
+  isAccent = false,
 }: {
   value: number | null;
   label: string;
   isLarge?: boolean;
   isGreen?: boolean;
-  highlight?: boolean;
+  isPercent?: boolean;
+  isAccent?: boolean;
 }) {
+  const formatted = value === null
+    ? "--"
+    : isPercent
+      ? `${value.toFixed(1)}%`
+      : isLarge
+        ? formatNumber(value)
+        : value.toLocaleString();
+
+  const valueClass = [
+    "game-card__stat-value",
+    isGreen ? "stat-green" : "",
+    isAccent ? "stat-accent" : "",
+  ].filter(Boolean).join(" ");
+
   return (
-    <div className={`game-card__stat${highlight ? " game-card__stat--highlight" : ""}`}>
-      <span className={`game-card__stat-value${isGreen ? " stat-green" : ""}`}>
-        {value === null ? "--" : isLarge ? formatNumber(value) : value.toLocaleString()}
-      </span>
+    <div className="game-card__stat">
+      <span className={valueClass}>{formatted}</span>
       <span className="game-card__stat-label">{label}</span>
     </div>
   );
