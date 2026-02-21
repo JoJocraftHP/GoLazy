@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(document-skills:frontend-design)",
+      "Skill(document-skills:web-artifacts-builder)",
+      "Skill(document-skills:theme-factory)",
+      "Bash(dir /s \"C:\\\\Users\\\\jojoc\\\\OneDrive\\\\Dokumente\\\\GitHub\\\\LazyGames\\\\assets\")",
+      "WebSearch",
+      "WebFetch(domain:thumbnails.roblox.com)",
+      "WebFetch(domain:create.roblox.com)",
+      "Bash(ls -lh \"C:\\\\Users\\\\jojoc\\\\OneDrive\\\\Dokumente\\\\GitHub\\\\LazyGames\\\\assets\\\\GameIcons\"\" 2>/dev/null && ls -lh \"C:UsersjojocOneDriveDokumenteGitHubLazyGamesassetsStudioIcons\"\")",
+      "Bash(git config:*)",
+      "Bash(del .gitindex)",
+      "Bash(git reset:*)",
+      "Skill(frontend-design)",
+      "WebFetch(domain:uiverse.io)",
+      "WebFetch(domain:games.roblox.com)",
+      "Bash(tail:*)",
+      "Bash(head:*)",
+      "Bash(cd /c/Users/jojoc/OneDrive/Dokumente/GitHub/LazyGames && npm run build 2>&1)"
+    ]
+  }
+}

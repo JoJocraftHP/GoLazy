@@ -1,0 +1,43 @@
+# robots.txt for www.golazy.net
+# GoLazy - Parent brand of LazyGames and ActiveGames
+
+# Allow all crawlers to index all content
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.golazy.net/sitemap.xml
+
+# Crawl delay (optional - helps prevent overwhelming the server)
+# Set to 1 second to be polite to the server
+Crawl-delay: 1
+
+# Block access to sensitive files (if any exist in the future)
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /assets/raw/
+
+# Allow Google Image Bot to index images
+User-agent: Googlebot-Image
+Allow: /assets/
+Allow: /images/
+
+# Allow Google AdsBot (if monetization is added later)
+User-agent: AdsBot-Google
+Allow: /
+
+# Block AI scrapers that don't respect intellectual property
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
