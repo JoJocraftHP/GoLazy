@@ -828,9 +828,9 @@ button {
 
 /* Orange accent — like rating */
 .game-card__stat-value.stat-accent {
-  -webkit-text-fill-color: var(--color-secondary);
-  color: var(--color-secondary);
-  text-shadow: 0 0 14px rgba(255, 159, 108, 0.45);
+  -webkit-text-fill-color: #f07535;
+  color: #f07535;
+  text-shadow: 0 0 14px rgba(240, 117, 53, 0.5);
 }
 
 .hero-stats__value:not(.stat-green) {
@@ -853,18 +853,20 @@ button {
     /* overflow: hidden kept so ::before background clips to border-radius */
   }
 
-  /* Top row: 3 items at 33.333% each */
+  /* Top row: items 1 & 2 at 50% — Players Online, Total Visits (big) */
   .hero-stats__item {
-    flex: 0 0 33.333%;
+    flex: 0 0 50%;
     min-width: 0;
-    padding: 0.875rem 0.25rem;
+    padding: 0.875rem 0.5rem;
   }
 
-  /* Bottom row: items 4 and 5 at 50% each */
+  /* Bottom row: items 3, 4, 5 at 33.333% — Total Favs, Total Likes, Group Members (small) */
+  .hero-stats__item:nth-child(3),
   .hero-stats__item:nth-child(4),
   .hero-stats__item:nth-child(5) {
-    flex: 0 0 50%;
+    flex: 0 0 33.333%;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.75rem 0.25rem;
   }
 
   /* Hide all right-edge dividers by default */
@@ -874,13 +876,20 @@ button {
 
   /* Re-enable dividers within same row only */
   .hero-stats__item:nth-child(1)::after,
-  .hero-stats__item:nth-child(2)::after,
+  .hero-stats__item:nth-child(3)::after,
   .hero-stats__item:nth-child(4)::after {
     display: block;
   }
 
+  /* Bigger values for top row */
+  .hero-stats__item:nth-child(1) .hero-stats__value,
+  .hero-stats__item:nth-child(2) .hero-stats__value {
+    font-size: 1.3rem;
+  }
+
+  /* Smaller values for bottom row */
   .hero-stats__value {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
   }
 
   .hero-stats__label {
