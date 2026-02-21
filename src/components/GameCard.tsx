@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import type { Variants } from "framer-motion";
 import type { Game } from "@/lib/data";
 import type { GameStat } from "@/hooks/useGameStats";
@@ -20,8 +20,11 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
   const [imgSrc, setImgSrc] = useState(game.fallbackImage);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  const rawMouseX = useMotionValue(0);
+  const rawMouseY = useMotionValue(0);
+  const mouseX = useSpring(rawMouseX, { stiffness: 150, damping: 20 });
+  const mouseY = useSpring(rawMouseY, { stiffness: 150, damping: 20 });
+
   const rotateX = useTransform(mouseY, [-0.5, 0.5], [7, -7]);
   const rotateY = useTransform(mouseX, [-0.5, 0.5], [-7, 7]);
 
@@ -42,16 +45,16 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
       const card = cardRef.current;
       if (!card) return;
       const rect = card.getBoundingClientRect();
-      mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-      mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+      rawMouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+      rawMouseY.set((e.clientY - rect.top) / rect.height - 0.5);
     },
-    [mouseX, mouseY]
+    [rawMouseX, rawMouseY]
   );
 
   const onMouseLeave = useCallback(() => {
-    mouseX.set(0);
-    mouseY.set(0);
-  }, [mouseX, mouseY]);
+    rawMouseX.set(0);
+    rawMouseY.set(0);
+  }, [rawMouseX, rawMouseY]);
 
   async function handleShare(e: React.MouseEvent) {
     e.preventDefault();

@@ -17,15 +17,7 @@ const SOCIAL_LINKS = [
       </svg>
     ),
   },
-  {
-    href: "https://www.roblox.com/communities/33472368/LazyGameStudios#!/about",
-    label: "Join our Roblox group",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M5.164 0L.16 18.928 18.836 24l5.004-18.928L5.164 0zm7.906 14.771l-4.16-1.1 1.1-4.16 4.16 1.1-1.1 4.16z" />
-      </svg>
-    ),
-  },
+
 ];
 
 const NAV_LINKS = [

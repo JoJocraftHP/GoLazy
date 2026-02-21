@@ -573,12 +573,10 @@ button {
   left: -110%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(
-    105deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.18) 50%,
-    transparent 70%
-  );
+  background: linear-gradient(105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.18) 50%,
+      transparent 70%);
   transform: skewX(-15deg);
   transition: left 0.45s ease;
   pointer-events: none;
@@ -906,12 +904,10 @@ button {
   left: 0;
   right: 0;
   height: 55%;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(11, 13, 26, 0.6) 60%,
-    var(--color-bg) 100%
-  );
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(11, 13, 26, 0.6) 60%,
+      var(--color-bg) 100%);
   pointer-events: none;
 }
 
@@ -1011,7 +1007,7 @@ button {
    ============================================================ */
 .games-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1.5rem;
 }
 
@@ -1052,7 +1048,9 @@ button {
   display: block;
   aspect-ratio: 16/9;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--color-bg);
+  margin: 0.75rem 0.75rem 0;
+  border-radius: var(--radius-md);
 }
 
 .game-card__image {
@@ -1090,7 +1088,7 @@ button {
 }
 
 .game-card__content {
-  padding: 1.25rem;
+  padding: 1rem 0.75rem;
   position: relative;
   z-index: 2;
 }

@@ -12,8 +12,7 @@ export default function ContactSection() {
               Get in Touch
             </h2>
             <p className="section__subtitle">
-              Join our community on Discord, follow us on Twitter, or become a
-              member of our Roblox group
+              Join our community on Discord or follow us on Twitter
             </p>
           </header>
 
@@ -55,14 +54,6 @@ export default function ContactSection() {
               rel="noopener noreferrer"
             >
               Follow on X
-            </MagneticButton>
-            <MagneticButton
-              className="btn btn--secondary btn--lg"
-              href="https://www.roblox.com/communities/33472368/LazyGameStudios#!/about"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Roblox Group
             </MagneticButton>
           </div>
         </div>

@@ -41,8 +41,24 @@ export default function Hero() {
 
   return (
     <section id="hero" className="hero" aria-label="Welcome section">
+      {/* Background Image */}
+      <div
+        className="hero__bg-img"
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: "url('/assets/branding/GoLazyGameCard.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.1,
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+
       {/* Aurora */}
-      <div className="hero__aurora" aria-hidden="true">
+      <div className="hero__aurora" aria-hidden="true" style={{ zIndex: 1 }}>
         <div className="hero__aurora-band" />
         <div className="hero__aurora-band" />
         <div className="hero__aurora-band" />
@@ -57,11 +73,7 @@ export default function Hero() {
         initial="hidden"
         animate="visible"
       >
-        {/* Badge */}
-        <motion.div className="hero__badge" variants={itemVariants}>
-          <span className="hero__badge-dot" aria-hidden="true" />
-          Home of LazyGames & ActiveGames
-        </motion.div>
+        {/* Badge removed per user request */}
 
         {/* Title */}
         <motion.h1 className="hero__title" variants={itemVariants}>
@@ -89,7 +101,7 @@ export default function Hero() {
             }}
             id="explore-games-btn"
           >
-            Explore Our Roblox Games
+            Explore our Games
           </MagneticButton>
           <MagneticButton
             className="btn btn--secondary btn--lg"
@@ -111,27 +123,9 @@ export default function Hero() {
         >
           <StatItem value={totalCCU} label="PLAYERS ONLINE" green />
           <StatItem value={totalVisits} label="TOTAL VISITS" />
-          <StatItem value={totalFavourites} label="TOTAL FAVOURITES" />
+          <StatItem value={totalFavourites} label="TOTAL FAVS" />
           <StatItem value={totalLikes} label="TOTAL LIKES" />
           <StatItem value={totalGroupMembers} label="GROUP MEMBERS" />
-        </motion.div>
-
-        {/* GoLazy Game Showcase */}
-        <motion.div className="hero__showcase" variants={itemVariants}>
-          <div className="hero__showcase-frame">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/branding/GoLazyGameCard.png"
-              alt="GoLazy Games — featured titles"
-              className="hero__showcase-img"
-              width={768}
-              height={432}
-            />
-            <div className="hero__showcase-fade" aria-hidden="true" />
-            <span className="hero__showcase-label" aria-hidden="true">
-              GoLazy Studios
-            </span>
-          </div>
         </motion.div>
       </motion.div>
     </section>
