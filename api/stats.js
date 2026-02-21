@@ -89,7 +89,7 @@ const CORS = {
 };
 
 /* ---------- handler ---------- */
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Apply CORS headers to every response
   for (const [k, v] of Object.entries(CORS)) res.setHeader(k, v);
 
