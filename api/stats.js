@@ -64,7 +64,11 @@ async function fetchWithRetry(url, { retries = 2, timeoutMs = 8000 } = {}) {
 
     try {
       const res = await fetch(url, {
-        headers: { accept: 'application/json' },
+        headers: {
+          'accept': 'application/json',
+          'user-agent': 'Mozilla/5.0 (compatible; GoLazy/1.0; +https://www.golazy.net)',
+          'accept-language': 'en-US,en;q=0.9',
+        },
         signal: ctrl.signal,
       });
       clearTimeout(timer);
@@ -127,8 +131,8 @@ export default async function handler(req) {
         const joined = encodeURIComponent(part.join(','));
 
         const [gamesRes, votesRes] = await Promise.all([
-          fetchWithRetry(`https://games.roproxy.com/v1/games?universeIds=${joined}`),
-          fetchWithRetry(`https://games.roproxy.com/v1/games/votes?universeIds=${joined}`),
+          fetchWithRetry(`https://games.roblox.com/v1/games?universeIds=${joined}`),
+          fetchWithRetry(`https://games.roblox.com/v1/games/votes?universeIds=${joined}`),
         ]);
         const [gamesBody, votesBody] = await Promise.all([gamesRes.json(), votesRes.json()]);
 
@@ -167,7 +171,7 @@ export default async function handler(req) {
       if (!groupId) return json({ ok: false, error: 'Missing groupId' }, { status: 400 });
 
       const groupRes = await fetchWithRetry(
-        `https://groups.roproxy.com/v1/groups/${encodeURIComponent(groupId)}`
+        `https://groups.roblox.com/v1/groups/${encodeURIComponent(groupId)}`
       );
       const body = await groupRes.json();
       return json({ ok: true, memberCount: toNum(body?.memberCount) });
