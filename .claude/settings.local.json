@@ -17,7 +17,8 @@
       "WebFetch(domain:games.roblox.com)",
       "Bash(tail:*)",
       "Bash(head:*)",
-      "Bash(cd /c/Users/jojoc/OneDrive/Dokumente/GitHub/LazyGames && npm run build 2>&1)"
+      "Bash(cd /c/Users/jojoc/OneDrive/Dokumente/GitHub/LazyGames && npm run build 2>&1)",
+      "Bash(cd \"C:\\\\Users\\\\jojoc\\\\OneDrive\\\\Dokumente\\\\GitHub\\\\LazyGames\" && npx tsc --noEmit 2>&1)"
     ]
   }
 }

@@ -115,10 +115,10 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
       <div className="game-card__content text-center flex flex-col items-center">
         <h3 className="game-card__title">{game.title}</h3>
 
-        <div className="game-card__stats justify-center">
+        <div className="game-card__stats">
           <StatCell value={ccu} label="Playing" isGreen />
-          <StatCell value={peak} label="Peak" />
-          <StatCell value={visits} label="Visits" isLarge />
+          <StatCell value={peak} label="Peak" highlight />
+          <StatCell value={visits} label="Visits" isLarge highlight />
         </div>
 
         <div className="game-card__actions justify-center mt-4">
@@ -149,14 +149,16 @@ function StatCell({
   label,
   isLarge = false,
   isGreen = false,
+  highlight = false,
 }: {
   value: number | null;
   label: string;
   isLarge?: boolean;
   isGreen?: boolean;
+  highlight?: boolean;
 }) {
   return (
-    <div className="game-card__stat flex flex-col items-center text-center">
+    <div className={`game-card__stat${highlight ? " game-card__stat--highlight" : ""}`}>
       <span className={`game-card__stat-value${isGreen ? " stat-green" : ""}`}>
         {value === null ? "--" : isLarge ? formatNumber(value) : value.toLocaleString()}
       </span>

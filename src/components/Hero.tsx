@@ -64,9 +64,6 @@ export default function Hero() {
         <div className="hero__aurora-band" />
       </div>
 
-      {/* Moon */}
-      <div className="hero__moon" aria-hidden="true" />
-
       <motion.div
         className="hero__content"
         variants={heroVariants}

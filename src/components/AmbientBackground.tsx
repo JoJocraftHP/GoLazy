@@ -56,13 +56,13 @@ export default function AmbientBackground() {
       fireflies.push({
         x: Math.random() * canvas!.width,
         y: canvas!.height * 0.25 + Math.random() * canvas!.height * 0.75,
-        size: Math.random() * 2.5 + 0.8,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: -(Math.random() * 0.7 + 0.15),
+        size: Math.random() * 2 + 0.6,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: -(Math.random() * 0.45 + 0.1),
         opacity: 0,
-        maxOpacity: Math.random() * 0.65 + 0.2,
+        maxOpacity: Math.random() * 0.38 + 0.1,
         life: 0,
-        maxLife: Math.random() * 320 + 180,
+        maxLife: Math.random() * 400 + 220,
         color: palette[Math.floor(Math.random() * palette.length)],
         wobble: Math.random() * Math.PI * 2,
       });
@@ -72,7 +72,7 @@ export default function AmbientBackground() {
       if (!running || !ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (fireflies.length < maxFireflies && Math.random() < 0.04) {
+      if (fireflies.length < maxFireflies && Math.random() < 0.022) {
         spawnFirefly();
       }
 
@@ -80,9 +80,9 @@ export default function AmbientBackground() {
 
       fireflies.forEach((ff) => {
         ff.life++;
-        ff.wobble += 0.018;
-        ff.x += ff.vx + Math.sin(ff.wobble) * 0.35;
-        ff.y += ff.vy + Math.cos(ff.wobble * 0.7) * 0.2;
+        ff.wobble += 0.011;
+        ff.x += ff.vx + Math.sin(ff.wobble) * 0.2;
+        ff.y += ff.vy + Math.cos(ff.wobble * 0.7) * 0.12;
 
         const ratio = ff.life / ff.maxLife;
         if (ratio < 0.12) {
