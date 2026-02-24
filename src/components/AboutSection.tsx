@@ -32,6 +32,24 @@ export default function AboutSection() {
             to launch, we focus on creating fun, high-quality experiences for
             players worldwide.
           </p>
+          <div className="about__milestones">
+            <div className="about__milestone-item">
+              <span className="about__milestone-value">2023</span>
+              <span className="about__milestone-label">Founded</span>
+            </div>
+            <div className="about__milestone-item">
+              <span className="about__milestone-value">2017</span>
+              <span className="about__milestone-label">Active Since</span>
+            </div>
+            <div className="about__milestone-item">
+              <span className="about__milestone-value">6</span>
+              <span className="about__milestone-label">Games Published</span>
+            </div>
+            <div className="about__milestone-item">
+              <span className="about__milestone-value">1.3M+</span>
+              <span className="about__milestone-label">Community</span>
+            </div>
+          </div>
         </div>
       </SectionReveal>
     </section>

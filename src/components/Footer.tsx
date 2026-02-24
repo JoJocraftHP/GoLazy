@@ -61,6 +61,7 @@ export default function Footer() {
         <p className="footer__copyright">
           &copy; {new Date().getFullYear()} GoLazy. All rights reserved.
         </p>
+        <p className="footer__tagline">Premium Roblox Games · Est. 2023</p>
       </div>
     </footer>
   );

@@ -55,6 +55,15 @@ export default function GroupCard({ group, variants }: GroupCardProps) {
         Members:{" "}
         {memberCount !== null ? memberCount.toLocaleString() : "--"}
       </p>
+      <a
+        href={group.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group-card__cta"
+        onClick={(e) => e.stopPropagation()}
+      >
+        Join Group →
+      </a>
     </motion.div>
   );
 }

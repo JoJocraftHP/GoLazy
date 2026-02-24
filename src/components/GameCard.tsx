@@ -174,7 +174,7 @@ function StatCell({
       ? `${value.toFixed(1)}%`
       : isLarge
         ? formatNumber(value)
-        : value.toLocaleString();
+        : value.toLocaleString('en-US');
 
   const valueClass = [
     "game-card__stat-value",

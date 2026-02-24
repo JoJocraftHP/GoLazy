@@ -52,6 +52,7 @@ export default function ContactSection() {
               href="https://x.com/LazyGamesTeam"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Follow GoLazy on X (Twitter)"
             >
               Follow on X
             </MagneticButton>
