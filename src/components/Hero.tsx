@@ -89,13 +89,7 @@ export default function Hero() {
         <motion.div className="hero__cta" variants={itemVariants}>
           <MagneticButton
             className="btn btn--primary btn--lg"
-            href="#games"
-            onClick={(e) => {
-              e.preventDefault();
-              document
-                .querySelector("#games")
-                ?.scrollIntoView({ behavior: "smooth" });
-            }}
+            href="/games"
             id="explore-games-btn"
           >
             Explore our Games
@@ -119,7 +113,7 @@ export default function Hero() {
           aria-label="Live game statistics"
         >
           <StatItem value={totalCCU} label="PLAYERS ONLINE" green />
-          <StatItem value={totalVisits} label="TOTAL VISITS" />
+          <StatItem value={totalVisits} label="TOTAL PLAYS" />
           <StatItem value={totalFavourites} label="TOTAL FAVS" />
           <StatItem value={totalLikes} label="TOTAL LIKES" />
           <StatItem value={totalGroupMembers} label="GROUP MEMBERS" />

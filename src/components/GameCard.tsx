@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import type { Variants } from "framer-motion";
 import type { Game } from "@/lib/data";
 import type { GameStat } from "@/hooks/useGameStats";
 import { formatNumber } from "@/lib/format";
 import { triggerToast } from "./Toast";
+import { useRobloxImage } from "@/hooks/useRobloxImage";
 
 interface GameCardProps {
   game: Game;
@@ -17,8 +18,11 @@ interface GameCardProps {
 const ROPROXY_URL = "https://thumbnails.roproxy.com/v1";
 
 export default function GameCard({ game, stat, variants }: GameCardProps) {
-  const [imgSrc, setImgSrc] = useState(game.fallbackImage);
+  const [imgLoaded, setImgLoaded] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+
+  const thumbUrl = `${ROPROXY_URL}/games/multiget/thumbnails?universeIds=${game.universeId}&countPerUniverse=1&size=768x432&format=Png`;
+  const imgSrc = useRobloxImage(thumbUrl, game.fallbackImage);
 
   const rawMouseX = useMotionValue(0);
   const rawMouseY = useMotionValue(0);
@@ -27,18 +31,6 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
 
   const rotateX = useTransform(mouseY, [-0.5, 0.5], [7, -7]);
   const rotateY = useTransform(mouseX, [-0.5, 0.5], [-7, 7]);
-
-  // Fetch RoProxy thumbnail
-  useEffect(() => {
-    const url = `${ROPROXY_URL}/games/multiget/thumbnails?universeIds=${game.universeId}&countPerUniverse=1&size=768x432&format=Png`;
-    fetch(url)
-      .then((r) => r.json())
-      .then((data) => {
-        const thumb = data?.data?.[0]?.thumbnails?.[0]?.imageUrl;
-        if (thumb) setImgSrc(thumb);
-      })
-      .catch(() => { });
-  }, [game.universeId]);
 
   const onMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -105,16 +97,19 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
         className="game-card__image-wrapper"
         aria-label={`Open ${game.title} on Roblox`}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imgSrc}
-          alt={game.alt}
-          className="game-card__image"
-          loading="lazy"
-          width={768}
-          height={432}
-          onError={() => setImgSrc(game.fallbackImage)}
-        />
+        {!imgLoaded && <div className="game-card__image-skeleton" />}
+        {imgSrc && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={imgSrc}
+            alt={game.alt}
+            className={`game-card__image${imgLoaded ? "" : " loading"}`}
+            width={768}
+            height={432}
+            onLoad={() => setImgLoaded(true)}
+            onError={() => setImgLoaded(true)}
+          />
+        )}
       </a>
 
       {/* Content */}
@@ -125,7 +120,7 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
           <div className="game-card__stats">
             <StatCell value={ccu} label="Playing" isGreen />
             <StatCell value={peak} label="Peak" />
-            <StatCell value={visits} label="Visits" isLarge />
+            <StatCell value={visits} label="Plays" isLarge />
             <StatCell value={likeRate} label="Rating" isPercent isAccent />
           </div>
         </div>

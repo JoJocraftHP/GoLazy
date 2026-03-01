@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 
 const NAV_LINKS = [
   { href: "#hero", label: "Home" },
-  { href: "#games", label: "Our Games" },
+  { href: "/games", label: "Our Games" },
   { href: "#about", label: "About Us" },
   { href: "#groups", label: "Groups" },
   { href: "#team", label: "Team" },
@@ -13,6 +14,8 @@ const NAV_LINKS = [
 ];
 
 export default function Header() {
+  const router = useRouter();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
@@ -21,6 +24,8 @@ export default function Header() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
+
+      if (pathname !== "/") return;
 
       const scrollPos = window.scrollY + 120;
       const sections = document.querySelectorAll<HTMLElement>("section[id]");
@@ -41,7 +46,7 @@ export default function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
 
   // Close mobile nav on Escape
   useEffect(() => {
@@ -66,10 +71,22 @@ export default function Header() {
 
   function handleLinkClick(href: string) {
     closeNav();
-    // smooth scroll (HTML already has scroll-behavior: smooth)
+    if (href.startsWith("/")) {
+      router.push(href);
+      return;
+    }
+    // Hash link — navigate to home if not already there
+    if (pathname !== "/") {
+      router.push(`/${href}`);
+      return;
+    }
     const target = document.querySelector(href);
     target?.scrollIntoView({ behavior: "smooth" });
   }
+
+  // Determine which link should be highlighted as active
+  const activeLinkHref =
+    pathname === "/games" ? "/games" : `#${activeSection}`;
 
   return (
     <header
@@ -80,11 +97,15 @@ export default function Header() {
       <div className="header__container">
         {/* Logo */}
         <a
-          href="#hero"
+          href={pathname === "/" ? "#hero" : "/"}
           className="logo"
           onClick={(e) => {
             e.preventDefault();
-            handleLinkClick("#hero");
+            if (pathname === "/") {
+              handleLinkClick("#hero");
+            } else {
+              router.push("/");
+            }
           }}
         >
           <Image
@@ -109,8 +130,9 @@ export default function Header() {
               <li key={link.href} className="nav__item">
                 <a
                   href={link.href}
-                  className={`nav__link${activeSection === link.href.slice(1) ? " active" : ""
-                    }`}
+                  className={`nav__link${
+                    activeLinkHref === link.href ? " active" : ""
+                  }`}
                   onClick={(e) => {
                     e.preventDefault();
                     handleLinkClick(link.href);

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Quicksand, Fredoka, Comfortaa } from "next/font/google";
+import { Quicksand, Outfit, Fredoka, Comfortaa } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -8,6 +8,13 @@ const quicksand = Quicksand({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--fw-quicksand",
+  display: "swap",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--fw-outfit",
   display: "swap",
 });
 
@@ -121,7 +128,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${quicksand.variable} ${fredoka.variable} ${comfortaa.variable}`}
+      className={`${quicksand.variable} ${outfit.variable} ${fredoka.variable} ${comfortaa.variable}`}
     >
       <head>
         <meta name="theme-color" content="#0a0a0f" />

@@ -69,6 +69,20 @@ export const GAMES: Game[] = [
     fallbackImage: "/assets/GameIcons/MonsterTN1.png",
     alt: "Monster Training - Roblox monster simulator game",
   },
+  {
+    title: "Double Jump for Brainrots!",
+    universeId: "9701551380",
+    url: "https://www.roblox.com/games/96872770738990",
+    fallbackImage: "/assets/branding/GoLazyGameCard.png",
+    alt: "Double Jump for Brainrots! - Roblox game by GoLazy",
+  },
+  {
+    title: "Guess the Path for Brainrots",
+    universeId: "9697705202",
+    url: "https://www.roblox.com/games/113500276693848",
+    fallbackImage: "/assets/branding/GoLazyGameCard.png",
+    alt: "Guess the Path for Brainrots - Roblox game by GoLazy",
+  },
 ];
 
 export const GROUPS: Group[] = [
