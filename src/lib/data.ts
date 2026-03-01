@@ -106,14 +106,14 @@ export const TEAM_CATEGORIES: TeamCategory[] = [
     members: [
       {
         name: "JoJocraftHP",
-        role: "Owner, Game Design & Management",
+        role: "Owner/Management",
         userId: "214865113",
         profileUrl: "https://www.roblox.com/users/214865113/profile",
         fallbackImage: "/assets/profiles/JoJoProfile.png",
       },
       {
         name: "mitex",
-        role: "Co-Owner, Scripter",
+        role: "Co-Owner/Scripter",
         userId: "271040226",
         profileUrl: "https://www.roblox.com/users/271040226/profile",
         fallbackImage: "/assets/profiles/MitexProfile.png",
