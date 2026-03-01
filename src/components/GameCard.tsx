@@ -19,6 +19,7 @@ const ROPROXY_URL = "https://thumbnails.roproxy.com/v1";
 
 export default function GameCard({ game, stat, variants }: GameCardProps) {
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [ready, setReady] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
   const thumbUrl = `${ROPROXY_URL}/games/multiget/thumbnails?universeIds=${game.universeId}&countPerUniverse=1&size=768x432&format=Png`;
@@ -51,17 +52,7 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
   async function handleShare(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    try {
-      await navigator.clipboard.writeText(game.url);
-    } catch {
-      const ta = document.createElement("textarea");
-      ta.value = game.url;
-      ta.style.cssText = "position:fixed;opacity:0";
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-    }
+    await navigator.clipboard.writeText(game.url).catch(() => {});
     triggerToast();
   }
 
@@ -80,11 +71,13 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
       ref={cardRef}
       className="game-card"
       variants={variants}
+      onAnimationComplete={() => setReady(true)}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       style={{
         rotateX,
         rotateY,
+        pointerEvents: ready ? "auto" : "none",
       }}
       aria-label={`${game.title} game card`}
       aria-live="polite"

@@ -1,3 +1,4 @@
+import { GAMES } from "@/lib/data";
 import SectionReveal from "./SectionReveal";
 
 export default function AboutSection() {
@@ -42,7 +43,7 @@ export default function AboutSection() {
               <span className="about__milestone-label">Active Since</span>
             </div>
             <div className="about__milestone-item">
-              <span className="about__milestone-value">6</span>
+              <span className="about__milestone-value">{GAMES.length}</span>
               <span className="about__milestone-label">Games Published</span>
             </div>
             <div className="about__milestone-item">

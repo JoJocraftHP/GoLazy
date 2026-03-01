@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import useSWR from "swr";
 
 const WORKER_URL = "https://livestatsupdate.jojocrafthdyt.workers.dev";
@@ -55,20 +56,21 @@ export function useGameStats(universeIds: string[]) {
     },
   });
 
-  const statMap = new Map<string, GameStat>();
-  if (data?.data) {
-    for (const g of data.data) {
-      statMap.set(String(g.id), g);
+  // Memoised so consumers (GamesSection, Hero) only recompute when data changes
+  const statMap = useMemo(() => {
+    const m = new Map<string, GameStat>();
+    if (data?.data) {
+      for (const g of data.data) m.set(String(g.id), g);
     }
-  }
+    return m;
+  }, [data]);
 
-  const totalCCU = data?.data?.reduce((s, g) => s + (g.playing ?? 0), 0) ?? 0;
-  const totalVisits =
-    data?.data?.reduce((s, g) => s + (g.visits ?? 0), 0) ?? 0;
-  const totalFavourites =
-    data?.data?.reduce((s, g) => s + (g.favoritedCount ?? 0), 0) ?? 0;
-  const totalLikes =
-    data?.data?.reduce((s, g) => s + (g.upVotes ?? 0), 0) ?? 0;
+  const { totalCCU, totalVisits, totalFavourites, totalLikes } = useMemo(() => ({
+    totalCCU:        data?.data?.reduce((s, g) => s + (g.playing        ?? 0), 0) ?? 0,
+    totalVisits:     data?.data?.reduce((s, g) => s + (g.visits         ?? 0), 0) ?? 0,
+    totalFavourites: data?.data?.reduce((s, g) => s + (g.favoritedCount ?? 0), 0) ?? 0,
+    totalLikes:      data?.data?.reduce((s, g) => s + (g.upVotes        ?? 0), 0) ?? 0,
+  }), [data]);
 
   return {
     statMap,

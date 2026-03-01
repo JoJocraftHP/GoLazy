@@ -6,18 +6,25 @@ const MAX_RETRIES = 5;
 const RETRY_INTERVAL_MS = 700;
 
 /**
- * Fetches a Roblox image URL from a thumbnails/icons API endpoint with
- * automatic retry on failure. Handles both endpoint response shapes:
- *   icons:      data[0].imageUrl
- *   thumbnails: data[0].thumbnails[0].imageUrl
- *
- * Returns null while loading, the image URL on success, or the fallback
- * after all retries are exhausted.
+ * Module-level cache — lives as long as the JS module does.
+ * Survives client-side navigation (Next.js keeps modules alive).
+ * Cleared automatically on full page refresh / tab close.
+ * Only successful fetches are cached; fallbacks are not stored so
+ * a future navigation attempt will retry.
  */
+const imageCache = new Map<string, string>();
+
 export function useRobloxImage(fetchUrl: string, fallback: string): string | null {
-  const [src, setSrc] = useState<string | null>(null);
+  // Initialise from cache so returning to a page shows images instantly
+  const [src, setSrc] = useState<string | null>(() => imageCache.get(fetchUrl) ?? null);
 
   useEffect(() => {
+    // Already have a good URL — nothing to do
+    if (imageCache.has(fetchUrl)) {
+      setSrc(imageCache.get(fetchUrl)!);
+      return;
+    }
+
     let cancelled = false;
     let attempts = 0;
     let retryTimer: ReturnType<typeof setTimeout> | null = null;
@@ -35,6 +42,7 @@ export function useRobloxImage(fetchUrl: string, fallback: string): string | nul
             item?.imageUrl ??
             item?.thumbnails?.[0]?.imageUrl;
           if (url) {
+            imageCache.set(fetchUrl, url);
             setSrc(url);
           } else {
             throw new Error("no imageUrl in response");
@@ -46,12 +54,12 @@ export function useRobloxImage(fetchUrl: string, fallback: string): string | nul
           if (attempts < MAX_RETRIES) {
             retryTimer = setTimeout(attempt, RETRY_INTERVAL_MS * attempts);
           } else {
+            // Don't cache the fallback — let the next mount retry
             setSrc(fallback);
           }
         });
     }
 
-    setSrc(null);
     attempt();
 
     return () => {

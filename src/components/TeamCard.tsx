@@ -1,8 +1,15 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import { motion, useMotionValue, useTransform, type Variants } from "framer-motion";
+import { useState, useRef, useCallback } from "react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  type Variants,
+} from "framer-motion";
 import type { TeamMember } from "@/lib/data";
+import { useRobloxImage } from "@/hooks/useRobloxImage";
 
 const ROPROXY_URL = "https://thumbnails.roproxy.com/v1";
 
@@ -12,39 +19,35 @@ interface TeamCardProps {
 }
 
 export default function TeamCard({ member, variants }: TeamCardProps) {
-  const [imgSrc, setImgSrc] = useState(member.fallbackImage);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const cardRef = useRef<HTMLElement>(null);
+
+  const avatarUrl = `${ROPROXY_URL}/users/avatar-headshot?userIds=${member.userId}&size=150x150&format=Png`;
+  const imgSrc = useRobloxImage(avatarUrl, member.fallbackImage);
+
+  // Spring-smoothed tilt (matches GameCard behaviour)
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const mouseX = useSpring(rawX, { stiffness: 150, damping: 20 });
+  const mouseY = useSpring(rawY, { stiffness: 150, damping: 20 });
   const rotateX = useTransform(mouseY, [-0.5, 0.5], [6, -6]);
   const rotateY = useTransform(mouseX, [-0.5, 0.5], [-6, 6]);
 
-  useEffect(() => {
-    const url = `${ROPROXY_URL}/users/avatar-headshot?userIds=${member.userId}&size=150x150&format=Png`;
-    fetch(url)
-      .then((r) => r.json())
-      .then((data) => {
-        const imageUrl = data?.data?.[0]?.imageUrl;
-        if (imageUrl) setImgSrc(imageUrl);
-      })
-      .catch(() => {});
-  }, [member.userId]);
-
   const onMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLElement>) => {
       const card = cardRef.current;
       if (!card) return;
       const rect = card.getBoundingClientRect();
-      mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-      mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+      rawX.set((e.clientX - rect.left) / rect.width - 0.5);
+      rawY.set((e.clientY - rect.top) / rect.height - 0.5);
     },
-    [mouseX, mouseY]
+    [rawX, rawY]
   );
 
   const onMouseLeave = useCallback(() => {
-    mouseX.set(0);
-    mouseY.set(0);
-  }, [mouseX, mouseY]);
+    rawX.set(0);
+    rawY.set(0);
+  }, [rawX, rawY]);
 
   return (
     <motion.article
@@ -61,16 +64,22 @@ export default function TeamCard({ member, variants }: TeamCardProps) {
         target="_blank"
         rel="noopener noreferrer"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imgSrc}
-          alt={`${member.name} profile picture`}
-          className="team-card__avatar"
-          loading="lazy"
-          width={72}
-          height={72}
-          onError={() => setImgSrc(member.fallbackImage)}
-        />
+        <div className="team-card__avatar-wrap">
+          {!imgLoaded && <div className="team-card__avatar-skeleton" />}
+          {imgSrc && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={imgSrc}
+              alt={`${member.name} profile picture`}
+              className={`team-card__avatar${imgLoaded ? "" : " loading"}`}
+              loading="lazy"
+              width={72}
+              height={72}
+              onLoad={() => setImgLoaded(true)}
+              onError={() => setImgLoaded(true)}
+            />
+          )}
+        </div>
         <h3 className="team-card__name">{member.name}</h3>
       </a>
       <p className="team-card__role">{member.role}</p>

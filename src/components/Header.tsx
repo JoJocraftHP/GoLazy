@@ -22,23 +22,28 @@ export default function Header() {
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    // Query sections once per pathname change — not on every scroll event
+    const sections =
+      pathname === "/"
+        ? Array.from(document.querySelectorAll<HTMLElement>("section[id]"))
+        : [];
+
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
 
       if (pathname !== "/") return;
 
       const scrollPos = window.scrollY + 120;
-      const sections = document.querySelectorAll<HTMLElement>("section[id]");
       let current = window.scrollY < 100 ? "hero" : "";
 
-      sections.forEach((sec) => {
+      for (const sec of sections) {
         if (
           scrollPos >= sec.offsetTop &&
           scrollPos < sec.offsetTop + sec.offsetHeight
         ) {
           current = sec.id;
         }
-      });
+      }
 
       if (current) setActiveSection(current);
     };

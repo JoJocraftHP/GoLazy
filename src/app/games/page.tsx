@@ -84,11 +84,6 @@ export default function GamesPage() {
             ))}
           </motion.div>
 
-          <div style={{ display: "flex", justifyContent: "center", marginTop: "4rem" }}>
-            <a href="/" className="btn btn--primary btn--lg">
-              &larr; Back to Home
-            </a>
-          </div>
         </section>
       </main>
 
