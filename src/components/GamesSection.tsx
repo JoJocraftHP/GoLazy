@@ -27,10 +27,14 @@ interface TopGameIconProps {
   statsLoading: boolean;
 }
 
-function TopGameIcon({ game, stat, rank, statsLoading }: TopGameIconProps) {
+interface MobileGameCardProps {
+  game: Game;
+  stat?: GameStat;
+  statsLoading: boolean;
+}
+
+function MobileGameCard({ game, stat, statsLoading }: MobileGameCardProps) {
   const [imgLoaded, setImgLoaded] = useState(false);
-  const isCenter = rank === 0;
-  const iconSize = RANK_ICON_SIZE[rank];
 
   const iconUrl =
     `${ROPROXY_URL}/games/icons?universeIds=${game.universeId}` +
@@ -39,56 +43,35 @@ function TopGameIcon({ game, stat, rank, statsLoading }: TopGameIconProps) {
 
   const ccu = stat?.playing ?? null;
   const visits = stat?.visits ?? null;
-  // Show shimmer only while SWR is still fetching; once settled show "—" or the value
   const showStatSkeleton = statsLoading && ccu === null;
 
   return (
-    <div className="top-game-icon-hitbox" style={{ order: RANK_CSS_ORDER[rank] }}>
-    <div
-      className={`top-game-icon${isCenter ? " top-game-icon--featured" : ""}`}
-    >
-      {/*
-       * Full-card transparent link overlay — clicking anywhere on the card
-       * opens the game. The Play Now button sits above this via z-index.
-       */}
+    <div className="mobile-game-card">
       <a
         href={game.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="top-game-icon__link-overlay"
-        aria-label={`Open ${game.title} on Roblox`}
-        tabIndex={-1}
-        aria-hidden="true"
-      />
-
-      {/* Game icon image — wrapped in link so clicking it opens the game */}
-      <a
-        href={game.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="top-game-icon__img-wrap"
-        style={{ width: iconSize, height: iconSize }}
+        className="mobile-game-card__img-wrapper"
         aria-label={`Open ${game.title} on Roblox`}
       >
-        {/* Skeleton shows until the img fires onLoad */}
-        {!imgLoaded && <div className="top-game-icon__skeleton" />}
+        {!imgLoaded && <div className="game-card__image-skeleton" style={{ borderRadius: 'var(--radius-xl)' }} />}
         {iconSrc && (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
             src={iconSrc}
             alt={game.alt}
-            width={iconSize}
-            height={iconSize}
-            className={`top-game-icon__img${imgLoaded ? " is-loaded" : ""}`}
+            loading="lazy"
+            className={`mobile-game-card__img${imgLoaded ? " is-loaded" : ""}`}
             onLoad={() => setImgLoaded(true)}
             onError={() => setImgLoaded(true)}
           />
         )}
       </a>
 
-      {/* Stats + title */}
-      <div className="top-game-icon__info">
-        <div className="top-game-icon__stats-row">
+      <div className="mobile-game-card__info">
+        <h3 className="mobile-game-card__title">{game.title}</h3>
+
+        <div className="top-game-icon__stats-row" style={{ justifyContent: 'center' }}>
           {/* CCU pill — green */}
           {ccu !== null ? (
             <span className="top-game-icon__ccu">
@@ -109,20 +92,115 @@ function TopGameIcon({ game, stat, rank, statsLoading }: TopGameIconProps) {
           ) : null}
         </div>
 
-        <span className="top-game-icon__title">{game.title}</span>
+        <a
+          href={game.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn--secondary btn--sm mobile-game-card__btn"
+        >
+          View Game
+        </a>
       </div>
-
-      {/* Play Now — sits above the card overlay via z-index */}
-      <a
-        href={game.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="top-game-icon__play-btn"
-        aria-label={`Play ${game.title} on Roblox (opens in new tab)`}
-      >
-        Play Now
-      </a>
     </div>
+  );
+}
+
+function TopGameIcon({ game, stat, rank, statsLoading }: TopGameIconProps) {
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const isCenter = rank === 0;
+  const iconSize = RANK_ICON_SIZE[rank];
+
+  const iconUrl =
+    `${ROPROXY_URL}/games/icons?universeIds=${game.universeId}` +
+    `&returnPolicy=PlaceHolder&size=512x512&format=Png&isCircular=false`;
+  const iconSrc = useRobloxImage(iconUrl, game.fallbackImage);
+
+  const ccu = stat?.playing ?? null;
+  const visits = stat?.visits ?? null;
+  // Show shimmer only while SWR is still fetching; once settled show "—" or the value
+  const showStatSkeleton = statsLoading && ccu === null;
+
+  return (
+    <div className="top-game-icon-hitbox" style={{ order: RANK_CSS_ORDER[rank] }}>
+      <div
+        className={`top-game-icon${isCenter ? " top-game-icon--featured" : ""}`}
+      >
+        {/*
+       * Full-card transparent link overlay — clicking anywhere on the card
+       * opens the game. The Play Now button sits above this via z-index.
+       */}
+        <a
+          href={game.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="top-game-icon__link-overlay"
+          aria-label={`Open ${game.title} on Roblox`}
+          tabIndex={-1}
+          aria-hidden="true"
+        />
+
+        {/* Game icon image — wrapped in link so clicking it opens the game */}
+        <a
+          href={game.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="top-game-icon__img-wrap"
+          style={{ width: iconSize, height: iconSize }}
+          aria-label={`Open ${game.title} on Roblox`}
+        >
+          {/* Skeleton shows until the img fires onLoad */}
+          {!imgLoaded && <div className="top-game-icon__skeleton" />}
+          {iconSrc && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={iconSrc}
+              alt={game.alt}
+              width={iconSize}
+              height={iconSize}
+              className={`top-game-icon__img${imgLoaded ? " is-loaded" : ""}`}
+              onLoad={() => setImgLoaded(true)}
+              onError={() => setImgLoaded(true)}
+            />
+          )}
+        </a>
+
+        {/* Stats + title */}
+        <div className="top-game-icon__info">
+          <div className="top-game-icon__stats-row">
+            {/* CCU pill — green */}
+            {ccu !== null ? (
+              <span className="top-game-icon__ccu">
+                <span className="top-game-icon__ccu-dot" />
+                {ccu.toLocaleString("en-US")}
+              </span>
+            ) : showStatSkeleton ? (
+              <span className="top-game-icon__stat-placeholder" />
+            ) : null}
+
+            {/* Plays pill — amber */}
+            {visits !== null ? (
+              <span className="top-game-icon__plays">
+                {formatNumber(visits)} plays
+              </span>
+            ) : showStatSkeleton ? (
+              <span className="top-game-icon__stat-placeholder" />
+            ) : null}
+          </div>
+
+          <span className="top-game-icon__title">{game.title}</span>
+        </div>
+
+        {/* Play Now — sits above the card overlay via z-index */}
+        <a
+          href={game.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="top-game-icon__play-btn"
+          aria-label={`Play ${game.title} on Roblox (opens in new tab)`}
+        >
+          Play Now
+        </a>
+      </div>
     </div>
   );
 }
@@ -135,10 +213,10 @@ export default function GamesSection() {
       statMap.size === 0
         ? [...GAMES]
         : [...GAMES].sort((a, b) => {
-            const ccuA = statMap.get(a.universeId)?.playing ?? 0;
-            const ccuB = statMap.get(b.universeId)?.playing ?? 0;
-            return ccuB - ccuA;
-          });
+          const ccuA = statMap.get(a.universeId)?.playing ?? 0;
+          const ccuB = statMap.get(b.universeId)?.playing ?? 0;
+          return ccuB - ccuA;
+        });
     return sorted.slice(0, 5);
   }, [statMap]);
 
@@ -169,6 +247,7 @@ export default function GamesSection() {
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
+        {/* Desktop: fan layout */}
         <div className="top-games-fan">
           {top5.map((game, rank) => (
             <TopGameIcon
@@ -176,6 +255,18 @@ export default function GamesSection() {
               game={game}
               stat={statMap.get(game.universeId)}
               rank={rank}
+              statsLoading={isLoading}
+            />
+          ))}
+        </div>
+
+        {/* Mobile: vertical stack — top 3 by CCU */}
+        <div className="top-games-mobile-stack">
+          {top5.slice(0, 3).map((game) => (
+            <MobileGameCard
+              key={game.universeId}
+              game={game}
+              stat={statMap.get(game.universeId)}
               statsLoading={isLoading}
             />
           ))}
