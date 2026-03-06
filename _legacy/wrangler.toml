@@ -1,0 +1,12 @@
+name = "livestatsupdate"
+main = "worker.js"
+compatibility_date = "2024-09-23"
+
+[triggers]
+crons = ["*/5 * * * *"]
+
+# KV namespace — replace <YOUR_KV_NAMESPACE_ID> with the actual ID from the CF dashboard
+# (Workers & Pages → KV → find "PEAKS" → copy the ID)
+[[kv_namespaces]]
+binding = "PEAKS"
+id = "708c83eada004cc8a222477943788cb8"

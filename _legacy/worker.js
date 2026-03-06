@@ -1,4 +1,21 @@
+// All universe IDs to poll during scheduled runs
+const ALL_UNIVERSE_IDS = [
+  '9564163170', // Floor is Lava for Brainrots
+  '8357236286', // Crush for Brainrots
+  '7017269091', // Jetpack Training
+  '5792683386', // Lift a Pet
+  '9697706765', // Escape Color Block for Brainrots
+  '7676176341', // Monster Training
+  '9701551380', // Double Jump for Brainrots
+  '9697705202', // Guess the Path for Brainrots
+];
+
 export default {
+  // Cron trigger: runs every 5 minutes to update peak CCU in KV
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(pollAllPeaks(env));
+  },
+
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
@@ -64,8 +81,27 @@ export default {
 
 const BASELINE_PEAKS = {
   '8357236286': 16500, '7017269091': 5900, '5792683386': 1900,
-  '7676176341': 600,   '5476431443': 500,  '9564163170': 100, '9697706765': 0,
+  '7676176341': 600,   '5476431443': 500,  '9564163170': 100,
+  '9697706765': 0,     '9701551380': 0,    '9697705202': 0,
 };
+
+// Called by the cron trigger — fetches live CCU for all games and updates KV peaks
+async function pollAllPeaks(env) {
+  const chunks = chunk(ALL_UNIVERSE_IDS, 100);
+  for (const part of chunks) {
+    const joined = encodeURIComponent(part.join(','));
+    try {
+      const res = await fetch(`https://games.roblox.com/v1/games?universeIds=${joined}`, {
+        headers: { accept: 'application/json' },
+      });
+      if (!res.ok) continue;
+      const body = await res.json();
+      for (const g of (body?.data || [])) {
+        await updatePeakSeeded(env, g.id, toNum(g.playing));
+      }
+    } catch (_) { /* ignore individual chunk failures */ }
+  }
+}
 
 function splitIds(s) { return (s || '').split(',').map(x => x.trim()).filter(Boolean); }
 function chunk(a, n) { const o = []; for (let i = 0; i < a.length; i += n) o.push(a.slice(i, i + n)); return o; }
