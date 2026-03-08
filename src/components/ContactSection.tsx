@@ -49,7 +49,7 @@ export default function ContactSection() {
             </MagneticButton>
             <MagneticButton
               className="btn btn--secondary btn--lg"
-              href="https://x.com/LazyGamesTeam"
+              href="https://x.com/GoLazyStudios"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Follow GoLazy on X (Twitter)"

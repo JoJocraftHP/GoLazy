@@ -9,7 +9,7 @@ const SOCIAL_LINKS = [
     ),
   },
   {
-    href: "https://x.com/LazyGamesTeam",
+    href: "https://x.com/GoLazyStudios",
     label: "Follow us on X (Twitter)",
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

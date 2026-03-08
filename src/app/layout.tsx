@@ -101,7 +101,7 @@ const organizationJsonLd = {
   foundingDate: "2023",
   sameAs: [
     "https://discord.gg/UnhZDUH93X",
-    "https://x.com/LazyGamesTeam",
+    "https://x.com/GoLazyStudios",
     "https://www.roblox.com/communities/33472368/LazyGameStudios",
     "https://www.roblox.com/communities/35868694/ActiveGameStudios",
   ],
