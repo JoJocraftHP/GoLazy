@@ -83,6 +83,13 @@ export const GAMES: Game[] = [
     fallbackImage: "/assets/branding/GoLazyGameCard.png",
     alt: "Guess the Path for Brainrots - Roblox game by GoLazy",
   },
+  {
+    title: "Crush Walls for Brainrots",
+    universeId: "9697689575",
+    url: "https://www.roblox.com/games/108971149268278/Crush-Walls-for-Brainrots",
+    fallbackImage: "/assets/branding/GoLazyGameCard.png",
+    alt: "Crush Walls for Brainrots - Roblox game by GoLazy",
+  },
 ];
 
 export const GROUPS: Group[] = [
