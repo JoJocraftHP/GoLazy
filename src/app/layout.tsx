@@ -26,20 +26,23 @@ const comfortaa = Comfortaa({
 });
 
 export const metadata: Metadata = {
-  title: "GoLazy",
+  title: {
+    default: "GoLazy - Play Top Roblox Games",
+    template: "%s | GoLazy",
+  },
   description:
-    "Parent brand of LazyGames and ActiveGames. We specialize in high-rated, innovative titles that define the platform.",
+    "GoLazy Studios makes hit Roblox games. Play Floor is Lava for Brainrots, Crush for Brainrots, Jetpack Training and more — millions of plays, 98%+ ratings.",
   keywords:
-    "GoLazy, GoLazy Studios, LazyGames, ActiveGames, Roblox game studio, Roblox simulators, Floor is Lava for Brainrots, Crush for Brainrots, Jetpack Training",
+    "GoLazy, GoLazy Studios, LazyGames, ActiveGames, Roblox game studio, Roblox simulators, Floor is Lava for Brainrots, Crush for Brainrots, Jetpack Training, Roblox brainrots games",
   authors: [{ name: "GoLazy" }],
   robots: "index, follow",
   metadataBase: new URL("https://www.golazy.net"),
   alternates: { canonical: "/" },
   openGraph: {
-    title: "GoLazy",
+    title: "GoLazy - Play Top Roblox Games",
     siteName: "GoLazy",
     description:
-      "Parent brand of LazyGames and ActiveGames. We specialize in high-rated, innovative titles that define the platform.",
+      "GoLazy Studios makes hit Roblox games. Play Floor is Lava for Brainrots, Crush for Brainrots, Jetpack Training and more — millions of plays, 98%+ ratings.",
     url: "https://www.golazy.net/",
     type: "website",
     images: [
@@ -55,9 +58,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     site: "@LazyGamesTeam",
-    title: "GoLazy",
+    title: "GoLazy - Play Top Roblox Games",
     description:
-      "Parent brand of LazyGames and ActiveGames. We specialize in high-rated, innovative titles that define the platform.",
+      "GoLazy Studios makes hit Roblox games. Play Floor is Lava for Brainrots, Crush for Brainrots, Jetpack Training and more — millions of plays, 98%+ ratings.",
     images: ["/assets/branding/GoLazyBanner.png"],
   },
   icons: {

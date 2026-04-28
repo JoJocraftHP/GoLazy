@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useCallback } from "react";
+import Link from "next/link";
 
 interface MagneticButtonProps {
   children: React.ReactNode;
@@ -58,9 +59,15 @@ export default function MagneticButton({
       }}
     >
       {href ? (
-        <a href={href} target={target} rel={rel} {...sharedProps}>
-          {children}
-        </a>
+        href.startsWith("/") && !target ? (
+          <Link href={href} {...sharedProps}>
+            {children}
+          </Link>
+        ) : (
+          <a href={href} target={target} rel={rel} {...sharedProps}>
+            {children}
+          </a>
+        )
       ) : (
         <button type="button" {...sharedProps}>
           {children}

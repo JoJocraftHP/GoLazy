@@ -12,7 +12,7 @@ export default function ContactSection() {
               Get in Touch
             </h2>
             <p className="section__subtitle">
-              Join our community on Discord or follow us on Twitter
+              Join our community on Discord or follow us on X
             </p>
           </header>
 
@@ -32,7 +32,7 @@ export default function ContactSection() {
             >
               <span className="discord-widget__dot" aria-hidden="true" />
               <span>
-                <span style={{ fontWeight: 700, color: "white" }}>500+</span>{" "}
+                <span style={{ fontWeight: 700, color: "white" }}>1,000+</span>{" "}
                 members online
               </span>
             </a>

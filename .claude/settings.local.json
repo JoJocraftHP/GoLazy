@@ -26,7 +26,8 @@
       "Bash(git push:*)",
       "Bash(cd \"C:/Users/jojoc/OneDrive/Dokumente/GitHub/LazyGames\" && npx tsc --noEmit 2>&1)",
       "Bash(cd \"C:/Users/jojoc/OneDrive/Dokumente/GitHub/LazyGames\" && npm run build 2>&1)",
-      "Bash(cd \"C:\\\\Users\\\\jojoc\\\\OneDrive\\\\Dokumente\\\\GitHub\\\\LazyGames\" && npm run build 2>&1)"
+      "Bash(cd \"C:\\\\Users\\\\jojoc\\\\OneDrive\\\\Dokumente\\\\GitHub\\\\LazyGames\" && npm run build 2>&1)",
+      "Bash(del *)"
     ]
   }
 }

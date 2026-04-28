@@ -74,7 +74,7 @@ export default function Hero() {
 
         {/* Title */}
         <motion.h1 className="hero__title" variants={itemVariants}>
-          <span className="text-gradient">Welcome to GoLazy</span>
+          <span className="text-gradient">Top Roblox Games by GoLazy Studios</span>
         </motion.h1>
 
         {/* Subtitle */}

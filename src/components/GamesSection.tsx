@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import SectionReveal from "./SectionReveal";
 import { useGameStats } from "@/hooks/useGameStats";
 import { useRobloxImage } from "@/hooks/useRobloxImage";
@@ -274,9 +275,9 @@ export default function GamesSection() {
       </motion.div>
 
       <div className="top-games-view-all">
-        <a href="/games" className="btn btn--primary btn--lg">
+        <Link href="/games" className="btn btn--primary btn--lg">
           View all Games
-        </a>
+        </Link>
       </div>
     </section>
   );
