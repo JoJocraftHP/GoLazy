@@ -90,6 +90,13 @@ export const GAMES: Game[] = [
     fallbackImage: "/assets/branding/GoLazyGameCard.png",
     alt: "Crush Walls for Brainrots - Roblox game by GoLazy",
   },
+  {
+    title: "Squishy Dumpling Duel",
+    universeId: "10096982704",
+    url: "https://www.roblox.com/games/75555951777956/Squishy-Dumpling-Duel",
+    fallbackImage: "/assets/branding/GoLazyGameCard.png",
+    alt: "Squishy Dumpling Duel - Roblox game by GoLazy",
+  },
 ];
 
 export const GROUPS: Group[] = [
