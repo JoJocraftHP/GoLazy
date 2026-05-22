@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Quicksand, Fredoka, Comfortaa } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -45,9 +46,11 @@ export const metadata: Metadata = {
       "GoLazy Studios makes hit Roblox games. Play Floor is Lava for Brainrots, Crush for Brainrots, Jetpack Training and more — millions of plays, 98%+ ratings.",
     url: "https://www.golazy.net/",
     type: "website",
+    locale: "en_US",
     images: [
       {
         url: "/assets/branding/GoLazyBanner.png",
+        secureUrl: "https://www.golazy.net/assets/branding/GoLazyBanner.png",
         type: "image/png",
         width: 1920,
         height: 678,
@@ -57,11 +60,27 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@LazyGamesTeam",
+    site: "@GoLazyStudios",
+    creator: "@GoLazyStudios",
     title: "GoLazy - Play Top Roblox Games",
     description:
       "GoLazy Studios makes hit Roblox games. Play Floor is Lava for Brainrots, Crush for Brainrots, Jetpack Training and more — millions of plays, 98%+ ratings.",
-    images: ["/assets/branding/GoLazyBanner.png"],
+    images: [
+      {
+        url: "/assets/branding/GoLazyBanner.png",
+        alt: "GoLazy - Parent brand of LazyGames and ActiveGames",
+      },
+    ],
+  },
+  formatDetection: {
+    email: false,
+    telephone: false,
+    address: false,
+  },
+  appleWebApp: {
+    capable: true,
+    title: "GoLazy",
+    statusBarStyle: "black-translucent",
   },
   icons: {
     icon: [
@@ -86,10 +105,17 @@ export const metadata: Metadata = {
   },
   manifest: "/assets/branding/GoLazyFav/site.webmanifest",
   other: {
-    "msapplication-TileColor": "#da532c",
+    "msapplication-TileColor": "#0a0a0f",
     "msapplication-config": "/assets/branding/GoLazyFav/browserconfig.xml",
-    "apple-mobile-web-app-status-bar-style": "black-translucent",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0f",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 const organizationJsonLd = {
@@ -115,6 +141,15 @@ const organizationJsonLd = {
   },
 };
 
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "GoLazy",
+  url: "https://www.golazy.net",
+  inLanguage: "en-US",
+  publisher: { "@id": "https://www.golazy.net/#organization" },
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -126,14 +161,15 @@ export default function RootLayout({
       className={`${quicksand.variable} ${fredoka.variable} ${comfortaa.variable}`}
     >
       <head>
-        <meta name="theme-color" content="#0a0a0f" />
-        <link rel="preconnect" href="https://thumbnails.roproxy.com" />
-        <link rel="dns-prefetch" href="https://thumbnails.roproxy.com" />
-        <link rel="dns-prefetch" href="https://livestatsupdate.jojocrafthdyt.workers.dev" />
+        <link rel="preconnect" href="https://thumbnails.roproxy.com" crossOrigin="" />
+        <link rel="preconnect" href="https://livestatsupdate.jojocrafthdyt.workers.dev" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://games.roproxy.com" />
+        <link rel="dns-prefetch" href="https://groups.roproxy.com" />
         <link
           rel="preload"
           href="/assets/branding/GoLazyGameCard.png"
           as="image"
+          fetchPriority="high"
         />
         <script
           type="application/ld+json"
@@ -142,9 +178,10 @@ export default function RootLayout({
           }}
         />
         <script
-          defer
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon='{"token": "4b70de09d99f4a84a5c58b5c30b61966"}'
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteJsonLd),
+          }}
         />
       </head>
       <body
@@ -156,6 +193,11 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
+        <Script
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          strategy="afterInteractive"
+          data-cf-beacon='{"token": "4b70de09d99f4a84a5c58b5c30b61966"}'
+        />
       </body>
     </html>
   );

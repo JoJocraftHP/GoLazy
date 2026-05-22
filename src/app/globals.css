@@ -92,6 +92,30 @@ button {
 }
 
 /* ============================================================
+   Accessibility — visible keyboard focus ring
+   ============================================================ */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(108, 92, 255, 0.18);
+}
+
+/* ============================================================
    Star Field Background
    ============================================================ */
 .stars {
@@ -1064,7 +1088,6 @@ button {
   contain: paint;
   transition: border-color 0.3s;
   will-change: transform;
-  cursor: pointer;
 }
 
 .game-card::before {

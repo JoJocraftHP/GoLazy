@@ -118,19 +118,18 @@ export default function AmbientBackground() {
     resize();
     window.addEventListener("resize", resize, { passive: true });
 
+    const spawnTimers: ReturnType<typeof setTimeout>[] = [];
     for (let i = 0; i < maxFireflies; i++) {
-      setTimeout(() => spawnFirefly(), Math.random() * 8000);
+      spawnTimers.push(setTimeout(() => spawnFirefly(), Math.random() * 8000));
     }
 
     animate();
 
-    document.addEventListener(
-      "visibilitychange",
-      () => {
-        running = document.visibilityState === "visible";
-        if (running) animate();
-      }
-    );
+    const onVisibility = () => {
+      running = document.visibilityState === "visible";
+      if (running) animate();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     // ── Shooting Stars ──────────────────────────────────────────
     function spawnShootingStar() {
@@ -154,19 +153,22 @@ export default function AmbientBackground() {
       setTimeout(() => star.remove(), (duration + 0.6) * 1000);
     }
 
+    let shootingStarInterval: ReturnType<typeof setInterval> | null = null;
     const shootingStarTimer = setTimeout(() => {
       spawnShootingStar();
-      const interval = setInterval(() => {
+      shootingStarInterval = setInterval(() => {
         if (document.visibilityState !== "visible") return;
         if (Math.random() > 0.65) spawnShootingStar();
       }, 11000);
-      return () => clearInterval(interval);
     }, 4000);
 
     return () => {
       running = false;
       cancelAnimationFrame(rafId);
       clearTimeout(shootingStarTimer);
+      if (shootingStarInterval) clearInterval(shootingStarInterval);
+      spawnTimers.forEach(clearTimeout);
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("resize", resize);
     };
   }, []);

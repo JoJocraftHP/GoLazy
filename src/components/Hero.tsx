@@ -105,11 +105,12 @@ export default function Hero() {
           </MagneticButton>
         </motion.div>
 
-        {/* Live Stats */}
+        {/* Live Stats — aria-live intentionally off; values refresh every 60s
+            and would otherwise constantly interrupt screen readers */}
         <motion.div
           className="hero-stats"
           variants={itemVariants}
-          aria-live="polite"
+          role="group"
           aria-label="Live game statistics"
         >
           <StatItem value={totalCCU} label="PLAYERS ONLINE" green />

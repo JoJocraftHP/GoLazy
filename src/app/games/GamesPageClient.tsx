@@ -46,15 +46,18 @@ export default function GamesPageClient() {
 
   return (
     <>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       <AmbientBackground />
       <ScrollProgress />
       <Header />
 
-      <main style={{ position: "relative", zIndex: 2, paddingTop: "5rem" }}>
+      <main id="main-content" style={{ position: "relative", zIndex: 2, paddingTop: "5rem" }}>
         <section
           className="section"
           aria-label="All GoLazy games"
-          style={{ paddingTop: "4rem", paddingBottom: "6rem" }}
+          style={{ paddingTop: "2rem", paddingBottom: "6rem" }}
         >
           <header className="section__header" style={{ marginBottom: "3rem" }}>
             <span className="section__eyebrow">GoLazy Studios</span>

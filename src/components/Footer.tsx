@@ -1,3 +1,8 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 const SOCIAL_LINKS = [
   {
     href: "https://discord.gg/UnhZDUH93X",
@@ -17,19 +22,21 @@ const SOCIAL_LINKS = [
       </svg>
     ),
   },
-
 ];
 
 const NAV_LINKS = [
-  { href: "#hero", label: "Home" },
-  { href: "#games", label: "Our Games" },
-  { href: "#about", label: "About Us" },
-  { href: "#groups", label: "Groups" },
-  { href: "#team", label: "Team" },
-  { href: "#contact", label: "Contact" },
+  { hash: "#hero", label: "Home" },
+  { hash: "#games", label: "Our Games", route: "/games" },
+  { hash: "#about", label: "About Us" },
+  { hash: "#groups", label: "Groups" },
+  { hash: "#team", label: "Team" },
+  { hash: "#contact", label: "Contact" },
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+  const onHome = pathname === "/";
+
   return (
     <footer className="footer" role="contentinfo">
       <div className="footer__container">
@@ -49,11 +56,19 @@ export default function Footer() {
         </div>
 
         <nav className="footer__nav" aria-label="Footer navigation">
-          {NAV_LINKS.map((link) => (
-            <a key={link.href} href={link.href} className="footer__link">
-              {link.label}
-            </a>
-          ))}
+          {NAV_LINKS.map((link) => {
+            // Prefer the dedicated route when one exists and we're not on home
+            const href = link.route && !onHome
+              ? link.route
+              : onHome
+                ? link.hash
+                : `/${link.hash}`;
+            return (
+              <Link key={link.hash} href={href} className="footer__link">
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="footer__divider" aria-hidden="true" />

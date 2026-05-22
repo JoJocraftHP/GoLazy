@@ -15,15 +15,15 @@ const RETRY_INTERVAL_MS = 700;
 const imageCache = new Map<string, string>();
 
 export function useRobloxImage(fetchUrl: string, fallback: string): string | null {
-  // Initialise from cache so returning to a page shows images instantly
-  const [src, setSrc] = useState<string | null>(() => imageCache.get(fetchUrl) ?? null);
+  // Read cache during render — avoids a sync setState-in-effect.
+  // If we've previously fetched this URL, it's returned immediately on every render
+  // (including post-navigation remounts), without an extra render cycle.
+  const cached = imageCache.get(fetchUrl);
+  const [asyncSrc, setAsyncSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    // Already have a good URL — nothing to do
-    if (imageCache.has(fetchUrl)) {
-      setSrc(imageCache.get(fetchUrl)!);
-      return;
-    }
+    // Cache hit — nothing to fetch
+    if (imageCache.has(fetchUrl)) return;
 
     let cancelled = false;
     let attempts = 0;
@@ -43,7 +43,7 @@ export function useRobloxImage(fetchUrl: string, fallback: string): string | nul
             item?.thumbnails?.[0]?.imageUrl;
           if (url) {
             imageCache.set(fetchUrl, url);
-            setSrc(url);
+            setAsyncSrc(url);
           } else {
             throw new Error("no imageUrl in response");
           }
@@ -55,7 +55,7 @@ export function useRobloxImage(fetchUrl: string, fallback: string): string | nul
             retryTimer = setTimeout(attempt, RETRY_INTERVAL_MS * attempts);
           } else {
             // Don't cache the fallback — let the next mount retry
-            setSrc(fallback);
+            setAsyncSrc(fallback);
           }
         });
     }
@@ -68,5 +68,5 @@ export function useRobloxImage(fetchUrl: string, fallback: string): string | nul
     };
   }, [fetchUrl, fallback]);
 
-  return src;
+  return cached ?? asyncSrc;
 }

@@ -10,10 +10,36 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import Toast from "@/components/Toast";
+import { GAMES } from "@/lib/data";
+
+const homeItemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Top Roblox Games by GoLazy Studios",
+  numberOfItems: GAMES.length,
+  itemListElement: GAMES.map((g, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "VideoGame",
+      name: g.title,
+      url: g.url,
+      gamePlatform: "Roblox",
+      applicationCategory: "Game",
+      operatingSystem: "Cross-platform",
+      publisher: { "@type": "Organization", name: "GoLazy" },
+    },
+  })),
+};
 
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeItemListSchema) }}
+      />
+
       {/* Skip link for accessibility */}
       <a href="#main-content" className="skip-link">
         Skip to main content

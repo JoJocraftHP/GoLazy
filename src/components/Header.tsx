@@ -53,20 +53,53 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
 
-  // Close mobile nav on Escape
+  // Close mobile nav on Escape + restrict tab focus to inside the drawer
   useEffect(() => {
+    if (!navOpen) return;
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && navOpen) setNavOpen(false);
+      if (e.key === "Escape") {
+        setNavOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      const nav = document.getElementById("main-nav");
+      if (!nav) return;
+      const focusables = nav.querySelectorAll<HTMLElement>(
+        'a, button, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [navOpen]);
 
-  // Lock body scroll when nav open
+  // Lock body scroll + mark non-nav content inert when drawer is open
   useEffect(() => {
     document.body.style.overflow = navOpen ? "hidden" : "";
+    const main = document.getElementById("main-content");
+    const footer = document.querySelector("footer");
+    [main, footer].forEach((el) => {
+      if (!el) return;
+      if (navOpen) {
+        el.setAttribute("inert", "");
+      } else {
+        el.removeAttribute("inert");
+      }
+    });
     return () => {
       document.body.style.overflow = "";
+      [main, footer].forEach((el) => el?.removeAttribute("inert"));
     };
   }, [navOpen]);
 
