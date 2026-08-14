@@ -3,20 +3,20 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-let showToastGlobal: (() => void) | null = null;
+let showToastGlobal: ((message: string) => void) | null = null;
 
-export function triggerToast() {
-  showToastGlobal?.();
+export function triggerToast(message: string) {
+  showToastGlobal?.(message);
 }
 
 export default function Toast() {
-  const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const show = useCallback(() => {
-    setVisible(true);
+  const show = useCallback((text: string) => {
+    setMessage(text);
     if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setVisible(false), 2500);
+    timerRef.current = setTimeout(() => setMessage(null), 2500);
   }, []);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function Toast() {
   return (
     <div className="toast-wrapper" role="status" aria-live="polite">
       <AnimatePresence>
-        {visible && (
+        {message && (
           <motion.div
             className="toast-notification"
             initial={{ y: 60, opacity: 0 }}
@@ -51,7 +51,7 @@ export default function Toast() {
             >
               <polyline points="20 6 9 17 4 12" />
             </svg>
-            Link copied to clipboard!
+            {message}
           </motion.div>
         )}
       </AnimatePresence>

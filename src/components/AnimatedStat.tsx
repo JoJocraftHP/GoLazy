@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import {
   motion,
   useSpring,
@@ -18,16 +18,10 @@ export default function AnimatedStat({ value, className }: AnimatedStatProps) {
   const raw = useMotionValue(0);
   const spring = useSpring(raw, { stiffness: 60, damping: 18 });
   const displayed = useTransform(spring, (v) => formatNumber(Math.round(v)));
-  const initialized = useRef(false);
 
+  // raw starts at 0, so the first set() springs up from zero on its own
   useEffect(() => {
     if (value === null || value === undefined) return;
-
-    if (!initialized.current) {
-      // First data load: spring from 0 to value
-      raw.set(0);
-      initialized.current = true;
-    }
 
     raw.set(value);
   }, [value, raw]);

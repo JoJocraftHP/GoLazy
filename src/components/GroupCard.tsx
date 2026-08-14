@@ -4,10 +4,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import type { Group } from "@/lib/data";
 import type { Variants } from "framer-motion";
-import { useGroupMembers } from "@/hooks/useGroupMembers";
-import { useRobloxImage } from "@/hooks/useRobloxImage";
-
-const ROPROXY_URL = "https://thumbnails.roproxy.com/v1";
+import { useGroupMemberCounts } from "@/hooks/useGroupMembers";
+import { useRobloxImage } from "@/hooks/useRobloxImages";
+import { GROUP_ICONS_URL } from "@/lib/roblox";
 
 interface GroupCardProps {
   group: Group;
@@ -16,10 +15,14 @@ interface GroupCardProps {
 
 export default function GroupCard({ group, variants }: GroupCardProps) {
   const [imgLoaded, setImgLoaded] = useState(false);
-  const { memberCount } = useGroupMembers(group.id);
+  const { counts } = useGroupMemberCounts();
+  const memberCount = counts[group.id] ?? null;
 
-  const iconUrl = `${ROPROXY_URL}/groups/icons?groupIds=${group.id}&size=150x150&format=Png`;
-  const imgSrc = useRobloxImage(iconUrl, group.fallbackImage);
+  const imgSrc = useRobloxImage(
+    GROUP_ICONS_URL,
+    group.id,
+    group.fallbackImage
+  );
 
   return (
     <motion.div className="group-card" variants={variants}>

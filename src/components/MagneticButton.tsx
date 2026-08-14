@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useCallback } from "react";
+import { useReducedMotion } from "framer-motion";
 import Link from "next/link";
 
 interface MagneticButtonProps {
@@ -25,8 +26,11 @@ export default function MagneticButton({
   id,
 }: MagneticButtonProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   const onMouseMove = useCallback((e: React.MouseEvent) => {
+    if (reduceMotion) return;
+
     const el = wrapRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -34,7 +38,7 @@ export default function MagneticButton({
     const x = (e.clientX - rect.left - rect.width / 2) * 0.022;
     const y = (e.clientY - rect.top - rect.height / 2) * 0.022;
     el.style.transform = `translate(${x}px, ${y}px)`;
-  }, []);
+  }, [reduceMotion]);
 
   const onMouseLeave = useCallback(() => {
     if (wrapRef.current) wrapRef.current.style.transform = "";

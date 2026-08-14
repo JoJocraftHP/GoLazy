@@ -6,12 +6,12 @@ import {
   useMotionValue,
   useSpring,
   useTransform,
+  useReducedMotion,
   type Variants,
 } from "framer-motion";
 import type { TeamMember } from "@/lib/data";
-import { useRobloxImage } from "@/hooks/useRobloxImage";
-
-const ROPROXY_URL = "https://thumbnails.roproxy.com/v1";
+import { useRobloxImage } from "@/hooks/useRobloxImages";
+import { AVATARS_URL } from "@/lib/roblox";
 
 interface TeamCardProps {
   member: TeamMember;
@@ -21,9 +21,13 @@ interface TeamCardProps {
 export default function TeamCard({ member, variants }: TeamCardProps) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const cardRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
 
-  const avatarUrl = `${ROPROXY_URL}/users/avatar-headshot?userIds=${member.userId}&size=150x150&format=Png`;
-  const imgSrc = useRobloxImage(avatarUrl, member.fallbackImage);
+  const imgSrc = useRobloxImage(
+    AVATARS_URL,
+    member.userId,
+    member.fallbackImage
+  );
 
   // Spring-smoothed tilt (matches GameCard behaviour)
   const rawX = useMotionValue(0);
@@ -35,13 +39,15 @@ export default function TeamCard({ member, variants }: TeamCardProps) {
 
   const onMouseMove = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
+      if (reduceMotion) return;
+
       const card = cardRef.current;
       if (!card) return;
       const rect = card.getBoundingClientRect();
       rawX.set((e.clientX - rect.left) / rect.width - 0.5);
       rawY.set((e.clientY - rect.top) / rect.height - 0.5);
     },
-    [rawX, rawY]
+    [rawX, rawY, reduceMotion]
   );
 
   const onMouseLeave = useCallback(() => {

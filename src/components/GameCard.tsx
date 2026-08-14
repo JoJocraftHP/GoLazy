@@ -1,13 +1,22 @@
 "use client";
 
 import { useRef, useState, useCallback } from "react";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  useSpring,
+  useReducedMotion,
+} from "framer-motion";
 import type { Variants } from "framer-motion";
 import type { Game } from "@/lib/data";
 import type { GameStat } from "@/hooks/useGameStats";
 import { formatNumber } from "@/lib/format";
 import { triggerToast } from "./Toast";
-import { useRobloxImage } from "@/hooks/useRobloxImage";
+import { useRobloxImage } from "@/hooks/useRobloxImages";
+import { useIsNewGame } from "@/hooks/useIsNewGame";
+import { GAME_THUMBS_URL } from "@/lib/roblox";
+import Link from "next/link";
 
 interface GameCardProps {
   game: Game;
@@ -15,15 +24,18 @@ interface GameCardProps {
   variants?: Variants;
 }
 
-const ROPROXY_URL = "https://thumbnails.roproxy.com/v1";
-
 export default function GameCard({ game, stat, variants }: GameCardProps) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const [ready, setReady] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+  const isNew = useIsNewGame(game.released);
 
-  const thumbUrl = `${ROPROXY_URL}/games/multiget/thumbnails?universeIds=${game.universeId}&countPerUniverse=1&size=768x432&format=Png`;
-  const imgSrc = useRobloxImage(thumbUrl, game.fallbackImage);
+  const imgSrc = useRobloxImage(
+    GAME_THUMBS_URL,
+    game.universeId,
+    game.fallbackImage
+  );
 
   const rawMouseX = useMotionValue(0);
   const rawMouseY = useMotionValue(0);
@@ -35,13 +47,15 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
 
   const onMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
+      if (reduceMotion) return;
+
       const card = cardRef.current;
       if (!card) return;
       const rect = card.getBoundingClientRect();
       rawMouseX.set((e.clientX - rect.left) / rect.width - 0.5);
       rawMouseY.set((e.clientY - rect.top) / rect.height - 0.5);
     },
-    [rawMouseX, rawMouseY]
+    [rawMouseX, rawMouseY, reduceMotion]
   );
 
   const onMouseLeave = useCallback(() => {
@@ -52,8 +66,12 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
   async function handleShare(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    await navigator.clipboard.writeText(game.url).catch(() => {});
-    triggerToast();
+    try {
+      await navigator.clipboard.writeText(game.url);
+      triggerToast("Link copied to clipboard!");
+    } catch {
+      triggerToast("Couldn't copy — copy the link manually");
+    }
   }
 
   const ccu = stat?.playing ?? null;
@@ -80,16 +98,18 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
         pointerEvents: ready ? "auto" : "none",
       }}
       aria-label={`${game.title} game card`}
-      aria-live="polite"
     >
-      {/* Thumbnail */}
-      <a
-        href={game.url}
-        target="_blank"
-        rel="noopener noreferrer"
+      {/* Thumbnail — tabIndex -1 so it isn't a second tab stop for the same
+          destination as the game page link below */}
+      <Link
+        href={`/games/${game.slug}`}
         className="game-card__image-wrapper"
-        aria-label={`Open ${game.title} on Roblox`}
+        aria-label={`${game.title} details`}
+        tabIndex={-1}
       >
+        {isNew && (
+          <span className="game-badge game-badge--new game-card__badge">NEW</span>
+        )}
         {!imgLoaded && <div className="game-card__image-skeleton" />}
         {imgSrc && (
           // eslint-disable-next-line @next/next/no-img-element
@@ -103,11 +123,15 @@ export default function GameCard({ game, stat, variants }: GameCardProps) {
             onError={() => setImgLoaded(true)}
           />
         )}
-      </a>
+      </Link>
 
       {/* Content */}
       <div className="game-card__content text-center flex flex-col items-center">
-        <h3 className="game-card__title">{game.title}</h3>
+        {/* The focusable route to the game page — the thumbnail above repeats
+            this destination for mouse users only */}
+        <Link href={`/games/${game.slug}`} className="game-card__title-link">
+          <h3 className="game-card__title">{game.title}</h3>
+        </Link>
 
         <div className="game-card__stats-panel">
           <div className="game-card__stats">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 
@@ -19,38 +19,46 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
-  const headerRef = useRef<HTMLElement>(null);
 
+  // scrollY alone doesn't force layout, so this stays cheap
   useEffect(() => {
-    // Query sections once per pathname change — not on every scroll event
-    const sections =
-      pathname === "/"
-        ? Array.from(document.querySelectorAll<HTMLElement>("section[id]"))
-        : [];
-
-    const onScroll = () => {
-      setScrolled(window.scrollY > 50);
-
-      if (pathname !== "/") return;
-
-      const scrollPos = window.scrollY + 120;
-      let current = window.scrollY < 100 ? "hero" : "";
-
-      for (const sec of sections) {
-        if (
-          scrollPos >= sec.offsetTop &&
-          scrollPos < sec.offsetTop + sec.offsetHeight
-        ) {
-          current = sec.id;
-        }
-      }
-
-      if (current) setActiveSection(current);
-    };
-
+    const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Active-link tracking via IntersectionObserver — the previous version read
+  // offsetTop/offsetHeight for every section on every scroll event, forcing a
+  // layout pass per frame.
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const sections = Array.from(
+      document.querySelectorAll<HTMLElement>("section[id]")
+    );
+    if (sections.length === 0) return;
+
+    const visible = new Set<string>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            visible.add(entry.target.id);
+          } else {
+            visible.delete(entry.target.id);
+          }
+        }
+        // DOM order wins, so the topmost visible section is the active one
+        const current = sections.find((sec) => visible.has(sec.id));
+        if (current) setActiveSection(current.id);
+      },
+      { rootMargin: "-120px 0px -60% 0px", threshold: 0 }
+    );
+
+    sections.forEach((sec) => observer.observe(sec));
+    return () => observer.disconnect();
   }, [pathname]);
 
   // Close mobile nav on Escape + restrict tab focus to inside the drawer
@@ -128,7 +136,6 @@ export default function Header() {
 
   return (
     <header
-      ref={headerRef}
       className={`header${scrolled ? " scrolled" : ""}`}
       role="banner"
     >

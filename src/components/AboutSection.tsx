@@ -1,7 +1,13 @@
+"use client";
+
 import { GAMES } from "@/lib/data";
+import { useGroupMemberCounts } from "@/hooks/useGroupMembers";
+import { formatNumber } from "@/lib/format";
 import SectionReveal from "./SectionReveal";
 
 export default function AboutSection() {
+  const { total: groupMembers } = useGroupMemberCounts();
+
   return (
     <section
       id="about"
@@ -47,7 +53,9 @@ export default function AboutSection() {
               <span className="about__milestone-label">Games Published</span>
             </div>
             <div className="about__milestone-item">
-              <span className="about__milestone-value">1.3M+</span>
+              <span className="about__milestone-value">
+                {groupMembers !== null ? `${formatNumber(groupMembers)}+` : "1.3M+"}
+              </span>
               <span className="about__milestone-label">Community</span>
             </div>
           </div>

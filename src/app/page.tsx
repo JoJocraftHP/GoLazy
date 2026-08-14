@@ -23,7 +23,11 @@ const homeItemListSchema = {
     item: {
       "@type": "VideoGame",
       name: g.title,
-      url: g.url,
+      description: g.description,
+      // Point at our own canonical page; the Roblox listing is the sameAs
+      url: `https://www.golazy.net/games/${g.slug}`,
+      sameAs: g.url,
+      datePublished: g.released,
       gamePlatform: "Roblox",
       applicationCategory: "Game",
       operatingSystem: "Cross-platform",

@@ -6,7 +6,8 @@ import type { NextConfig } from "next";
 //     inline JSON-LD blocks. Next 16 does not yet emit a nonce for these.
 //   - 'unsafe-inline' for styles is required by Tailwind CSS v4 and Framer Motion.
 //   - connect-src lists the Cloudflare Worker, all RoProxy hosts used by hooks,
-//     and Vercel Analytics / Speed Insights endpoints.
+//     the Discord invite API (live member counts), and Vercel Analytics /
+//     Speed Insights endpoints.
 //   - img-src allows any https origin so RoProxy CDN URLs (which can rotate
 //     hostnames) keep working without future churn.
 const csp = [
@@ -19,7 +20,7 @@ const csp = [
   "font-src 'self' https://fonts.gstatic.com data:",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://va.vercel-scripts.com",
-  "connect-src 'self' https://livestatsupdate.jojocrafthdyt.workers.dev https://thumbnails.roproxy.com https://games.roproxy.com https://groups.roproxy.com https://cloudflareinsights.com https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+  "connect-src 'self' https://livestatsupdate.jojocrafthdyt.workers.dev https://thumbnails.roproxy.com https://games.roproxy.com https://groups.roproxy.com https://discord.com https://cloudflareinsights.com https://va.vercel-scripts.com https://vitals.vercel-insights.com",
   "manifest-src 'self'",
   "upgrade-insecure-requests",
 ].join("; ");

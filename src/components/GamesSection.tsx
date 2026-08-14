@@ -5,14 +5,15 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import SectionReveal from "./SectionReveal";
 import { useGameStats } from "@/hooks/useGameStats";
-import { useRobloxImage } from "@/hooks/useRobloxImage";
+import { useRobloxImage } from "@/hooks/useRobloxImages";
+import { useIsNewGame } from "@/hooks/useIsNewGame";
 import { GAMES } from "@/lib/data";
+import { GAME_ICONS_URL } from "@/lib/roblox";
 import { formatNumber } from "@/lib/format";
 import type { Game } from "@/lib/data";
 import type { GameStat } from "@/hooks/useGameStats";
 
 const universeIds = GAMES.map((g) => g.universeId);
-const ROPROXY_URL = "https://thumbnails.roproxy.com/v1";
 
 // Visual display order left→right: rank 4, 2, 0, 1, 3
 const RANK_CSS_ORDER = [3, 4, 2, 5, 1];
@@ -36,11 +37,13 @@ interface MobileGameCardProps {
 
 function MobileGameCard({ game, stat, statsLoading }: MobileGameCardProps) {
   const [imgLoaded, setImgLoaded] = useState(false);
+  const isNew = useIsNewGame(game.released);
 
-  const iconUrl =
-    `${ROPROXY_URL}/games/icons?universeIds=${game.universeId}` +
-    `&returnPolicy=PlaceHolder&size=512x512&format=Png&isCircular=false`;
-  const iconSrc = useRobloxImage(iconUrl, game.fallbackImage);
+  const iconSrc = useRobloxImage(
+    GAME_ICONS_URL,
+    game.universeId,
+    game.fallbackImage
+  );
 
   const ccu = stat?.playing ?? null;
   const visits = stat?.visits ?? null;
@@ -55,6 +58,9 @@ function MobileGameCard({ game, stat, statsLoading }: MobileGameCardProps) {
         className="mobile-game-card__img-wrapper"
         aria-label={`Open ${game.title} on Roblox`}
       >
+        {isNew && (
+          <span className="game-badge game-badge--new game-card__badge">NEW</span>
+        )}
         {!imgLoaded && <div className="game-card__image-skeleton" style={{ borderRadius: 'var(--radius-xl)' }} />}
         {iconSrc && (
           /* eslint-disable-next-line @next/next/no-img-element */
@@ -110,11 +116,13 @@ function TopGameIcon({ game, stat, rank, statsLoading }: TopGameIconProps) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const isCenter = rank === 0;
   const iconSize = RANK_ICON_SIZE[rank];
+  const isNew = useIsNewGame(game.released);
 
-  const iconUrl =
-    `${ROPROXY_URL}/games/icons?universeIds=${game.universeId}` +
-    `&returnPolicy=PlaceHolder&size=512x512&format=Png&isCircular=false`;
-  const iconSrc = useRobloxImage(iconUrl, game.fallbackImage);
+  const iconSrc = useRobloxImage(
+    GAME_ICONS_URL,
+    game.universeId,
+    game.fallbackImage
+  );
 
   const ccu = stat?.playing ?? null;
   const visits = stat?.visits ?? null;
@@ -140,7 +148,9 @@ function TopGameIcon({ game, stat, rank, statsLoading }: TopGameIconProps) {
           aria-hidden="true"
         />
 
-        {/* Game icon image — wrapped in link so clicking it opens the game */}
+        {/* Game icon image — wrapped in link so clicking it opens the game.
+            tabIndex -1 so it isn't a second tab stop for the same destination
+            as the Play Now button below. */}
         <a
           href={game.url}
           target="_blank"
@@ -148,7 +158,11 @@ function TopGameIcon({ game, stat, rank, statsLoading }: TopGameIconProps) {
           className="top-game-icon__img-wrap"
           style={{ width: iconSize, height: iconSize }}
           aria-label={`Open ${game.title} on Roblox`}
+          tabIndex={-1}
         >
+          {isNew && (
+            <span className="game-badge game-badge--new game-card__badge">NEW</span>
+          )}
           {/* Skeleton shows until the img fires onLoad */}
           {!imgLoaded && <div className="top-game-icon__skeleton" />}
           {iconSrc && (
@@ -188,7 +202,7 @@ function TopGameIcon({ game, stat, rank, statsLoading }: TopGameIconProps) {
             ) : null}
           </div>
 
-          <span className="top-game-icon__title">{game.title}</span>
+          <h3 className="top-game-icon__title">{game.title}</h3>
         </div>
 
         {/* Play Now — sits above the card overlay via z-index */}
@@ -207,7 +221,7 @@ function TopGameIcon({ game, stat, rank, statsLoading }: TopGameIconProps) {
 }
 
 export default function GamesSection() {
-  const { statMap, isLoading } = useGameStats(universeIds);
+  const { statMap, topRating, isLoading } = useGameStats(universeIds);
 
   const top5 = useMemo(() => {
     const sorted =
@@ -235,7 +249,8 @@ export default function GamesSection() {
             Our Top Games
           </h2>
           <p className="section__subtitle">
-            Our most-played Roblox games — some rated up to 98.5% by the
+            Our most-played Roblox games — rated up to{" "}
+            {topRating !== null ? `${topRating.toFixed(1)}%` : "98.5%"} by the
             community.
           </p>
         </header>

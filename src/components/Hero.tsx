@@ -4,11 +4,10 @@ import { motion, Variants } from "framer-motion";
 import MagneticButton from "./MagneticButton";
 import AnimatedStat from "./AnimatedStat";
 import { useGameStats } from "@/hooks/useGameStats";
-import { useGroupMembers } from "@/hooks/useGroupMembers";
-import { GAMES, GROUPS } from "@/lib/data";
+import { useGroupMemberCounts } from "@/hooks/useGroupMembers";
+import { GAMES } from "@/lib/data";
 
 const universeIds = GAMES.map((g) => g.universeId);
-const groupIds = GROUPS.map((g) => g.id);
 
 const heroVariants: Variants = {
   hidden: {},
@@ -26,18 +25,10 @@ const itemVariants: Variants = {
   },
 };
 
-function useGroupTotal() {
-  const g1 = useGroupMembers(groupIds[0]);
-  const g2 = useGroupMembers(groupIds[1]);
-  const total =
-    (g1.memberCount ?? 0) + (g2.memberCount ?? 0);
-  return total > 0 ? total : null;
-}
-
 export default function Hero() {
   const { totalCCU, totalVisits, totalFavourites, totalLikes } =
     useGameStats(universeIds);
-  const totalGroupMembers = useGroupTotal();
+  const { total: totalGroupMembers } = useGroupMemberCounts();
 
   return (
     <section id="hero" className="hero" aria-label="Welcome section">

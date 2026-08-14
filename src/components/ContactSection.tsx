@@ -1,7 +1,12 @@
+"use client";
+
 import SectionReveal from "./SectionReveal";
 import MagneticButton from "./MagneticButton";
+import { useDiscordStats } from "@/hooks/useDiscordStats";
 
 export default function ContactSection() {
+  const { memberCount, onlineCount } = useDiscordStats();
+
   return (
     <section id="contact" className="contact" aria-label="Contact information">
       <SectionReveal>
@@ -32,8 +37,29 @@ export default function ContactSection() {
             >
               <span className="discord-widget__dot" aria-hidden="true" />
               <span>
-                <span style={{ fontWeight: 700, color: "white" }}>1,000+</span>{" "}
-                members online
+                {onlineCount !== null ? (
+                  <>
+                    <span style={{ fontWeight: 700, color: "white" }}>
+                      {onlineCount.toLocaleString("en-US")}
+                    </span>{" "}
+                    online
+                    {memberCount !== null && (
+                      <> · {memberCount.toLocaleString("en-US")} members</>
+                    )}
+                  </>
+                ) : memberCount !== null ? (
+                  <>
+                    <span style={{ fontWeight: 700, color: "white" }}>
+                      {memberCount.toLocaleString("en-US")}
+                    </span>{" "}
+                    members
+                  </>
+                ) : (
+                  <>
+                    <span style={{ fontWeight: 700, color: "white" }}>Join</span>{" "}
+                    our Discord
+                  </>
+                )}
               </span>
             </a>
           </div>

@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import MotionProvider from "@/components/MotionProvider";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -190,7 +191,7 @@ export default function RootLayout({
             "var(--fw-quicksand), Quicksand, Comfortaa, sans-serif",
         }}
       >
-        {children}
+        <MotionProvider>{children}</MotionProvider>
         <Analytics />
         <SpeedInsights />
         <Script
