@@ -97,6 +97,27 @@ export const GAMES: Game[] = [
     fallbackImage: "/assets/branding/GoLazyGameCard.png",
     alt: "Squishy Dumpling Duel - Roblox game by GoLazy",
   },
+  {
+    title: "Hungry Animals",
+    universeId: "8827308630",
+    url: "https://www.roblox.com/games/117215991955643/Hungry-Animals",
+    fallbackImage: "/assets/branding/GoLazyGameCard.png",
+    alt: "Hungry Animals - Roblox garden and animal collecting game by ActiveGames",
+  },
+  {
+    title: "Deep Fishing",
+    universeId: "10526853622",
+    url: "https://www.roblox.com/games/132239307080610/Deep-Fishing",
+    fallbackImage: "/assets/branding/GoLazyGameCard.png",
+    alt: "Deep Fishing - Roblox fishing simulator game by LazyGames",
+  },
+  {
+    title: "+1 Health for Brainrots",
+    universeId: "10078651002",
+    url: "https://www.roblox.com/games/136709177643541/1-Health-for-Brainrots",
+    fallbackImage: "/assets/branding/GoLazyGameCard.png",
+    alt: "+1 Health for Brainrots - Roblox game by ActiveGames",
+  },
 ];
 
 export const GROUPS: Group[] = [
