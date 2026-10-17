@@ -134,6 +134,8 @@ const organizationJsonLd = {
     "https://x.com/GoLazyStudios",
     "https://www.roblox.com/communities/33472368/LazyGameStudios",
     "https://www.roblox.com/communities/35868694/ActiveGameStudios",
+    "https://www.roblox.com/communities/34744238/LazyGames",
+    "https://www.roblox.com/communities/12416224/CrashSmash",
   ],
   contactPoint: {
     "@type": "ContactPoint",

@@ -193,6 +193,18 @@ export const GROUPS: Group[] = [
     url: "https://www.roblox.com/communities/35868694/ActiveGameStudios#!/about",
     fallbackImage: "/assets/StudioIcons/ActiveGames.png",
   },
+  {
+    id: "34744238",
+    name: "LazyGames.",
+    url: "https://www.roblox.com/communities/34744238/LazyGames#!/about",
+    fallbackImage: "/assets/branding/GoLazyFav/android-chrome-192x192.png",
+  },
+  {
+    id: "12416224",
+    name: "CrashSmash",
+    url: "https://www.roblox.com/communities/12416224/CrashSmash#!/about",
+    fallbackImage: "/assets/branding/GoLazyFav/android-chrome-192x192.png",
+  },
 ];
 
 export const TEAM_CATEGORIES: TeamCategory[] = [
@@ -231,13 +243,6 @@ export const TEAM_CATEGORIES: TeamCategory[] = [
         userId: "1841149124",
         profileUrl: "https://www.roblox.com/users/1841149124/profile",
         fallbackImage: "/assets/profiles/EpicProfile.png",
-      },
-      {
-        name: "Reexify",
-        role: "Scripter",
-        userId: "205658940",
-        profileUrl: "https://www.roblox.com/users/205658940/profile",
-        fallbackImage: "/assets/profiles/DefaultProfile.png",
       },
       {
         name: "JustaDev",
