@@ -19,6 +19,7 @@ export interface Group {
   name: string;
   url: string;
   fallbackImage: string;
+  hidden?: boolean;
 }
 
 export interface TeamMember {
@@ -186,6 +187,7 @@ export const GROUPS: Group[] = [
     name: "CrashSmash",
     url: "https://www.roblox.com/communities/12416224/CrashSmash#!/about",
     fallbackImage: "/assets/branding/GoLazyFav/android-chrome-192x192.png",
+    hidden: true,
   },
   {
     id: "35868694",

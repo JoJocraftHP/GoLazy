@@ -29,7 +29,7 @@ export default function GroupsSection() {
 
   const sortedGroups = useMemo(
     () =>
-      [...GROUPS].sort((a, b) => (counts[b.id] ?? 0) - (counts[a.id] ?? 0)),
+      GROUPS.filter((g) => !g.hidden).sort((a, b) => (counts[b.id] ?? 0) - (counts[a.id] ?? 0)),
     [counts]
   );
 
