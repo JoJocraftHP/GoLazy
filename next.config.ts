@@ -25,11 +25,20 @@ const csp = [
   "upgrade-insecure-requests",
 ].join("; ");
 
+// The team dashboard is a separate Cloudflare Worker; it sends its own security headers.
+const TEAM_DASHBOARD = "https://golazy-dashboard.jojocrafthdyt.workers.dev";
+
 const nextConfig: NextConfig = {
+  async rewrites() {
+    return [
+      { source: "/team", destination: `${TEAM_DASHBOARD}/team` },
+      { source: "/team/:path*", destination: `${TEAM_DASHBOARD}/team/:path*` },
+    ];
+  },
   async headers() {
     return [
       {
-        source: "/(.*)",
+        source: "/((?!team(?:/|$)).*)",
         headers: [
           { key: "Content-Security-Policy", value: csp },
           { key: "X-Frame-Options", value: "DENY" },
