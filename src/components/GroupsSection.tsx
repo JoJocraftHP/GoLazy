@@ -1,9 +1,11 @@
 "use client";
 
+import { useMemo } from "react";
 import { motion, Variants } from "framer-motion";
 import GroupCard from "./GroupCard";
 import SectionReveal from "./SectionReveal";
 import { GROUPS } from "@/lib/data";
+import { useGroupMemberCounts } from "@/hooks/useGroupMembers";
 
 const containerVariants: Variants = {
   hidden: {},
@@ -23,6 +25,14 @@ const cardVariants: Variants = {
 };
 
 export default function GroupsSection() {
+  const { counts } = useGroupMemberCounts();
+
+  const sortedGroups = useMemo(
+    () =>
+      [...GROUPS].sort((a, b) => (counts[b.id] ?? 0) - (counts[a.id] ?? 0)),
+    [counts]
+  );
+
   return (
     <section
       id="groups"
@@ -49,7 +59,7 @@ export default function GroupsSection() {
         whileInView="visible"
         viewport={{ once: true, margin: "-60px" }}
       >
-        {GROUPS.map((group) => (
+        {sortedGroups.map((group) => (
           <GroupCard key={group.id} group={group} variants={cardVariants} />
         ))}
       </motion.div>

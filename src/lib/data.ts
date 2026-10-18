@@ -182,10 +182,10 @@ export const GAMES: Game[] = [
 
 export const GROUPS: Group[] = [
   {
-    id: "33472368",
-    name: "LazyGames",
-    url: "https://www.roblox.com/communities/33472368/LazyGameStudios#!/about",
-    fallbackImage: "/assets/StudioIcons/LazyStudios.png",
+    id: "12416224",
+    name: "CrashSmash",
+    url: "https://www.roblox.com/communities/12416224/CrashSmash#!/about",
+    fallbackImage: "/assets/branding/GoLazyFav/android-chrome-192x192.png",
   },
   {
     id: "35868694",
@@ -200,10 +200,10 @@ export const GROUPS: Group[] = [
     fallbackImage: "/assets/branding/GoLazyFav/android-chrome-192x192.png",
   },
   {
-    id: "12416224",
-    name: "CrashSmash",
-    url: "https://www.roblox.com/communities/12416224/CrashSmash#!/about",
-    fallbackImage: "/assets/branding/GoLazyFav/android-chrome-192x192.png",
+    id: "33472368",
+    name: "LazyGames",
+    url: "https://www.roblox.com/communities/33472368/LazyGameStudios#!/about",
+    fallbackImage: "/assets/StudioIcons/LazyStudios.png",
   },
 ];
 
